@@ -210,73 +210,7 @@ isDataValid -> hasRequiredFields [rejected]
 
 #### How Automatic Token Tracking Works
 
-Token tracking is a three-part handoff between the command, Claude Code's session storage, and a Stop hook.
-
-**1. Session start — command writes a state file**
-
-When the command creates the log file, it immediately writes the log's absolute path to a known temp location:
-
-```bash
-echo "/abs/path/to/docs/refactorings/utils/refactor-names-utils-prompt-<timestamp>.md" > ~/.claude/refactor-session.tmp
-```
-
-This is the only piece the hook needs to locate the right log later.
-
-**2. During the session — Claude Code accumulates token data**
-
-As the session runs, Claude Code appends each exchange to a JSONL file at:
-
-```
-~/.claude/projects/<sanitized-cwd>/<session-id>.jsonl
-```
-
-Each assistant turn is a JSON object containing a `message.usage` block with per-turn token counts:
-
-```json
-{
-  "message": {
-    "usage": {
-      "input_tokens": 3,
-      "cache_creation_input_tokens": 8784,
-      "cache_read_input_tokens": 11937,
-      "output_tokens": 1055
-    }
-  }
-}
-```
-
-**3. Session end — Stop hook fires automatically**
-
-The hook script lives at `hooks/end-refactor-log-session-stats.sh` in this repo. Running `./install.sh` copies it to `~/.claude/hooks/` and registers it in `~/.claude/settings.json` as a global Stop hook:
-
-```json
-{
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          { "type": "command", "command": "bash ~/.claude/hooks/end-refactor-log-session-stats.sh" }
-        ]
-      }
-    ]
-  }
-}
-```
-
-Because it's registered globally (not in a project-level `.claude/settings.json`), it fires in any project where `/refactor` is run — not just inside the vflow repo.
-
-When the hook fires, it:
-
-1. Reads `session_id` from the hook's stdin JSON
-2. Checks for `~/.claude/refactor-session.tmp` — if missing, exits silently (not a refactor session)
-3. Reads the log path from the state file, then deletes it
-4. Derives the session JSONL path: `~/.claude/projects/$(pwd | sed 's|/|-|g')/$SESSION_ID.jsonl`
-5. Sums all four token fields across every line in the JSONL:
-   ```bash
-   jq -r '.message.usage | select(.) | (.input_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0) + (.output_tokens // 0)' "$SF" \
-     | awk '{s+=$1} END{print s+0}'
-   ```
-6. Overwrites `Total Tokens: —` in the log with the real count via `sed`
+See `2026-05-14-research-refactor-skill.md` → **Custom Hooks / end-refactor-log-session-stats.sh** for the full three-part handoff design.
 
 ### Refactor Names Tree Diagram (claude-mermaid)
 
