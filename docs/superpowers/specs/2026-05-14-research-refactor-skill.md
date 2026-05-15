@@ -337,9 +337,11 @@ Rate each accepted rename at the moment it's logged on a 3-tier scale:
 
 | Score | Label | Example |
 |-------|-------|---------|
-| `1` | Cosmetic polish | `buildSystemPromptString → buildSystemPrompt` (type suffix removed) |
-| `2` | Behavioral shift | `processData → generateColorSwatch` (behavior named) |
-| `3` | Domain discovery | `formatOutput → formatListingOutput` (business concept surfaced) |
+| `1` | Type Suffix Removed | `buildSystemPromptString → buildSystemPrompt` |
+| `2` | Behavior Named | `processData → generateColorSwatch` |
+| `3` | Domain Term Surfaced | `formatOutput → formatListingOutput` |
+
+The label is the rename type — a repeatable, specific category, not a quality tier. If a rename doesn't fit `Type Suffix Removed`, `Behavior Named`, or `Domain Term Surfaced`, the agent coins a new label that describes what changed. The user reviews and cleans up or renames labels over time. This is how the taxonomy grows: agent-driven discovery, user curation.
 
 Roll up to a session average. Captures not just *how many* names were fixed, but *how far* they moved.
 
