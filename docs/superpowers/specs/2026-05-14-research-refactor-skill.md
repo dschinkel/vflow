@@ -62,44 +62,72 @@ Each `/refactor` session is treated as an experiment. The user states their hypo
 
 ### On Start — Hypothesis Prompt
 
-After announcing scope and file order, the skill asks:
+After announcing scope and file order, the skill asks two questions in sequence:
 
 ```
-What's your hypothesis for this refactor session?
-(e.g. "I think most names are implementation-focused and miss the business domain")
+1. What's your hypothesis for this refactor session?
+   (e.g. "I think most names are implementation-focused and miss the business domain")
+
+2. What's your prediction — what specifically would you expect to see if your hypothesis is true?
+   (e.g. "I expect to find type suffixes in more than half the constants, and function
+   names using build/format/process with no domain context")
 ```
 
-The user's response is recorded verbatim and written to the session log immediately.
+Both responses are recorded verbatim and written to the session log immediately.
 
-### At Session End — Analysis
+### At Session End — Analysis, Verdict & Learnings
 
-After all renames are processed (and before generating the tree diagram), the skill produces an analysis covering:
-- Which naming patterns appeared most (type suffixes, vague verbs, missing domain language, etc.)
-- How many proposals were accepted vs. rejected and what that might indicate
-- Whether the hypothesis held up based on what was actually found
+After all renames are processed (and before generating the tree diagram), the skill produces:
 
-The skill then asks:
+1. **Analysis** — what actually happened:
+   - Which naming patterns appeared most (type suffixes, vague verbs, missing domain language, etc.)
+   - How many proposals were accepted vs. rejected and what that might indicate
+
+2. **Verdict** — a single explicit call based on whether the prediction held: `confirmed`, `refuted`, or `partial`
+
+3. **Learnings** — what this session revealed that wasn't known before; what to do differently
+
+4. **Next Hypothesis** — what this session suggests should be tested next
+
+The skill presents all four sections and asks:
 
 ```
-Analysis above — approve or reject?
+Approve or reject this analysis?
 ```
 
-- **approve** → analysis is written to the session log as-is.
+- **approve** → written to the session log as-is.
 - **reject** → skill prompts: *"Type your own analysis:"* and records whatever the user writes instead.
 
 ### In the Session Log
 
-The hypothesis and final analysis are written at the top of `docs/refactorings/refactor-names-<session-timestamp>.md`, before the rename entries:
+The full experiment block is written at the top of `docs/refactorings/refactor-names-<session-timestamp>.md`, before the rename entries:
 
 ```
 ## Hypothesis
-I think most names here are implementation-focused and miss the business domain entirely.
+I think the names here are implementation-focused — lots of type suffixes and
+generic verbs with no domain language from the listing generation business.
+
+## Prediction
+I expect to find type suffixes (String, Obj, Array) in more than half the
+constants, and function names that use "build/format/process" with no
+Etsy or listing context.
+
+## Verdict
+confirmed
 
 ## Analysis
-The hypothesis held. 8 of 11 constants included type suffixes (String, Obj, Array).
-Function names described mechanism not behavior — "build", "format", "process" with
-no domain context. The conditional reads revealed the actual domain (listing generation,
-SVG processing) was never surfaced in any identifier.
+7 of 9 constants had type suffixes. Function names used mechanism words
+with no domain reference. Conditional reads revealed the domain was never
+surfaced in any identifier.
+
+## Learnings
+The inside-out strategy worked well — reading constants first gave enough
+context to propose strong function renames without asking the user for
+domain context upfront.
+
+## Next Hypothesis
+The test files likely mirror the same naming problems — test names probably
+describe implementation not behavior.
 
 ---
 
