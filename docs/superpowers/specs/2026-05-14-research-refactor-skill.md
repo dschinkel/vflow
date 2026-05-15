@@ -240,7 +240,7 @@ isDataValid -> hasRequiredFields [rejected]
 ```
 
 - **Models** — written at session start; lists every model used (primary agent first, then any sub-agents).
-- **Total Tokens** — filled in automatically at session end by a global Stop hook. No user action required.
+- **Total Tokens** — filled in automatically at session end by a global Stop hook. The hook script lives at `hooks/stop-refactor-tokens.sh` in this repo and is installed to `~/.claude/hooks/` via `install.sh`. No user action required at runtime.
 
 #### How Automatic Token Tracking Works
 
