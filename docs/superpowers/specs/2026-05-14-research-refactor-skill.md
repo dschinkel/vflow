@@ -86,6 +86,56 @@ _(Error handling is already in the current `refactor.md`.)_
 
 ---
 
+## Global Naming Knowledge Base
+
+Each `/refactor` session produces a session log capturing what was renamed and why. Across many sessions, a pattern builds up: what naming problems appear most often, what reasoning guided the decisions, what the user has pushed back on. That accumulated context is currently lost between sessions.
+
+A global naming knowledge base would let the agent carry forward what it has learned — and let the user build a set of principles over time rather than re-explaining preferences every session.
+
+### Two-layer design
+
+**Layer 1 — Raw feedback log** (machine-written, append-only)
+
+One file, auto-appended after each session, containing the raw rename entries with user annotations:
+
+```
+# vflow — 2026-05-15T16-32-10 — hooks/stop-refactor-tokens.sh
+STATE -> REFACTOR_LOG_AWAITING_TOKEN_COUNT [accepted] — "use the why to name it, not a vague label"
+SESSION_JSON -> REFACTOR_SESSION [accepted] — "represents a refactor session, not just a stopped session"
+SF -> REFACTOR_SESSION_FILE [accepted] — "keep UPPERCASE, we're in a script"
+```
+
+This is a running log, not a curated one. It captures everything said, verbatim, in context.
+
+**Layer 2 — Distilled principles** (user-curated, agent-read at session start)
+
+A separate file the user edits manually — short, durable principles extracted from the raw log:
+
+```
+## Naming Principles (distilled from sessions)
+- Name from the why, not the shape: if you can explain why something exists, use that explanation as the name.
+- Script-level variables: UPPERCASE. Always.
+- Avoid labels that describe a role without explaining what the thing actually represents.
+```
+
+The agent reads this file at session start, before proposing any renames. It informs how the agent generates names and what it anticipates the user will push back on.
+
+### How it connects to session logs
+
+The raw feedback log feeds the distilled principles. After several sessions, the user reads the raw log, notices patterns ("I keep rejecting names that have 'marker' or 'record' in them"), and writes a principle. Over time the principles layer gets richer and the agent gets better at generating names the user will accept.
+
+The session log's `## Feedback` section (or inline annotations — see naming research doc) provides the raw material that gets appended to Layer 1.
+
+### Open questions
+
+- Where does the global knowledge base live? Options: inside the vflow repo (versioned), inside `~/.claude/` (personal, global), or both.
+- Should the agent prompt the user at session end to review the raw feedback and propose a distilled principle? Or leave curation entirely to the user?
+- Should the agent reference specific past sessions in its reasoning ("In the hooks session, you said to name from the why — applying that here...")?
+- How does the knowledge base stay relevant as the user's preferences evolve? Principles that were true early on may be superseded later.
+
+---
+
 ## Open Questions
 
 - Pattern matching against an existing codebase for consistency — noted as a future addition once the core skill works well
+- Global naming knowledge base: raw feedback log + distilled principles — see above for design options

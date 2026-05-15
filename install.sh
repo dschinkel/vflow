@@ -33,25 +33,39 @@ for f in "$REPO_DIR"/hooks/*.sh; do
   echo "installed hook:    $(basename "$f")"
 done
 
-# --- settings: merge Stop hook entry ---
-HOOK_COMMAND="bash $HOOKS_DIR/stop-refactor-tokens.sh"
-
 # Create settings file if missing
 if [ ! -f "$SETTINGS" ]; then
   echo '{}' > "$SETTINGS"
 fi
 
-# Check if this hook command is already registered
-if jq -e --arg cmd "$HOOK_COMMAND" \
+# --- settings: merge Stop hook entry ---
+STOP_HOOK_COMMAND="bash $HOOKS_DIR/stop-refactor-tokens.sh"
+
+if jq -e --arg cmd "$STOP_HOOK_COMMAND" \
   '.hooks.Stop[]?.hooks[]? | select(.command == $cmd)' \
   "$SETTINGS" > /dev/null 2>&1; then
-  echo "hook already registered in $SETTINGS — skipping"
+  echo "Stop hook already registered in $SETTINGS — skipping"
 else
   TMP=$(mktemp)
-  jq --arg cmd "$HOOK_COMMAND" \
+  jq --arg cmd "$STOP_HOOK_COMMAND" \
     '.hooks.Stop //= [] | .hooks.Stop += [{"hooks": [{"type": "command", "command": $cmd}]}]' \
     "$SETTINGS" > "$TMP" && mv "$TMP" "$SETTINGS"
   echo "registered Stop hook in $SETTINGS"
+fi
+
+# --- settings: merge UserPromptSubmit hook entry ---
+SKILL_START_HOOK_COMMAND="bash $HOOKS_DIR/refactor-skill-start.sh"
+
+if jq -e --arg cmd "$SKILL_START_HOOK_COMMAND" \
+  '.hooks.UserPromptSubmit[]?.hooks[]? | select(.command == $cmd)' \
+  "$SETTINGS" > /dev/null 2>&1; then
+  echo "UserPromptSubmit hook already registered in $SETTINGS — skipping"
+else
+  TMP=$(mktemp)
+  jq --arg cmd "$SKILL_START_HOOK_COMMAND" \
+    '.hooks.UserPromptSubmit //= [] | .hooks.UserPromptSubmit += [{"hooks": [{"type": "command", "command": $cmd}]}]' \
+    "$SETTINGS" > "$TMP" && mv "$TMP" "$SETTINGS"
+  echo "registered UserPromptSubmit hook in $SETTINGS"
 fi
 
 echo ""

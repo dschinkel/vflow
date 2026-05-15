@@ -137,3 +137,20 @@ Clipart Generator App
 		Constants
 		---------
 			const buildSystemPromptString (Do not put the type in the name!)
+
+I want to offer several options / workflows when a user runs /refactor
+
+1. [CURRENTLY EXPERIMENTING ON] Semi Automated Skill Option: A back and fourth workflow where the skill has more human in the loop.
+    So like the first experiment, it's going to ask you
+        1. What type of refactor you are doing.  Right now you can only pick one type (e.g. naming, extracting, etc).
+            Once we evolve this, we may allow more once we confirm other refactorking skills work
+    Then it'll go through a file and present a refactor and ask you whether to approve / accept it.
+        1. If you approve it, it'll make the change and then ask you if you want to commit it or not.
+            1a. If you commit it, it'll commit it with a message that the agent writes for you.
+            1b. If you don't commit it, it'll just leave the change in the file and then move on to the next refactor.
+        2. If you don't approve it, it'll skip that refactor and move on to the next one.
+    You get through the session and it logs it as usual.
+
+2. More automated Skill Option: TODO: no idea what this looks like yet.
+
+3: Totally atonomous Skill Option: TODO: no idea what this looks like yet.
