@@ -15,6 +15,9 @@ This skill handles **naming refactors only**. More refactoring types will be add
 
 The `@` reference is required. If omitted, stop and ask for one before doing anything else.
 
+> **Recommended model:** `claude-sonnet-4-6` — fast and accurate for mechanical naming refactors. Opus is unnecessary here.
+> To switch: `/model claude-sonnet-4-6`
+
 ---
 
 ## On Start
