@@ -73,6 +73,12 @@ The `@` reference is required. If omitted, stop and ask for one before doing any
    ```
    Immediately write the Date and Models values. Models must include the model name for every agent that ran during the session (e.g. `claude-sonnet-4-6`, `claude-opus-4-7`). If only one model was used, list one.
 
+   Then write the absolute path of the log file to `~/.claude/refactor-session.tmp` using Bash:
+   ```
+   echo "/absolute/path/to/log.md" > ~/.claude/refactor-session.tmp
+   ```
+   This enables the Stop hook to automatically fill in Total Tokens at session end.
+
 5. If a **folder** was given:
    - Scan all files, order by complexity simplest first (fewest functions, smallest LOC).
    - Print: *"Processing files in this order:"* followed by the ordered list.
@@ -206,15 +212,6 @@ Rules:
 - Include both accepted and rejected proposals.
 - No file or folder info — names only.
 - If a rename section has no entries, write `(none this session)` under it.
-
----
-
-## At Session End — Token Cost
-
-Before the analysis, capture the session token total:
-
-1. Ask the user to run `/cost` in the Claude Code prompt.
-2. Once they share the output, extract the total tokens figure and update the `Total Tokens:` line in the `## Session Info` block of the session log.
 
 ---
 
