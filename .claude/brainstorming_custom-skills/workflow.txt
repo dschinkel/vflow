@@ -1,0 +1,209 @@
+The Story Map is for review.
+The Feature Archive is for memory.
+
+feature-story-map-skill
+	Turn a rough feature request into a reviewable story map, then produce the initial planning-state feature archive after approval.
+
+It would be cool to also use https://github.com/veelenga/claude-mermaid to create User Workflow Diagrams to show outside-in from user to architecture flows.
+    - it can also do Dependencies Diagrams which would be useful for showing how different features or components depend on each other
+    - once it creates a diagram then I need to take that and use mcp servers or some way to convert them to various formats for things like Miro, Lucidchart, etc.
+    - But also the story map must be a living app running in my own agent orchestration center where people can see its live state as agents are working through each step in the workflow
+    - I don't know if we can use claude-mermaid to actually create story maps. It seems to struggle with trying to get it in a story map layout like I did with the diagram
+     I created in the brainstorming value story interview md
+
+Skill Resonsibilities
+=====================
+1. Clarify the feature
+2. Identify users/actors
+3. Define business outcome
+4. Break feature into user activities
+5. Break activities into user tasks
+6. Slice MVP / later / out-of-scope
+7. Identify domain concepts
+8. Identify bounded contexts touched
+9. Identify architecture risks
+10. Define acceptance criteria
+11. Define testing strategy
+12. Produce implementation-ready story slices
+13. Produce initial Feature Archive
+
+
+That is a very good pattern because it forces:
+
+* business value clarity
+* actor clarity
+* outcome clarity
+* organizational alignment
+
+
+Compare Reality vs Plan
+=======================
+Its purpose is to identify:
+
+* scope drift
+* architecture drift
+* testing drift
+* process drift
+* unexpected complexity
+* successful discoveries
+* recurring implementation patterns
+
+
+
+Me: in the flow, it's ideal to come up with value stories which are NOT features, they're statements of value then draw a story map of features off that value story.  However we can allow them to skip the value story and just start with a story map too.  So they might skip the value story in the flow.
+	So we need a skill that comes before value story that asks what step we want to start at. Do we start at a Value Story or Story Map
+
+Things that I want to be optional but these default to true if they choose to use the out of box for quick start:
+    - Value Story Creation
+    - TDD
+        - If doing it, a choice between outside-in or inside-out
+            - If outside-in a choice between starting with an integration test or under the skin test for client or server or both depending on the slice being built.
+    - Change from Story Map to Decision Tree or reverse
+    - mermaid flows created
+        - for ???
+
+Pillar Notes
+============
+We take a value story and then build a story map from it I think.  Then we take the items off the story mapp and start working on them via user stories. (the difference that Quinton does is we don't create user stories, we just work on the items in the story map or discovery tree and don't need a kanban with stories split out, it's already there in the map I think)
+
+It seems like people did story maps in several ways:
+	1. going left to right where top row are features and going down are stickes on how to implement the feature or steps / flow for the feature
+	2. Going left to right and on the very far left is the persona.  Then going left to right is either a flow or set of features (where each feature goes down - like #1)
+
+So I want the first sticky in any story mapy row or column to be a persona it's for.
+
+
+
+Discovery Trees
+===============
+Are just a different orientation of a Story Map
+
+
+Code
+====
+feature envy
+SRP
+Ask Don't Tell
+DRY
+4 Rules of Simple Design
+Domain Models
+Clean Code
+Every feature has automated tests tests
+
+Code Smells
+	Mysterious Name
+	Long Method
+	Duplicate Code
+	Switch Statements
+	Conditional Complexity
+	Data Class
+	Feature Envy
+
+Test Names
+	Capture behavior
+	Are clear about what each test state is
+	Are specific about the expected behavior
+	Express a specific requirement in well written business domain pros
+	Reflect the why of the behavior
+	Should include expected input and expected result
+
+Do we need any Agent Hooks in addition to Rules or Skills?
+
+What linting rules do we need?
+
+Automated gates. Lint, types, tests, contract checks. Hard fail. No human eyes on broken code.
+AI-assisted review. The same agent that wrote the code reads the diff with a reviewer prompt. Different role. Ideally different model. Explicitly oppositional. The disagreement is the value
+
+Value Stories
+=============
+Abby had everyone add value story ideas via stickies under centalized themes (safety, Admin efficiency, etc.) relating to the business
+
+Value stories appear to be very high level goals
+	How did we make these? Was it from discovery? Or did we make these THEN have discovery to essentially flush out some story maps?
+
+Feature Requests are mapped to the value story. If a feature request did not make sense in terms of it helping to fullfill the value story, then the feature request was not a fit
+
+It answers the Who, What, Why that you align features towards
+
+Did we basically create user stories under a value story?
+
+Example Value Stories
+
+As an EV Owner
+I want to select my home address
+So I can choose a power plan for my home
+
+	Acceptance Criteria
+		I can enter an address
+		Address Validation
+
+
+User Stories
+============
+User Story
+	Hypothesises (assumptions)
+	Has a Name
+	Has a Description (either in Gherkin or not)
+	Is a placeholder for further conversation
+	Deliver incremental value
+
+A user story has the same exact format as a Value Story, only that it's focused solely on a personal, lower level executable feature / value. A value story can also focus on different levels such as persona, business, or technical but they're more general value statements (OKRs)
+
+	As a (an) [persona]
+	I want [feature/goal]
+	So that [benefit/outcome]
+
+Different kinds of story formats
+
+what
+why
+how
+
+Who
+What
+Why
+
+My Stew for Agent Workflows
+===========================
+My Mix - Value Driven Agentic Flow
+
+	Pillar
+		Value Stories
+		User Stories
+
+	Quinton
+		Story Map
+		Discovery Tree
+		etc.
+
+	My Hex Style
+	My TDD Style
+
+?
+	- How do we store and discover feature .md files
+	- Personas, Value Stories, Story Maps, Implementation
+	- How do we track History, Code Patterns
+		- Notebook LM
+		- Provide context on Hex from another project
+	- How do we visualize a live story map, not just static.
+		- Could start out simple with a static first and then have it gen a real app story map that's interactive
+
+OKRs are just goals and you measure how you are doing against those goals
+
+So they're like Value Stories basically
+
+MVP
+==
+Says that you always ship software that is:
+	Complete
+	Delivers Value
+	Ready for Extension
+
+Not parts, but whole pieces of value. (parts of a car vs the car)
+
+
+
+Walking Skeleton
+
+Delivery Lead Agent
+

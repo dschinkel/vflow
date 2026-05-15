@@ -108,9 +108,7 @@ Small Refactorings
 						1. If the file has one or more functions at the root, pick the smallest function and go inside out in that function and:
 							1a. rename constants first in that function
 							1b. if the function contains conditionals, note the behavior of those conditionals
-							1c. try to use the conditional behavior in 1b. to help try to rename the function
-
-					? Which of the constructs above should it try to refactor
+							1c. try to use the conditional behavior in 1b. to help try to rename the functio
 
 
 2. Introduce Variable
