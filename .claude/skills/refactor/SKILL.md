@@ -1,6 +1,12 @@
 ---
 name: refactor
-description: Use when the user runs /refactor and provides a file or folder reference to rename identifiers using business domain language and behavioral prose.
+description: Use when user runs /refactor, asks to rename identifiers, variables, or functions, or says "clean up naming" on a file or folder.
+allowed-tools: "Read Edit Bash"
+metadata:
+  author: Dave Schinkel
+  version: 0.1.0
+  category: refactoring
+  tags: [naming, domain-language, xp, refactoring]
 ---
 
 # Refactor Skill
@@ -28,6 +34,20 @@ The `@` reference is required. If omitted, stop and ask for one before doing any
 4. Create the flat log: `docs/refactorings/refactor-names-<timestamp>.md`
    Initialize with:
    ```
+   ## Hypothesis
+
+   ## Prediction
+
+   ## Verdict
+
+   ## Analysis
+
+   ## Learnings
+
+   ## Next Hypothesis
+
+   ---
+
    ## Constants
 
    ## Functions
@@ -39,7 +59,35 @@ The `@` reference is required. If omitted, stop and ask for one before doing any
    - Scan all files, order by complexity simplest first (fewest functions, smallest LOC).
    - Print: *"Processing files in this order:"* followed by the ordered list.
 
-6. If a **single file** was given, proceed directly to Processing.
+6. If a **single file** was given, proceed directly to step 7.
+
+7. Ask in sequence — one question at a time, wait for each answer before asking the next.
+
+   Present the hypothesis with a default pre-filled:
+
+   ```
+   What's your hypothesis for this refactor session?
+   (press Enter to accept default, or type your own)
+
+   Default: "I suspect not all the names in here are domain driven and some are not
+   written in prose and are instead written based on technology or implementation
+   based terms."
+   ```
+
+   Then present the prediction with a default pre-filled:
+
+   ```
+   What's your prediction — what specifically would you expect to see if your hypothesis is true?
+   (press Enter to accept default, or type your own)
+
+   Default: "I expect to find a mix — some names will be fine, others will reference
+   technology concepts (String, Array, Handler, Manager, Utils) or describe what the
+   code does mechanically rather than what it means in the business. I don't expect
+   it to be uniformly bad."
+   ```
+
+   If the user presses Enter or says "default" / "yes" / "ok", use the default text verbatim.
+   Record both responses. Write them immediately to the `## Hypothesis` and `## Prediction` sections of the session log.
 
 ---
 
@@ -100,6 +148,27 @@ After each proposal resolves, append to `docs/refactorings/refactor-names-<times
 
 Format:
 ```
+## Hypothesis
+I suspect not all the names in here are domain driven...
+
+## Prediction
+I expect to find a mix — some names will be fine, others will reference
+technology concepts or describe what the code does mechanically.
+
+## Verdict
+partial
+
+## Analysis
+The hypothesis held partially. About half the names were acceptable...
+
+## Learnings
+A general hypothesis like this is hard to confirm or refute cleanly...
+
+## Next Hypothesis
+The coordination-layer functions are likely the worst...
+
+---
+
 ## Constants
 buildSystemPromptString -> buildSystemPrompt [accepted]
 resultStr -> formattedOutput [rejected]
@@ -113,10 +182,32 @@ isDataValid -> hasRequiredFields [rejected]
 ```
 
 Rules:
-- Group by construct type: `## Constants`, `## Functions`, `## Tests`.
+- The experiment block (Hypothesis through Next Hypothesis) appears at the top, before the rename sections.
+- The experiment block is written in two passes: Hypothesis and Prediction at session start; Verdict, Analysis, Learnings, Next Hypothesis at session end.
+- Group renames by construct type: `## Constants`, `## Functions`, `## Tests`.
 - Include both accepted and rejected proposals.
 - No file or folder info — names only.
-- If a section has no entries, write `(none this session)` under it.
+- If a rename section has no entries, write `(none this session)` under it.
+
+---
+
+## At Session End — Analysis
+
+Before generating the tree diagram, produce the experiment analysis:
+
+1. **Analysis** — what actually happened: which naming patterns appeared most (type suffixes, vague verbs, missing domain language), how many proposals were accepted vs. rejected and what that might indicate.
+2. **Verdict** — a single explicit call: `confirmed`, `refuted`, or `partial`.
+3. **Learnings** — what this session revealed that wasn't known before; what to do differently.
+4. **Next Hypothesis** — what this session suggests should be tested next.
+
+Present all four sections and ask:
+
+```
+Approve or reject this analysis?
+```
+
+- **approve** → write to the session log as-is (fill in the Verdict, Analysis, Learnings, Next Hypothesis sections).
+- **reject** → prompt: *"Type your own analysis:"* and record whatever the user writes instead.
 
 ---
 
@@ -156,3 +247,12 @@ graph TD
 - Every proposed rename (accepted or rejected) appears in the tree.
 - Mark accepted with `✓` and rejected with `✗` at end of node label.
 - If multiple files were processed, each file gets its own root node.
+
+---
+
+## Error Handling
+
+- **`@` reference not found** → halt immediately. Print: *"The file or folder `[path]` was not found. Please check the path and try again."*
+- **File has no functions** → tell the user, skip the file, and continue to the next file if processing a folder.
+- **`docs/refactorings/` can't be created** → halt and explain the problem. Do not proceed without a log file.
+- **Mermaid MCP unavailable at session end** → write the `.mmd` source to disk anyway and note: *"Diagram source saved to `[path]`. The Mermaid MCP tool was unavailable — open the file to render it manually."*
