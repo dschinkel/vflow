@@ -281,7 +281,25 @@ Each assistant turn is a JSON object containing a `message.usage` block with per
 
 **3. Session end — Stop hook fires automatically**
 
-A global Stop hook in `~/.claude/settings.json` runs when Claude Code stops. It:
+The hook script lives at `hooks/stop-refactor-tokens.sh` in this repo. Running `./install.sh` copies it to `~/.claude/hooks/` and registers it in `~/.claude/settings.json` as a global Stop hook:
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/stop-refactor-tokens.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Because it's registered globally (not in a project-level `.claude/settings.json`), it fires in any project where `/refactor` is run — not just inside the vflow repo.
+
+When the hook fires, it:
 
 1. Reads `session_id` from the hook's stdin JSON
 2. Checks for `~/.claude/refactor-session.tmp` — if missing, exits silently (not a refactor session)
@@ -293,8 +311,6 @@ A global Stop hook in `~/.claude/settings.json` runs when Claude Code stops. It:
      | awk '{s+=$1} END{print s+0}'
    ```
 6. Overwrites `Total Tokens: —` in the log with the real count via `sed`
-
-The hook is global (not project-scoped) so it fires in any project where `/refactor` is run.
 
 ### Refactor Names Tree Diagram (claude-mermaid)
 
