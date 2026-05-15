@@ -54,6 +54,46 @@ Small Refactorings
 
 	Strategy
 	========
+	    Claude Info
+	        https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start
+	        The quality of Claude's navigation is shaped by how well the codebase is set up, layering context with [CLAUDE.md](http://claude.md/) files and skills.
+	        If you ask it to find all instances of a vague pattern across a billion-line codebase, you’ll hit context-window limits before the work begins.
+	        Claude's reading code harnesss is built from five extension points—CLAUDE.md files, hooks, skills, plugins, and MCP servers — each serving a different function
+                The order in which teams build them matters, as each layer builds on what came before.
+                Two additional capabilities, LSP integrations and subagents, round out the setup.
+            CLAUDE.md files come first.
+                These are context files that Claude reads automatically at the start of every session: root file for the big picture, subdirectory files for local conventions.
+                They give Claude the codebase knowledge it needs to do anything well.
+                Because they load in every session regardless of the task, keeping them focused on what applies broadly will prevent them from becoming a drag on performance.
+            Hooks make the setup self-improving
+                Most teams think of hooks as scripts that prevent Claude from doing something wrong, but their more valuable use is continuous improvement.
+                A stop hook can reflect on what happened during a session and propose CLAUDE.md updates while the context is fresh.
+                A start hook can load team-specific context dynamically so every developer gets the right setup for their module without manual configuration.
+                For automated checks like linting and formatting, hooks enforce the rules deterministically and produce more consistent results than relying on Claude to remember an instruction.
+            Skills keep the right expertise available on-demand without bloating every session.
+                In a large codebase with dozens of task types, not all expertise needs to be present in every session.
+                Skills solve this through progressive disclosure, offloading specialized workflows and domain knowledge that would otherwise compete for context space and loading them only when the task calls for it.
+                For example, a security review skill loads when Claude is assessing code for vulnerabilities, while a document processing skill loads when a code change is made and documentation needs to be updated.
+                Skills can also be scoped to specific paths so they only activate in the relevant part of the codebase.
+                A team that owns a payments service can bind their deployment skill to that directory, so it never auto-loads when someone is working elsewhere in the monorepo.
+            Plugins distribute what works.
+                One challenge with large codebases is that good setups can stay tribal. A plugin bundles skills, hooks, and MCP configurations into a single installable package, so when a new engineer installs that plugin on day one, they will immediately have the same context and capabilities as those who have been using Claude already.
+                Plugin updates can be distributed across the organization through managed marketplaces.
+                For example, a large retail organization we work with built a skill connecting Claude to their internal analytics platform so that business analysts could pull performance data without leaving their workflow. They distributed it as a plugin before the broad rollout to the business.
+            Language server protocol (LSP) integrations give Claude the same navigation a developer has in their IDE.
+                Most large-codebase IDEs already have an LSP running, powering "go to definition" and "find all references."
+                Surfacing this to Claude gives it symbol-level precision: it can follow a function call to its definition, trace references across files, and distinguish between identically named functions in different languages.
+                Without it, Claude pattern-matches on text and can land on the wrong symbol. One enterprise software company we worked with deployed LSP integrations org-wide before their Claude Code rollout, specifically to make C and C++ navigation reliable at scale. For multi-language codebases, this is one of the highest-value investments.
+            MCP servers extend everything.
+                MCP servers are how Claude connects to internal tools, data sources, and APIs that it can't otherwise reach.
+                The most sophisticated teams built MCP servers exposing structured search as a tool Claude can call directly.
+                Others connect Claude to internal documentation, ticketing systems, or analytics platforms.
+            Subagents split exploration from editing.
+                A subagent is an isolated Claude instance with its own context window that takes a task, does the work, and returns only the final result to the parent.
+                Once the harness is in place, some teams spin up a read-only subagent to map a subsystem and write findings to a file, then have the main agent edit with the full picture.
+
+	        Me: This is why we want refactors to be focused on smaller pieces of the codebase at a time.
+
 		We are in a codebase that we want to refactor
 		That codebase could be a mess
 			Doesn't have client / server abstractions
