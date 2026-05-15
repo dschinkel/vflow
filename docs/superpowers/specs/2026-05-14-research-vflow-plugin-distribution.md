@@ -215,6 +215,47 @@ Not pursued for vflow because: (1) vflow uses native commands, not Superpowers s
 
 ---
 
+## Future: Own Skills Folder (Without Superpowers)
+
+vflow currently uses flat native commands (`.claude/commands/`). If it ever grows to the point where a `skills/<name>/SKILL.md` multi-file subfolder structure makes sense — companion reference files, templates, examples too large to inline — here's how to replicate what Superpowers does without depending on it.
+
+### What Superpowers Actually Does
+
+Superpowers is a Claude Code plugin that combines several things:
+
+1. **Skill discovery** — on startup it scans `~/.claude/skills/` (and installed plugin `skills/` dirs) for `SKILL.md` files
+2. **The `Skill` tool** — registers a custom tool Claude can call to load skill content on demand. Skills aren't injected upfront; Claude calls `Skill("refactor")` and only then does the content land in context
+3. **Slash command registration** — wires up `/refactor`, `/brainstorm`, etc. so Claude Code knows they exist
+4. **Hooks** — lifecycle events around tool calls
+
+The key is **the `Skill` tool**. With native `.claude/commands/`, the full file is injected into context the moment you invoke `/refactor`. With Superpowers, nothing is injected until Claude explicitly calls `Skill("refactor")` — so you can have 50 skills installed and only pay context cost for the ones used in a session.
+
+### How to Build Your Own
+
+**Option A: MCP server (cleanest)**
+
+Write a small MCP server that reads from a `skills/` directory and exposes a `load_skill` tool. Claude calls `load_skill("refactor")`, the server reads `skills/refactor/SKILL.md` and returns the content, the skill runs. Same on-demand loading pattern as Superpowers, zero Superpowers dependency.
+
+```
+skills/
+  refactor/
+    SKILL.md        ← loaded on demand via MCP tool
+    references/     ← companion files too large to inline
+```
+
+**Option B: Build step (simpler, no on-demand loading)**
+
+Keep `skills/refactor/SKILL.md` as the authored source. A script flattens it to `.claude/commands/refactor.md` when changed. Organized source structure, native delivery. No on-demand loading — full content still injected at invocation.
+
+### When to Consider This
+
+The subfolder structure only pays off when a skill needs multiple supporting files. For a single growing `refactor.md`, flat native commands are fine. Switch when:
+- A command file exceeds ~200 lines and needs companion reference docs
+- Multiple commands share reference material that shouldn't be duplicated
+- On-demand loading becomes worthwhile (many skills, context cost matters)
+
+---
+
 ## Open Question
 
 Should `commands/` at root and `.claude/commands/` be kept in sync (two files), or should root `commands/` be the single source of truth with `.claude/commands/` symlinked to it? With the symlink approach, `~/.claude/commands/refactor.md` already points to `commands/refactor.md`, so working in any project gives you the same command without duplication.
