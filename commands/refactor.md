@@ -26,11 +26,31 @@ The `@` reference is required. If omitted, stop and ask for one before doing any
 
 2. Record the session timestamp (format: `YYYY-MM-DDThh-mm-ss`).
 
-3. Create the output directory if it doesn't exist: `docs/refactorings/`
+3. Determine the output path from the `@` reference:
+   - **Single file** (e.g., `src/utils/prompt.ts`):
+     - `<folder>` = immediate parent directory name (e.g., `utils`)
+     - `<stem>` = filename without extension (e.g., `prompt`)
+     - Output dir: `docs/refactorings/<folder>/`
+     - Log filename: `refactor-names-<folder>-<stem>-<timestamp>.md`
+     - Tree filename: `refactor-names-<folder>-<stem>-<timestamp>-tree.mmd`
+   - **Folder** (e.g., `src/utils/`):
+     - `<folder>` = the target folder name (e.g., `utils`)
+     - Output dir: `docs/refactorings/<folder>/`
+     - Log filename: `refactor-names-<folder>-<timestamp>.md`
+     - Tree filename: `refactor-names-<folder>-<timestamp>-tree.mmd`
 
-4. Create the flat log: `docs/refactorings/refactor-names-<timestamp>.md`
+   Create the output directory if it doesn't exist.
+
+4. Create the flat log at `docs/refactorings/<folder>/<log-filename>`.
    Initialize with:
    ```
+   ## Session Info
+   Date: <timestamp>
+   Models: <list every model used — primary agent first, then any sub-agents>
+   Total Tokens: —
+
+   ---
+
    ## Hypothesis
 
    ## Prediction
@@ -51,6 +71,7 @@ The `@` reference is required. If omitted, stop and ask for one before doing any
 
    ## Tests
    ```
+   Immediately write the Date and Models values. Models must include the model name for every agent that ran during the session (e.g. `claude-sonnet-4-6`, `claude-opus-4-7`). If only one model was used, list one.
 
 5. If a **folder** was given:
    - Scan all files, order by complexity simplest first (fewest functions, smallest LOC).
@@ -141,7 +162,7 @@ Apply in order:
 
 ## Session Log
 
-After each proposal resolves, append to `docs/refactorings/refactor-names-<timestamp>.md` under the appropriate section.
+After each proposal resolves, append to the session log (`docs/refactorings/<folder>/<log-filename>`) under the appropriate section.
 
 Format:
 ```
@@ -188,6 +209,15 @@ Rules:
 
 ---
 
+## At Session End — Token Cost
+
+Before the analysis, capture the session token total:
+
+1. Ask the user to run `/cost` in the Claude Code prompt.
+2. Once they share the output, extract the total tokens figure and update the `Total Tokens:` line in the `## Session Info` block of the session log.
+
+---
+
 ## At Session End — Analysis
 
 Before generating the tree diagram, produce the experiment analysis:
@@ -210,11 +240,7 @@ Approve or reject this analysis?
 
 ## At Session End — Tree Diagram
 
-When all files have been processed, generate a Mermaid tree diagram using the claude-mermaid MCP tool and save it to:
-
-```
-docs/refactorings/refactor-names-<timestamp>-tree.mmd
-```
+When all files have been processed, generate a Mermaid tree diagram using the claude-mermaid MCP tool and save it to `docs/refactorings/<folder>/<tree-filename>` (the tree filename was determined in step 3 of On Start).
 
 The tree mirrors the **code structure** — not the construct-type grouping in the flat log. It shows which file was processed, which functions were entered, and what was renamed inside each function.
 

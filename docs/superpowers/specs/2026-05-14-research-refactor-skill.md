@@ -98,7 +98,7 @@ Approve or reject this analysis?
 
 ### In the Session Log
 
-The full experiment block is written at the top of `docs/refactorings/refactor-names-<session-timestamp>.md`, before the rename entries:
+The full experiment block is written at the top of the session log (e.g. `docs/refactorings/utils/refactor-names-utils-prompt-<timestamp>.md`), before the rename entries:
 
 ```
 ## Hypothesis
@@ -179,20 +179,54 @@ Accept? (yes / no)
 
 ## Session Log
 
-Each `/refactor` session produces two companion files in `docs/refactorings/`:
+Each `/refactor` session produces two companion files, grouped under a subfolder named after the immediate parent folder of the target file or folder:
 
+**Single file** (e.g. `src/utils/prompt.ts`):
 ```
-docs/refactorings/refactor-names-<session-timestamp>.md       ← flat rename log
-docs/refactorings/refactor-names-<session-timestamp>-tree.mmd ← Mermaid tree diagram
+docs/refactorings/utils/refactor-names-utils-prompt-<timestamp>.md       ← flat rename log
+docs/refactorings/utils/refactor-names-utils-prompt-<timestamp>-tree.mmd ← Mermaid tree diagram
+```
+
+**Folder** (e.g. `src/utils/`):
+```
+docs/refactorings/utils/refactor-names-utils-<timestamp>.md       ← flat rename log
+docs/refactorings/utils/refactor-names-utils-<timestamp>-tree.mmd ← Mermaid tree diagram
 ```
 
 Created at session start, appended to after each proposal resolves (accept or final rejection).
 
 ### Flat Log
 
-All rename proposals — accepted and rejected — grouped by construct type. No file/folder info:
+Starts with a `## Session Info` block written at session start, followed by the experiment block, then the rename entries:
 
 ```
+## Session Info
+Date: 2026-05-15T10-30-00
+Models: claude-sonnet-4-6
+Total Tokens: 24,318
+
+---
+
+## Hypothesis
+...
+
+## Prediction
+...
+
+## Verdict
+...
+
+## Analysis
+...
+
+## Learnings
+...
+
+## Next Hypothesis
+...
+
+---
+
 ## Constants
 buildSystemPromptString -> buildSystemPrompt [accepted]
 resultStr -> formattedOutput [rejected]
@@ -204,6 +238,9 @@ isDataValid -> hasRequiredFields [rejected]
 ## Tests
 (none this session)
 ```
+
+- **Models** — written at session start; lists every model used (primary agent first, then any sub-agents).
+- **Total Tokens** — filled in at session end after the user runs `/cost` and shares the output.
 ### Refactor Names Tree Diagram (claude-mermaid)
 
 A completely different view from the flat log. Where the log groups by construct type, the tree mirrors the actual code structure — file → function → what was renamed inside that function. It shows *where* in the code the renames happened and how deep the skill went.
