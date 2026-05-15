@@ -1,9 +1,9 @@
-# vflow Plugin Distribution — Research Notes
+# vflow Command Distribution — Research Notes
 _2026-05-14_
 
 ## Goal
 
-Make vflow skills installable by others via `/plugins` in Claude Code, the same way Superpowers is installed.
+Make vflow commands installable by others. vflow uses native Claude Code commands (`.claude/commands/`) — not Superpowers. Distribution options are documented below, with Clone + Symlink as the primary approach for personal use.
 
 ---
 
@@ -45,43 +45,18 @@ A repo can be both a plugin AND its own marketplace — that's what claude-merma
 
 ---
 
-## Skills Directory Structure
+## Commands Directory Structure
 
-For the plugin system to find skills, they must live at **`skills/`** at the repo root — not `.claude/skills/`.
-
-The `.claude/skills/` path is for local project-scoped use when working inside the repo itself. For distribution, the plugin loader looks at `skills/` at root.
+vflow uses native Claude Code commands. Commands live at `.claude/commands/` for local use, and at `commands/` at the repo root for distribution via symlink or future plugin support.
 
 ```
 vflow/
-  skills/
-    refactor/
-      SKILL.md
-      .skillfish.json
-  .claude-plugin/
-    plugin.json
-    marketplace.json
+  commands/
+    refactor.md       ← canonical source of truth for distribution
   .claude/
-    skills/       ← local dev only, not loaded by plugin system
-      refactor/
-        SKILL.md
-        .skillfish.json
+    commands/         ← local dev; points here via symlink or is the same file
+      refactor.md
 ```
-
----
-
-## How Users Would Install
-
-```
-/plugins add marketplace github:dschinkel/vflow
-/plugins install vflow
-```
-
-Or in one step if they already know the repo:
-```
-/plugins install github:dschinkel/vflow
-```
-
-> **Note on visibility:** This approach is **public**. Because vflow is a public GitHub repo, anyone with Claude Code could discover and install these skills once the marketplace manifest is in place. If you want skills to remain personal/private, use the Clone + Symlink approach instead — nothing gets published and it stays local to your machine.
 
 ---
 
@@ -137,53 +112,109 @@ vflow currently delivers **skills only** — no hooks. The `/plugins` approach i
 
 ---
 
-## Simple Local Approach: Clone + Symlink
+## Why `commands/` and not `skills/`?
 
-The quickest way to get vflow skills globally available across all projects on your machine — no plugin system, no Python, no installer.
+`.claude/skills/` is a **Superpowers convention** — Claude Code itself doesn't know what that folder is. Superpowers is what watches it, reads the `SKILL.md` files, and wires up the slash commands. If you removed Superpowers, `.claude/skills/` would just be an ignored folder.
+
+The thing Claude Code *natively* understands is `.claude/commands/`. These are parallel concepts from different layers:
+
+| | Superpowers | Native Claude Code |
+|---|---|---|
+| Folder | `.claude/skills/` | `.claude/commands/` |
+| File | `SKILL.md` | `<command-name>.md` |
+| Metadata | `.skillfish.json` | None |
+| Wired up by | Superpowers plugin | Claude Code itself |
+
+---
+
+## Clone + Symlink (Primary Approach)
+
+The quickest way to get vflow commands globally available across all projects on your machine — no plugin system, no Python, no installer.
 
 ### How It Works
 
-Claude Code loads personal global skills from `~/.claude/skills/`. Symlink each skill folder from your cloned vflow repo into that directory and Claude Code picks them up immediately in every project.
+Claude Code loads personal global commands from `~/.claude/commands/`. Symlink the commands folder from your cloned vflow repo into that directory and Claude Code picks them up immediately in every project.
 
 ```bash
 # Step 1: clone vflow somewhere stable on your machine
 git clone https://github.com/dschinkel/vflow ~/code/ai/vflow
 
-# Step 2: symlink each skill into ~/.claude/skills/
-ln -s ~/code/ai/vflow/skills/refactor ~/.claude/skills/refactor
+# Step 2: symlink each command into ~/.claude/commands/
+ln -s ~/code/ai/vflow/commands/refactor.md ~/.claude/commands/refactor.md
 ```
 
-To add new skills in the future, just add one more symlink. To update, `git pull` inside the vflow repo — the symlink means every project instantly gets the updated skill with no reinstall step.
+To add new commands in the future, just add one more symlink. To update, `git pull` inside the vflow repo — the symlink means every project instantly gets the updated command with no reinstall step.
 
-### Adding All Skills at Once
-
-To symlink every skill in one command:
+### Adding All Commands at Once
 
 ```bash
-for skill in ~/code/ai/vflow/skills/*/; do
-  ln -s "$skill" ~/.claude/skills/$(basename "$skill")
+for cmd in ~/code/ai/vflow/commands/*.md; do
+  ln -s "$cmd" ~/.claude/commands/$(basename "$cmd")
 done
 ```
 
 **Prompt to give Claude after cloning:**
-> Symlink all skills from `~/code/ai/vflow/skills/` into `~/.claude/skills/`
+> Symlink all commands from `~/code/ai/vflow/commands/` into `~/.claude/commands/`
 
 ### Trade-offs vs Other Approaches
 
-| | Clone + Symlink | `/plugins` | CLI Installer (nWave-style) |
-|---|---|---|---|
-| **Setup time** | ~30 seconds | ~1 minute | ~5 minutes + Python req |
-| **Updates** | `git pull` | `/plugins update` | `uv tool upgrade nwave-ai` |
-| **Hook support** | Yes (files live in `~/.claude/`) | No | Yes |
-| **Requires tooling** | git only | Claude Code `/plugins` | Python 3.10+, uv/pipx |
-| **Best for** | Personal use on one machine | Sharing with others easily | Full frameworks with hooks |
+| | Clone + Symlink | CLI Installer (nWave-style) |
+|---|---|---|
+| **Setup time** | ~30 seconds | ~5 minutes + Python req |
+| **Updates** | `git pull` | `uv tool upgrade nwave-ai` |
+| **Hook support** | Yes (files live in `~/.claude/`) | Yes |
+| **Requires tooling** | git only | Python 3.10+, uv/pipx |
+| **Best for** | Personal use on one machine | Full frameworks with hooks |
 
-### What Needs to Be True for This to Work
+---
 
-Skills must live at `skills/` at the root of the vflow repo (not only in `.claude/skills/`). The symlink points to `~/code/ai/vflow/skills/<skill-name>`, so the canonical source of truth for each skill needs to be at root `skills/`.
+## Reference: nWave (CLI Installer Approach)
+
+**What is nWave?** An agentic framework / workflow layer for Claude Code. Not a plugin in the traditional sense. The repo: `https://github.com/nWave-ai/nWave`.
+
+### How nWave Installs
+
+nWave is a **Python package on PyPI** (`nwave-ai`). Users install via `uv` or `pipx`, then run the CLI tool which copies files directly into `~/.claude/`:
+
+```bash
+uv tool install nwave-ai
+nwave-ai install
+nwave-ai doctor
+```
+
+Their installer copies agents, commands, skills, and Claude Code hook files straight into the user's `~/.claude/` directory — bypassing the plugin system entirely.
+
+### Why They Chose This Over `/plugins`
+
+nWave explicitly documents that the plugin marketplace is **not recommended**:
+
+> "The plugin marketplace install path is blocked on an upstream Claude Code limitation where `${CLAUDE_PLUGIN_ROOT}` is not populated in plugin hook execution contexts. Without DES hooks, you lose phase enforcement, TDD validation, rigor profiles, and audit logging."
+
+**The core issue:** Claude Code does not populate `${CLAUDE_PLUGIN_ROOT}` when executing hooks registered by a plugin. A CLI installer that writes directly to `~/.claude/` doesn't have this limitation.
+
+### Relevance to vflow
+
+vflow delivers commands only — no hooks. The CLI installer approach is overkill for vflow's current scope. Relevant if vflow ever adds lifecycle hooks.
+
+---
+
+## Reference: `/plugins` Approach (Superpowers Marketplace)
+
+Documented here for reference only. This approach is **Superpowers-specific** and requires the Superpowers plugin system. vflow does not use Superpowers.
+
+The `/plugins` approach works by adding `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` to the repo, with skills at `skills/` at the repo root. Users install via:
+
+```
+/plugins add marketplace github:dschinkel/vflow
+/plugins install vflow
+```
+
+**Note on visibility:** This approach is **public**. Anyone with Claude Code could discover and install these commands once a marketplace manifest is in place.
+
+Not pursued for vflow because: (1) vflow uses native commands, not Superpowers skills format, and (2) the `/plugins` hook limitation documented by nWave would apply if hooks are ever added.
 
 ---
 
 ## Open Question
 
-Should `.claude/skills/` and root `skills/` be kept in sync (two copies), or should the root `skills/` be the single source of truth and `.claude/skills/` dropped? The local dev experience might still benefit from `.claude/skills/` when working inside the vflow repo itself — but with the symlink approach, `~/.claude/skills/refactor` already points to `skills/refactor`, so working in any project gives you the same skill.
+Should `commands/` at root and `.claude/commands/` be kept in sync (two files), or should root `commands/` be the single source of truth with `.claude/commands/` symlinked to it? With the symlink approach, `~/.claude/commands/refactor.md` already points to `commands/refactor.md`, so working in any project gives you the same command without duplication.

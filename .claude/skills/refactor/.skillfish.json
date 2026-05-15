@@ -1,7 +1,0 @@
-{
-  "name": "refactor",
-  "description": "Proposes naming refactors using business domain language, following an inside-out strategy. Naming only — more refactoring types will be added iteratively.",
-  "command": "refactor",
-  "version": "0.1.0",
-  "type": "interactive"
-}

@@ -1,12 +1,6 @@
 ---
-name: refactor
 description: Use when user runs /refactor, asks to rename identifiers, variables, or functions, or says "clean up naming" on a file or folder.
 allowed-tools: "Read Edit Bash"
-metadata:
-  author: Dave Schinkel
-  version: 0.1.0
-  category: refactoring
-  tags: [naming, domain-language, xp, refactoring]
 ---
 
 # Refactor Skill

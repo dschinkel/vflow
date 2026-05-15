@@ -1,26 +1,28 @@
 # vflow
 
-vflow is a personal collection of Claude Code skills. It contains no application code.
+vflow is a personal collection of Claude Code commands. It contains no application code. Commands use native Claude Code — no Superpowers required.
 
 ## What's in this repo
 
-- `.claude/skills/` — skill definitions. Each skill is a subfolder with `SKILL.md` and `.skillfish.json`.
-- `docs/superpowers/` — brainstorming specs, plans, and research for skills under development.
+- `commands/` — canonical source of truth for all commands. Each command is a single `.md` file.
+- `.claude/commands/` — local copy used when working inside this repo. Kept in sync with `commands/`.
+- `docs/superpowers/` — brainstorming specs, plans, and research for commands under development.
 - `docs/refactorings/` — session output from `/refactor` runs. Not committed (see `.gitignore`).
 
-## Skill structure
+## Command structure
 
-Each skill follows this layout:
+Each command is a single markdown file with optional frontmatter:
 
 ```
-.claude/skills/<name>/
-  SKILL.md          ← skill definition (YAML frontmatter + body)
-  .skillfish.json   ← Superpowers metadata
+commands/
+  refactor.md     ← description + allowed-tools frontmatter + body
 ```
 
-## Working on skills
+No `.skillfish.json`. No `SKILL.md`. No Superpowers dependency.
 
-- Edit `SKILL.md` to change skill behavior.
+## Working on commands
+
+- Edit `commands/<name>.md` to change command behavior. Mirror the change to `.claude/commands/<name>.md`.
 - Session logs and tree diagrams from `/refactor` go to `docs/refactorings/` — gitignored, not committed.
 - Brainstorming and research docs go under `docs/superpowers/specs/`.
 - Implementation plans go under `docs/superpowers/plans/`.
@@ -28,5 +30,5 @@ Each skill follows this layout:
 ## Key conventions
 
 - `docs/refactorings/` is gitignored — do not commit session output.
-- All skills currently use the Superpowers format: `.skillfish.json` + `SKILL.md` with YAML frontmatter (`name`, `description`, `allowed-tools`, `metadata`).
 - Naming is the only refactoring type currently in scope. More will be added iteratively.
+- `commands/` is the distribution source. `~/.claude/commands/` is where they land on the user's machine.

@@ -25,19 +25,17 @@ This is being built iteratively. **Naming is the first and only refactoring type
 
 ## Skill Format
 
-Uses Option 2 from the `.claude` folder research: `.claude/skills/` with a subfolder per skill.
+Uses native Claude Code commands — no Superpowers required.
 
 ```
 .claude/
-  skills/
-    refactor/
-      SKILL.md
-      examples/
-      templates/
-      .skillfish.json
+  commands/
+    refactor.md
 ```
 
-The framework that runs this is external (Superpowers). Vflow just holds the skills.
+A `.md` file in `.claude/commands/` becomes a slash command automatically. When `/refactor` is invoked, Claude Code reads the file and injects its content into context. No plugin, no `.skillfish.json`, no `Skill` tool call.
+
+Vflow has no runtime code. It is purely a storage repo for command files. The thing that reads `refactor.md`, intercepts `/refactor`, and injects the content into context is Claude Code itself — no external framework needed.
 
 ---
 
@@ -258,74 +256,48 @@ Report as a breakdown in the Analysis section. Aligns well with the hypothesis/p
 
 ---
 
-## Proposed Changes (from Anthropic Skills Guide)
+## Notes (from Anthropic Skills Guide)
 
 _Reviewed against: The Complete Guide to Building Skills for Claude (Anthropic, 2026)_
 
-### 1. Description field is incomplete
+Since vflow uses native Claude Code commands (not Superpowers), several of the original proposed changes no longer apply. Notes that remain relevant:
 
-The guide requires description to include **both** what the skill does AND when to use it, with specific trigger phrases users would actually say. Current description:
+### Description field
 
-> *"Use when the user runs /refactor and provides a file or folder reference to rename identifiers using business domain language and behavioral prose."*
+The guide recommends trigger-phrase-focused descriptions. Native Claude Code commands support an optional `description:` in frontmatter — keep it short and trigger-focused:
 
-Missing the "what it does" half and has no natural-language trigger phrases. Should be closer to:
+> *"Use when user runs /refactor, asks to rename identifiers, variables, or functions, or says 'clean up naming' on a file or folder."*
 
-> *"Renames identifiers using business domain language and behavioral prose, following an inside-out strategy through the code structure. Use when user runs /refactor, asks to rename variables or functions, or says 'clean up naming' on a file or folder."*
+### `allowed-tools` frontmatter
 
-**Tension to note:** The Superpowers `writing-skills` skill says description should contain triggering conditions only — no workflow summary — because Claude may shortcut the skill body if the description summarizes behavior. The Anthropic guide says include both what and when. These conflict. Resolution: lean toward the Superpowers guidance for now since it's based on observed Claude behavior, but include trigger phrases as the Anthropic guide requires.
-
----
-
-### 2. `.skillfish.json` is not part of the official Anthropic skill spec
-
-The guide makes no mention of `.skillfish.json`. It is Superpowers-specific. The official format requires only `SKILL.md` with YAML frontmatter. Metadata fields (`author`, `version`, `category`, `tags`) belong inside a `metadata:` block in the frontmatter — not in a separate file.
-
-The `.skillfish.json` can remain for Superpowers compatibility, but the SKILL.md frontmatter should also carry the metadata block:
-
-```yaml
----
-name: refactor
-description: ...
-metadata:
-  author: Dave Schinkel
-  version: 0.1.0
-  category: refactoring
-  tags: [naming, domain-language, xp, refactoring]
----
-```
-
----
-
-### 3. `allowed-tools` frontmatter field — not yet used
-
-The guide documents an optional `allowed-tools` field to restrict which tools the skill can invoke. For the refactor skill this is useful — it only needs `Read`, `Edit`, and `Bash` (for the Mermaid MCP call at session end):
+Claude Code natively supports `allowed-tools` in command frontmatter to restrict which tools the command can invoke:
 
 ```yaml
 allowed-tools: "Read Edit Bash"
 ```
 
----
+This is not Superpowers-specific — it works with native commands.
 
-### 4. `references/` not `examples/`
+### Command file size
 
-The official folder structure uses `references/` for supporting documentation, not `examples/`. If we add supporting docs in the future (naming principles reference, XP refactoring catalog, etc.) they go in `references/`, not `examples/`.
+Keep `refactor.md` under 5,000 words. Large command bodies cause degraded performance.
 
----
+### Error handling
 
-### 5. Error handling missing from SKILL.md
+The guide calls out error handling as required. The command file should cover:
 
-The guide explicitly calls out error handling as required. Current SKILL.md has none. At minimum, these cases need to be covered:
+- `@` reference not found → halt and tell the user
+- File has no functions → tell the user and skip
+- Mermaid MCP unavailable → write `.mmd` source to disk anyway
+- `docs/refactorings/` can't be created → halt and explain
 
-- `@` reference points to a file that doesn't exist → halt and tell the user
-- `@` reference points to a file with no functions → tell the user and skip the file
-- Mermaid MCP tool unavailable at session end → write the `.mmd` source file anyway and note the diagram could not be rendered
-- `docs/refactorings/` directory can't be created → halt and explain
+_(Error handling is already in the current `refactor.md`.)_
 
----
+### No longer relevant
 
-### 6. SKILL.md body should stay under 5,000 words
-
-The guide warns that large skill bodies cause degraded performance. Current SKILL.md is well within that limit but worth tracking as more sections are added.
+- `.skillfish.json` — Superpowers-only, not used
+- `metadata:` block — Superpowers-only, not used
+- `references/` vs `examples/` folder naming — only applies to the Superpowers multi-file skill structure; native commands are a single file
 
 ---
 
@@ -333,4 +305,3 @@ The guide warns that large skill bodies cause degraded performance. Current SKIL
 
 - What constructs beyond constants and functions should be renamed? (variables, test names, React components — noted in original brainstorm but not yet scoped)
 - Pattern matching against an existing codebase for consistency — noted as a future addition once the core skill works well
-- Resolve the description field tension: Superpowers (triggers only) vs. Anthropic guide (what + when + triggers)
