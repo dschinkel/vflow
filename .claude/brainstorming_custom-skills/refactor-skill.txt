@@ -1,20 +1,3 @@
-
-
-
-
-Clipart Generator
-=================
-	Naming Issues
-	-------------
-		Functions
-		----------
-			React Functional Component Names
-			--------------------------------
-				ExamplesList (what does "Example" mean)
-		Constants
-		---------
-			const buildSystemPromptString (Do not put the type in the name)
-
 Existing Apps I coded Last Year using Junie + Codex (it was cheap)
 =================================================================
 
@@ -110,7 +93,6 @@ Small Refactorings
 							1b. if the function contains conditionals, note the behavior of those conditionals
 							1c. try to use the conditional behavior in 1b. to help try to rename the functio
 
-
 2. Introduce Variable
 3. Introduce Constant
 4. Introduce Field
@@ -119,8 +101,29 @@ Small Refactorings
 7. Extract to interface
 8. Remove comments
 
+
 Bigger Refactors
 ----------------
-1. core behavior lives on the client, move it to a service
-2. an existing service to hexagonal
-3. react views to be humble
+1. Core behavior lives all on the client; Split the behavior that should be into a service to a new service.
+2. Convert an existing service to hexagonal
+3. React views to be humble
+4. React Views to be small well named composed functions (reads like a newspaper)
+
+
+Codebases to run experiments on
+===============================
+
+EXAMPLE 1 - EXISTING CODEBASE
+
+Clipart Generator App
+---------------------
+	Naming Issues
+	-------------
+		Functions
+		----------
+			React Functional Component Names
+			--------------------------------
+				ExamplesList (what does "Example" mean)
+		Constants
+		---------
+			const buildSystemPromptString (Do not put the type in the name!)
