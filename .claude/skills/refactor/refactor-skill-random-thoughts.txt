@@ -45,11 +45,14 @@ Small Refactorings
 	========
 	    Claude Info
 	        https://claude.com/blog/how-claude-code-works-in-large-codebases-best-practices-and-where-to-start
+	        https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf
+
 	        The quality of Claude's navigation is shaped by how well the codebase is set up, layering context with [CLAUDE.md](http://claude.md/) files and skills.
 	        If you ask it to find all instances of a vague pattern across a billion-line codebase, you’ll hit context-window limits before the work begins.
 	        Claude's reading code harnesss is built from five extension points—CLAUDE.md files, hooks, skills, plugins, and MCP servers — each serving a different function
                 The order in which teams build them matters, as each layer builds on what came before.
                 Two additional capabilities, LSP integrations and subagents, round out the setup.
+
             CLAUDE.md files come first.
                 These are context files that Claude reads automatically at the start of every session: root file for the big picture, subdirectory files for local conventions.
                 They give Claude the codebase knowledge it needs to do anything well.
@@ -61,6 +64,7 @@ Small Refactorings
                 For automated checks like linting and formatting, hooks enforce the rules deterministically and produce more consistent results than relying on Claude to remember an instruction.
             Skills keep the right expertise available on-demand without bloating every session.
                 In a large codebase with dozens of task types, not all expertise needs to be present in every session.
+                A skill is a set of instructions - packaged as a simple folder - that teaches Claude how to handle specific tasks or workflows
                 Skills solve this through progressive disclosure, offloading specialized workflows and domain knowledge that would otherwise compete for context space and loading them only when the task calls for it.
                 For example, a security review skill loads when Claude is assessing code for vulnerabilities, while a document processing skill loads when a code change is made and documentation needs to be updated.
                 Skills can also be scoped to specific paths so they only activate in the relevant part of the codebase.
