@@ -39,7 +39,7 @@ if [ ! -f "$SETTINGS" ]; then
 fi
 
 # --- settings: merge Stop hook entry ---
-STOP_HOOK_COMMAND="bash $HOOKS_DIR/stop-refactor-tokens.sh"
+STOP_HOOK_COMMAND="bash $HOOKS_DIR/end-refactor-log-session-stats.sh"
 
 if jq -e --arg cmd "$STOP_HOOK_COMMAND" \
   '.hooks.Stop[]?.hooks[]? | select(.command == $cmd)' \
@@ -54,7 +54,7 @@ else
 fi
 
 # --- settings: merge UserPromptSubmit hook entry ---
-SKILL_START_HOOK_COMMAND="bash $HOOKS_DIR/refactor-skill-start.sh"
+SKILL_START_HOOK_COMMAND="bash $HOOKS_DIR/start-refactor-skill.sh"
 
 if jq -e --arg cmd "$SKILL_START_HOOK_COMMAND" \
   '.hooks.UserPromptSubmit[]?.hooks[]? | select(.command == $cmd)' \

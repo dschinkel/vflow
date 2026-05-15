@@ -99,7 +99,7 @@ A global naming knowledge base would let the agent carry forward what it has lea
 One file, auto-appended after each session, containing the raw rename entries with user annotations:
 
 ```
-# vflow — 2026-05-15T16-32-10 — hooks/stop-refactor-tokens.sh
+# vflow — 2026-05-15T16-32-10 — hooks/end-refactor-log-session-stats.sh
 STATE -> REFACTOR_LOG_AWAITING_TOKEN_COUNT [accepted] — "use the why to name it, not a vague label"
 SESSION_JSON -> REFACTOR_SESSION [accepted] — "represents a refactor session, not just a stopped session"
 SF -> REFACTOR_SESSION_FILE [accepted] — "keep UPPERCASE, we're in a script"

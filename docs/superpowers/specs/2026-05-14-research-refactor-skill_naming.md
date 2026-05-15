@@ -206,7 +206,7 @@ isDataValid -> hasRequiredFields [rejected]
 ```
 
 - **Models** — written at session start; lists every model used (primary agent first, then any sub-agents).
-- **Total Tokens** — filled in automatically at session end by a global Stop hook. The hook script lives at `hooks/stop-refactor-tokens.sh` in this repo and is installed to `~/.claude/hooks/` via `install.sh`. No user action required at runtime.
+- **Total Tokens** — filled in automatically at session end by a global Stop hook. The hook script lives at `hooks/end-refactor-log-session-stats.sh` in this repo and is installed to `~/.claude/hooks/` via `install.sh`. No user action required at runtime.
 
 #### How Automatic Token Tracking Works
 
@@ -247,7 +247,7 @@ Each assistant turn is a JSON object containing a `message.usage` block with per
 
 **3. Session end — Stop hook fires automatically**
 
-The hook script lives at `hooks/stop-refactor-tokens.sh` in this repo. Running `./install.sh` copies it to `~/.claude/hooks/` and registers it in `~/.claude/settings.json` as a global Stop hook:
+The hook script lives at `hooks/end-refactor-log-session-stats.sh` in this repo. Running `./install.sh` copies it to `~/.claude/hooks/` and registers it in `~/.claude/settings.json` as a global Stop hook:
 
 ```json
 {
@@ -255,7 +255,7 @@ The hook script lives at `hooks/stop-refactor-tokens.sh` in this repo. Running `
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "bash ~/.claude/hooks/stop-refactor-tokens.sh" }
+          { "type": "command", "command": "bash ~/.claude/hooks/end-refactor-log-session-stats.sh" }
         ]
       }
     ]
