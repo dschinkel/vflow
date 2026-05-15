@@ -104,35 +104,56 @@ The full experiment block is written at the top of `docs/refactorings/refactor-n
 
 ```
 ## Hypothesis
-I think the names here are implementation-focused — lots of type suffixes and
-generic verbs with no domain language from the listing generation business.
+I suspect not all the names in here are domain driven and some are not written
+in prose and are instead written based on technology or implementation based terms.
 
 ## Prediction
-I expect to find type suffixes (String, Obj, Array) in more than half the
-constants, and function names that use "build/format/process" with no
-Etsy or listing context.
+I expect to find a mix — some names will be fine, others will reference
+technology concepts (String, Array, Handler, Manager, Utils) or describe
+what the code does mechanically rather than what it means in the business.
+I don't expect it to be uniformly bad.
 
 ## Verdict
-confirmed
+partial
 
 ## Analysis
-7 of 9 constants had type suffixes. Function names used mechanism words
-with no domain reference. Conditional reads revealed the domain was never
-surfaced in any identifier.
+The hypothesis held partially. About half the names were acceptable —
+a few already read as domain language. The other half leaned on
+technology terms (String, Obj, Handler) or mechanism verbs ("process",
+"handle", "manage") that describe the how not the what. No names were
+actively wrong, but several were vague enough that a new developer
+wouldn't know what business concept they referred to without reading
+the implementation.
 
 ## Learnings
-The inside-out strategy worked well — reading constants first gave enough
-context to propose strong function renames without asking the user for
-domain context upfront.
+A general hypothesis like this is hard to confirm or refute cleanly —
+"not all" is almost always true. Future sessions will be more useful
+with a sharper prediction (e.g. "I expect more than half to have
+technology terms"). The partial result also suggests this file is
+mid-quality naming, not a disaster — the inside-out strategy found
+fewer high-confidence renames than expected.
 
 ## Next Hypothesis
-The test files likely mirror the same naming problems — test names probably
-describe implementation not behavior.
+The weakest names were on the boundary functions — the ones that
+coordinate between layers. I suspect those coordination-layer functions
+are the most likely to have technology-focused names because they were
+written to wire things together, not to express business intent.
 
 ---
 
 ## Constants
-...
+buildSystemPromptString -> buildListingPrompt [accepted]
+inputDataObj -> product [accepted]
+resultStr -> resultStr [rejected]
+
+## Functions
+handleResponse -> handleResponse [rejected]
+processData -> generateColorSwatch [accepted]
+formatOutput -> formatListingOutput [accepted]
+manageState -> manageState [rejected]
+
+## Tests
+(none this session)
 ```
 
 ---
