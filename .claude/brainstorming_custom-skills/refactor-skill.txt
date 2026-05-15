@@ -1,0 +1,88 @@
+
+
+
+
+Clipart Generator
+=================
+	Naming Issues
+	-------------
+		Functions
+		----------
+			React Functional Component Names
+			--------------------------------
+				ExamplesList (what does "Example" mean)
+		Constants
+		---------
+			const buildSystemPromptString (Do not put the type in the name)
+
+Existing Apps I coded Last Year using Junie + Codex (it was cheap)
+=================================================================
+
+SVG Generator
+Etsy Listing Generator
+Etsy SEO Optimize
+
+    New Apps to Create
+    ==================
+    CAD Product Generator
+    Product Color Chart Generator
+
+Skills
+======
+	is my format with A1.x.x helping the LLM?
+
+REFACTORING SKILL
+=================
+
+Refactoring Interviewer
+-----------------------
+/refactor <file or whole folder>
+	- requires you to provide one via @
+
+1. Pattern Matching
+	Do we have an existing codebase we can point it to? (add this last after I get my refactoring skill working well without this)
+
+What are you trying to refactor to?
+
+Small Refactorings
+-------------------
+1. Naming (with well written prose and domain language)
+	variables
+	functions
+	test names
+	React Component
+
+	Strategy
+	========
+		We are in a codebase that we want to refactor
+		That codebase could be a mess
+			Doesn't have client / server abstractions
+			etc.
+		The agent doesn't know the behavior going into this codebase so it's going to have a hard time trying rename a bunch of things across the board at once
+			We need to see that the agent can produce small wins for us so we will try the smallest of refactors first.
+			    First is we'll try naming but name the smallest possible thing, a constant first and see if it can rename well
+
+			So lets try this as the general strategy:
+				1. Have agent focus on one file at a time
+				2. In a file it could have these things: conditionals, constants, existing functions
+						1. If the file has one or more functions at the root, pick the smallest function and go inside out in that function
+							1a. rename constants first in that function
+							1b. if the function contains conditionals, note the behavior of those conditionals
+							1c. try to use the conditional behavior in 1b. to help try to rename the function
+
+					? Which of the constructs above should it try to refactor
+
+
+2. Introduce Variable
+3. Introduce Constant
+4. Introduce Field
+5. Introduce Parameter
+6. Extract to function
+7. Extract to interface
+8. Remove comments
+
+Bigger Refactors
+----------------
+1. core behavior lives on the client, move it to a service
+2. an existing service to hexagonal
+3. react views to be humble
