@@ -39,7 +39,7 @@ if [ ! -f "$SETTINGS" ]; then
 fi
 
 # --- settings: merge Stop hook entry ---
-STOP_HOOK_COMMAND="bash $HOOKS_DIR/end-refactor-log-session-stats.sh"
+STOP_HOOK_COMMAND="[ -f $HOOKS_DIR/end-refactor-log-session-stats.sh ] && bash $HOOKS_DIR/end-refactor-log-session-stats.sh || true"
 
 if jq -e --arg cmd "$STOP_HOOK_COMMAND" \
   '.hooks.Stop[]?.hooks[]? | select(.command == $cmd)' \
