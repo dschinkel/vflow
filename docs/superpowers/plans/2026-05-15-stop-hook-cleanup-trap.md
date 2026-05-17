@@ -1,6 +1,6 @@
 # Stop Hook — Guaranteed Cleanup Trap Implementation Plan
 
-> **Spec:** [Refactor Skill — Research Notes](../specs/2026-05-14-research-refactor-skill.md)
+> **Spec:** [Refactor Skill — Research Notes](../specs/skills/refactor-skill/2026-05-14-research-refactor-skill.md)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 

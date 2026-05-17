@@ -1,6 +1,6 @@
 # Refactor Skill — Research Notes
 
-> **Plans:** [Refactor Command Implementation Plan](../plans/2026-05-14-refactor-skill.md) · [Stop Hook Cleanup Trap](../plans/2026-05-15-stop-hook-cleanup-trap.md)
+> **Plans:** [Refactor Command Implementation Plan](../../../plans/skills/2026-05-14-refactor-skill.md) · [Stop Hook Cleanup Trap](../../../plans/2026-05-15-stop-hook-cleanup-trap.md)
 _2026-05-14_
 Note: this was partly based on feeding it my thoughts from `refactor-skill.txt`.
 

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-> **Spec:** [Hexagonal Architecture Skill — Design Spec](../specs/2026-05-17-hexagonal-architecture-skill.md)
+> **Spec:** [Hexagonal Architecture Skill — Design Spec](../../../specs/skills/2026-05-17-hexagonal-architecture-skill.md)
 
 > **Prerequisite:** [hexagonal-architecture-skill plan](2026-05-17-hexagonal-architecture-skill.md) must be complete — `commands/hexagonal.md` must exist before this plan is executed.
 
@@ -269,7 +269,7 @@ In `docs/superpowers/specs/2026-05-17-hexagonal-architecture-skill.md`, replace:
 With:
 
 ```markdown
-> **Plan:** [Hexagonal Architecture Skill — Implementation Plan](../plans/2026-05-17-hexagonal-architecture-skill.md) · [Hexagonal Scaffold Skill — Implementation Plan](../plans/2026-05-17-hexagonal-scaffold-skill.md)
+> **Plan:** [Hexagonal Architecture Skill — Implementation Plan](2026-05-17-hexagonal-architecture-skill.md) · [Hexagonal Scaffold Skill — Implementation Plan](../plans/2026-05-17-hexagonal-scaffold-skill.md)
 ```
 
 - [ ] **Step 2: Commit**

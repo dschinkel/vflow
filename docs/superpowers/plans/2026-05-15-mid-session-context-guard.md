@@ -1,6 +1,6 @@
 # Mid-Session Context Guard Implementation Plan
 
-> **Spec:** [Refactor Skill — Mid-Session Context Guard](../specs/2026-05-15-research-refactor-skill_mid-session-context-guard.md)
+> **Spec:** [Refactor Skill — Mid-Session Context Guard](../specs/skills/refactor-skill/2026-05-15-research-refactor-skill_mid-session-context-guard.md)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 

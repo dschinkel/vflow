@@ -1,6 +1,6 @@
 # Refactor Skill — Mid-Session Context Guard
 
-> **Plan:** [Mid-Session Context Guard Implementation Plan](../plans/2026-05-15-mid-session-context-guard.md)
+> **Plan:** [Mid-Session Context Guard Implementation Plan](../../../plans/2026-05-15-mid-session-context-guard.md)
 _2026-05-15_
 
 A `PreToolUse` hook that fires during an active `/refactor` session and warns the user before the context window fills up entirely, giving Claude enough room to stop gracefully and prompt a restart.
