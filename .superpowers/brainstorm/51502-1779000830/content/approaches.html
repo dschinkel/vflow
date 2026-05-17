@@ -1,0 +1,45 @@
+<h2>Feature Workflow Skill — Three Approaches</h2>
+<p class="subtitle">These are the three ideas from our earlier discussion. Select the one(s) that resonate — or mix them.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Conductor Skill <code>/feature</code></h3>
+      <p>One skill runs the full XP flow in a single session: Value Story → Story Map → approve → implement stickies one at a time. Each sticky auto-invokes the right sub-skills (hexagonal, TDD, refactor). Commits after every sticky. The story map file IS the backlog.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Single entry point</li><li>Fully guided end-to-end</li><li>Sub-skills fire automatically</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Long sessions</li><li>Harder to resume mid-flow</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Persistent Story Map</h3>
+      <p>Run <code>/feature</code> once to create and approve the story map as a markdown file with checkboxes. Every future session the skill reads the map, finds the next unchecked sticky, and implements it. Progress survives across sessions. Story Map = review. Feature Archive = memory.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Resumable across sessions</li><li>Map is always the source of truth</li><li>Fits long-running features</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Needs map file management</li><li>Two invocations to start</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Three-Agent Structure</h3>
+      <p>Separate agents for each role: <strong>Drafter</strong> produces the story map, <strong>Provocateur</strong> challenges assumptions before you approve, then one focused <strong>Implementation agent</strong> per sticky using all the sub-skills. Adversarial check built in before any code is written.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Quality gate before coding</li><li>Each agent is focused</li><li>Disagreement surfaces blind spots</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>More orchestration overhead</li><li>Heavier to start</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+  <p class="label">My recommendation</p>
+  <p>Combine <strong>A + B</strong>: the conductor flow for creation, the persistent map for resumability. Add a lightweight Provocateur step (not a full agent) as a challenge gate before the map is approved. C's three-agent structure is better saved for a later iteration once the core flow is solid.</p>
+</div>

@@ -1,4 +1,6 @@
 # Refactor Skill — Naming Research Notes
+
+> **Plan:** [Refactor Command Implementation Plan](../plans/2026-05-14-refactor-skill.md)
 _2026-05-14_
 
 Naming-specific research for the `/refactor` skill. For general skill notes see `2026-05-14-research-refactor-skill.md`.

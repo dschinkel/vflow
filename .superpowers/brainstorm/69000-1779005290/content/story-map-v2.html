@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Story Map</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #f0f0f0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  padding: 1.5rem 2rem;
+  min-height: 100vh;
+  color: #222;
+}
+
+.page-title {
+  margin-bottom: 1.5rem;
+}
+.page-title h1 {
+  font-size: 1.9rem;
+  font-weight: 900;
+  display: inline;
+  color: #111;
+}
+.page-title .subtitle {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #333;
+  margin-left: 0.75rem;
+}
+.page-title .subtitle strong { font-weight: 700; }
+
+.value-story {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+/* Prompt bar */
+.prompt-bar {
+  background: rgba(255,255,255,0.85);
+  border: 1.5px solid #e8a020;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.prompt-bar .label { color: #c07800; font-weight: 700; }
+.prompt-bar .suggestion { color: #111; font-weight: 600; }
+.prompt-bar .hint { color: #999; font-size: 0.72rem; }
+
+/* Board */
+.board {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  align-items: flex-start;
+  padding-bottom: 2rem;
+}
+
+.activity-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  padding: 0 1.5rem 0 0;
+  margin-right: 1.5rem;
+  min-width: 0;
+}
+
+.activity-header {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  color: #222;
+  background: rgba(255,255,255,0.7);
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  min-width: 120px;
+  max-width: 300px;
+}
+.activity-header .num {
+  font-size: 0.65rem;
+  opacity: 0.55;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+.arrow-up {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  line-height: 1;
+  margin: 0.2rem 0;
+  width: 100%;
+}
+
+/* Sub-column layout (multiple trees per activity) */
+.sub-columns {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.sub-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 105px;
+  max-width: 115px;
+}
+
+/* Sticky base */
+.sticky {
+  width: 105px;
+  min-height: 72px;
+  border-radius: 5px;
+  padding: 0.45rem 0.5rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 2px 5px rgba(0,0,0,0.18);
+  position: relative;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.sticky .action-label {
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+/* Colors */
+.sticky.green  { background: #7ed693; }
+.sticky.yellow { background: #f9e04b; }
+.sticky.blue   { background: #7ec8e3; }
+.sticky.pink   { background: #f08080; }
+
+/* States */
+.sticky.done {
+  opacity: 0.5;
+  box-shadow: none;
+}
+.sticky.done::after {
+  content: '✓';
+  position: absolute;
+  top: 3px; right: 5px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #1a6b2a;
+}
+
+.sticky.active {
+  box-shadow: 0 0 0 2.5px #e8a020, 2px 3px 10px rgba(0,0,0,0.25);
+  transform: translateY(-1px);
+}
+.sticky.active::before {
+  content: '▶ NOW';
+  position: absolute;
+  top: 3px; left: 5px;
+  font-size: 0.55rem;
+  font-weight: 900;
+  color: #b37400;
+  letter-spacing: 0.05em;
+}
+
+.sticky.selectable { cursor: pointer; }
+.sticky.selectable:hover {
+  transform: translateY(-3px) rotate(-0.8deg);
+  box-shadow: 0 0 0 2px #3a7fc1, 3px 6px 14px rgba(0,0,0,0.22);
+  z-index: 20;
+}
+.sticky.selectable:hover::before {
+  content: 'SELECT';
+  position: absolute;
+  top: 3px; left: 50%; transform: translateX(-50%);
+  font-size: 0.55rem; font-weight: 900; color: #1a4a8a;
+  letter-spacing: 0.06em;
+}
+
+.sticky.chosen {
+  box-shadow: 0 0 0 3px #3a7fc1, 2px 4px 12px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+.sticky.chosen::before {
+  content: '✓ PICK';
+  position: absolute;
+  top: 3px; left: 50%; transform: translateX(-50%);
+  font-size: 0.55rem; font-weight: 900; color: #1a4a8a;
+  letter-spacing: 0.06em;
+}
+
+.sticky.deferred {
+  opacity: 0.45;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+/* Legend */
+.legend {
+  display: flex; gap: 1.25rem; margin-top: 1.75rem;
+  font-size: 0.72rem; flex-wrap: wrap; color: #555;
+}
+.legend-item { display: flex; align-items: center; gap: 0.35rem; }
+.legend-dot { width: 13px; height: 13px; border-radius: 3px; }
+</style>
+<script>
+let chosen = null;
+function pick(el, id, label) {
+  if (chosen) chosen.classList.remove('chosen');
+  el.classList.add('chosen');
+  chosen = el;
+  document.getElementById('suggestion').textContent = '"' + label + '"';
+  document.getElementById('hint').textContent = 'Confirm in terminal to start →';
+  if (window.__superpowers_select) window.__superpowers_select(id, label);
+}
+</script>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>Story Map</h1>
+  <span class="subtitle">Payments Flow</span>
+</div>
+<div class="value-story">As a buyer, I want to pay for goods online so I can receive them without visiting a store.</div>
+
+<div class="prompt-bar">
+  <span class="label">Suggested next →</span>
+  <span class="suggestion" id="suggestion">"Proceed to checkout"</span>
+  <span class="hint" id="hint">Click a different sticky to change</span>
+</div>
+
+<div class="board">
+
+  <!-- Activity 1 -->
+  <div class="activity-group">
+    <div class="activity-header"><span class="num">①</span>User starts checkout</div>
+    <div class="arrow-up">↑</div>
+    <div class="sub-columns">
+      <div class="sub-col">
+        <div class="sticky green done">View cart summary</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky green active">Proceed to checkout</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'guest-choice','Guest vs account choice')"><span class="action-label">Choose</span>Guest vs account</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity 2 -->
+  <div class="activity-group">
+    <div class="activity-header"><span class="num">②</span>User enters shipping</div>
+    <div class="arrow-up">↑</div>
+    <div class="sub-columns">
+      <div class="sub-col">
+        <div class="sticky green selectable" onclick="pick(this,'shipping-addr','Enter shipping address')"><span class="action-label">Enter</span>Shipping address</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'validate-addr','Validate address format')"><span class="action-label">Validate</span>Address format</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'shipping-method','Select shipping method')"><span class="action-label">Select</span>Shipping method</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'delivery-est','Show delivery estimate')"><span class="action-label">Show</span>Delivery estimate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity 3 -->
+  <div class="activity-group">
+    <div class="activity-header"><span class="num">③</span>User enters payment</div>
+    <div class="arrow-up">↑</div>
+    <div class="sub-columns">
+      <div class="sub-col">
+        <div class="sticky green selectable" onclick="pick(this,'card-details','Enter card details')"><span class="action-label">Enter</span>Card details</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'validate-card','Validate card number')"><span class="action-label">Validate</span>Card number</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky blue selectable" onclick="pick(this,'promo-code','Apply promo code')"><span class="action-label">Apply</span>Promo code</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity 4 -->
+  <div class="activity-group">
+    <div class="activity-header"><span class="num">④</span>User reviews order</div>
+    <div class="arrow-up">↑</div>
+    <div class="sub-columns">
+      <div class="sub-col">
+        <div class="sticky green selectable" onclick="pick(this,'order-summary','Show order summary')"><span class="action-label">Show</span>Order summary</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'total-tax','Show total with tax')"><span class="action-label">Show</span>Total with tax</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'back-edit','Back to edit')"><span class="action-label">Back</span>To edit</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity 5 -->
+  <div class="activity-group" style="border-right:none; margin-right:0; padding-right:0;">
+    <div class="activity-header"><span class="num">⑤</span>User submits order</div>
+    <div class="arrow-up">↑</div>
+    <div class="sub-columns">
+      <div class="sub-col">
+        <div class="sticky green selectable" onclick="pick(this,'confirm-charge','Confirm and charge card')"><span class="action-label">Confirm</span>Charge card</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky yellow selectable" onclick="pick(this,'confirm-screen','Show confirmation screen')"><span class="action-label">Show</span>Confirmation</div>
+        <div class="arrow-up">↑</div>
+        <div class="sticky pink deferred">Email receipt<br><small>(deferred)</small></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#7ed693;opacity:0.5;"></div>Done</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7ed693;box-shadow:0 0 0 2px #e8a020;"></div>Active now</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7ed693;"></div>Top-level task</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f9e04b;"></div>Sub-task (view/select)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7ec8e3;"></div>Sub-task (add/apply)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f08080;opacity:0.5;"></div>Deferred</div>
+</div>
+
+</body>
+</html>

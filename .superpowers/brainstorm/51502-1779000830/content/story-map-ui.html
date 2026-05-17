@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Story Map — Feature Skill UI</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: 1.5rem;
+    min-height: 100vh;
+  }
+  .header {
+    margin-bottom: 1.5rem;
+  }
+  .header h1 { font-size: 1.1rem; color: #fff; margin-bottom: 0.25rem; }
+  .value-story {
+    font-size: 0.8rem;
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 0.25rem;
+  }
+  .meta {
+    font-size: 0.72rem;
+    color: #666;
+  }
+  .meta span { margin-right: 1rem; }
+  .meta .done { color: #63a67a; }
+  .meta .active { color: #d6a35c; }
+  .meta .todo { color: #666; }
+
+  .board {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    align-items: flex-start;
+  }
+
+  .column {
+    min-width: 160px;
+    max-width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Activity header — orange sticky */
+  .activity {
+    background: #e8a020;
+    color: #1a1a1a;
+    border-radius: 6px 6px 0 0;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.3;
+    position: relative;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.4);
+    min-height: 64px;
+    display: flex;
+    align-items: flex-start;
+  }
+  .activity .num {
+    font-size: 0.65rem;
+    font-weight: 900;
+    opacity: 0.6;
+    margin-right: 0.3rem;
+    margin-top: 0.1rem;
+  }
+
+  .divider {
+    height: 3px;
+    background: rgba(255,255,255,0.15);
+    margin: 0;
+  }
+
+  /* Task stickies — yellow */
+  .tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 0.5rem;
+  }
+
+  .sticky {
+    background: #f5d87a;
+    color: #1a1a1a;
+    border-radius: 4px;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.35);
+    position: relative;
+    transition: opacity 0.2s;
+  }
+
+  .sticky.done {
+    background: #a8d5b5;
+    opacity: 0.75;
+  }
+  .sticky.done::after {
+    content: '✓';
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    font-size: 0.7rem;
+    color: #2d6a4f;
+    font-weight: 900;
+  }
+
+  .sticky.active {
+    background: #f5d87a;
+    box-shadow: 0 0 0 2px #d6a35c, 2px 2px 8px rgba(0,0,0,0.4);
+  }
+  .sticky.active::before {
+    content: '▶ NOW';
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 900;
+    color: #b37400;
+    margin-bottom: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .sticky.deferred {
+    background: #f5a0a0;
+    opacity: 0.6;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #aaa;
+  }
+  .legend-dot {
+    width: 14px; height: 14px; border-radius: 3px;
+  }
+
+  /* Future views note */
+  .future-note {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid #444;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.75rem;
+    color: #666;
+  }
+  .future-note strong { color: #888; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Payments Feature</h1>
+  <div class="value-story">As a buyer, I want to pay for goods online so I can receive them without visiting a store.</div>
+  <div class="meta">
+    <span class="done">✓ 1 done</span>
+    <span class="active">▶ 1 active</span>
+    <span class="todo">○ 9 remaining</span>
+  </div>
+</div>
+
+<div class="board">
+
+  <!-- Column 1 -->
+  <div class="column">
+    <div class="activity"><span class="num">①</span>User starts checkout</div>
+    <div class="divider"></div>
+    <div class="tasks">
+      <div class="sticky done">View cart summary</div>
+      <div class="sticky active">Proceed to checkout button</div>
+      <div class="sticky">Guest vs account choice</div>
+    </div>
+  </div>
+
+  <!-- Column 2 -->
+  <div class="column">
+    <div class="activity"><span class="num">②</span>User enters shipping</div>
+    <div class="divider"></div>
+    <div class="tasks">
+      <div class="sticky">Enter shipping address</div>
+      <div class="sticky">Validate address format</div>
+      <div class="sticky">Select shipping method</div>
+      <div class="sticky">Show delivery estimate</div>
+    </div>
+  </div>
+
+  <!-- Column 3 -->
+  <div class="column">
+    <div class="activity"><span class="num">③</span>User enters payment</div>
+    <div class="divider"></div>
+    <div class="tasks">
+      <div class="sticky">Enter card details</div>
+      <div class="sticky">Validate card number</div>
+      <div class="sticky">Apply promo code</div>
+    </div>
+  </div>
+
+  <!-- Column 4 -->
+  <div class="column">
+    <div class="activity"><span class="num">④</span>User reviews order</div>
+    <div class="divider"></div>
+    <div class="tasks">
+      <div class="sticky">Show order summary</div>
+      <div class="sticky">Show total with tax</div>
+      <div class="sticky">Back to edit button</div>
+    </div>
+  </div>
+
+  <!-- Column 5 -->
+  <div class="column">
+    <div class="activity"><span class="num">⑤</span>User submits order</div>
+    <div class="divider"></div>
+    <div class="tasks">
+      <div class="sticky">Confirm + charge card</div>
+      <div class="sticky">Show confirmation screen</div>
+      <div class="sticky deferred">Email receipt (deferred)</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#a8d5b5;"></div>Done</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f5d87a; box-shadow:0 0 0 2px #d6a35c;"></div>Active (agent working)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f5d87a;"></div>To do</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f5a0a0;"></div>Deferred / out of scope</div>
+</div>
+
+<div class="future-note">
+  <strong>Future:</strong> Toggle to Decision Tree view — same data, reoriented left-to-right with parent/child links. Each column becomes a node; stickies become branches.
+</div>
+
+</body>
+</html>

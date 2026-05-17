@@ -1,0 +1,78 @@
+<h2>Story Map Format in Markdown</h2>
+<p class="subtitle">This file lives in the repo and IS the backlog. Which format feels right?</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Nested Sections (Persona → Activity → Stickies)</h3>
+      <p>Each persona is a heading. Activities are sub-headings. Stickies are checkboxes. Clean hierarchy, easy to scan, easy for the skill to parse the next unchecked item.</p>
+      <div class="mockup" style="margin-top: 0.75rem;">
+        <div class="mockup-header">story-map.md</div>
+        <div class="mockup-body" style="font-family: monospace; font-size: 0.8rem; line-height: 1.7;">
+          <span style="color:#6c8ebf;">## Value Story</span><br>
+          As a buyer I want to pay for goods so I can receive them.<br><br>
+          <span style="color:#6c8ebf;">## 🧑 Buyer</span><br>
+          <span style="color:#aaa;">### Browse</span><br>
+          - [x] View product listing<br>
+          - [ ] <strong>Filter by category</strong> ← next<br>
+          - [ ] Add item to cart<br><br>
+          <span style="color:#aaa;">### Checkout</span><br>
+          - [ ] Enter payment details<br>
+          - [ ] Confirm order<br><br>
+          <span style="color:#6c8ebf;">## 🔧 Admin</span><br>
+          <span style="color:#aaa;">### Orders</span><br>
+          - [ ] View all orders<br>
+          - [ ] Mark order fulfilled
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Table (Left-to-right Activities × Personas)</h3>
+      <p>Mirrors a physical story map board. Activities go left to right across the top. Personas are rows. Stickies live in the cells. Hardest for the skill to parse checkboxes from.</p>
+      <div class="mockup" style="margin-top: 0.75rem;">
+        <div class="mockup-header">story-map.md</div>
+        <div class="mockup-body" style="font-family: monospace; font-size: 0.75rem; line-height: 1.7; overflow-x: auto;">
+          | Persona | Browse | Checkout | Post-purchase |<br>
+          |---|---|---|---|<br>
+          | 🧑 Buyer | [x] View listing&lt;br&gt;[ ] Filter | [ ] Payment&lt;br&gt;[ ] Confirm | [ ] Track order |<br>
+          | 🔧 Admin | — | — | [ ] Fulfill order |
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Flat Checklist with Tags</h3>
+      <p>One flat list, every sticky is a checkbox. Persona and activity are inline tags. Simplest format, easiest for the skill to scan, least structured visually.</p>
+      <div class="mockup" style="margin-top: 0.75rem;">
+        <div class="mockup-header">story-map.md</div>
+        <div class="mockup-body" style="font-family: monospace; font-size: 0.8rem; line-height: 1.7;">
+          <span style="color:#6c8ebf;">## Value Story</span><br>
+          As a buyer I want to pay for goods so I can receive them.<br><br>
+          <span style="color:#6c8ebf;">## Stickies</span><br>
+          - [x] [buyer/browse] View product listing<br>
+          - [ ] [buyer/browse] Filter by category<br>
+          - [ ] [buyer/browse] Add item to cart<br>
+          - [ ] [buyer/checkout] Enter payment details<br>
+          - [ ] [buyer/checkout] Confirm order<br>
+          - [ ] [admin/orders] View all orders<br>
+          - [ ] [admin/orders] Mark order fulfilled
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+  <p class="label">My recommendation</p>
+  <p><strong>A — Nested Sections.</strong> It reads like a real story map, the hierarchy is clear at a glance, and the skill can trivially find the next unchecked sticky by scanning top-to-bottom. Table format (B) looks like a board but is painful to maintain in markdown. Flat tags (C) lose the visual structure that makes a story map useful for review.</p>
+</div>

@@ -1,0 +1,89 @@
+<h2>Living Story Map UI — Options</h2>
+<p class="subtitle">From simplest to most powerful. All are buildable now.</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Extend the Brainstorm Server (Zero Setup)</h3>
+      <p>We already have a local server running. The skill generates a <code>story-map.html</code> that renders like a board. Agent updates the file as stickies complete — browser auto-refreshes. No React, no build step, works today.</p>
+      <div class="mockup" style="margin-top: 0.75rem;">
+        <div class="mockup-header">Story Map Board — served at localhost:PORT</div>
+        <div class="mockup-body" style="padding: 0.75rem;">
+          <div style="display: flex; gap: 0.75rem; overflow-x: auto;">
+            <div style="min-width: 140px;">
+              <div style="font-size: 0.7rem; text-transform: uppercase; color: #aaa; margin-bottom: 0.5rem;">Browse</div>
+              <div style="background: #2a5298; border-radius: 6px; padding: 0.5rem; margin-bottom: 0.4rem; font-size: 0.75rem;">✅ View listing</div>
+              <div style="background: #2a5298; border-radius: 6px; padding: 0.5rem; margin-bottom: 0.4rem; font-size: 0.75rem; opacity: 0.5;">◻ Filter items</div>
+              <div style="background: #2a5298; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; opacity: 0.5;">◻ Add to cart</div>
+            </div>
+            <div style="min-width: 140px;">
+              <div style="font-size: 0.7rem; text-transform: uppercase; color: #aaa; margin-bottom: 0.5rem;">Checkout</div>
+              <div style="background: #2a5298; border-radius: 6px; padding: 0.5rem; margin-bottom: 0.4rem; font-size: 0.75rem; opacity: 0.5;">◻ Enter payment</div>
+              <div style="background: #2a5298; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; opacity: 0.5;">◻ Confirm order</div>
+            </div>
+            <div style="min-width: 140px;">
+              <div style="font-size: 0.7rem; text-transform: uppercase; color: #aaa; margin-bottom: 0.5rem;">Post-purchase</div>
+              <div style="background: #2a5298; border-radius: 6px; padding: 0.5rem; font-size: 0.75rem; opacity: 0.5;">◻ Track order</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top: 0.75rem;">
+        <div class="pros"><h4>Pros</h4><ul><li>Works right now</li><li>No setup</li><li>Skill controls it fully</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Not shareable</li><li>No drag/drop</li><li>Tied to brainstorm server lifecycle</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Tiny React/Vite App (Scaffolded by the Skill)</h3>
+      <p>The <code>/feature</code> skill scaffolds a small <code>story-map-app/</code> alongside your project. Skill writes to <code>story-map.json</code>; the React app reads it and renders the board live (hot-reload). Can add drag-to-reprioritize, filters, persona toggle. Shareable on a local URL.</p>
+      <div class="mockup" style="margin-top: 0.75rem;">
+        <div class="mockup-header">story-map-app/ (Vite dev server)</div>
+        <div class="mockup-body" style="font-family: monospace; font-size: 0.78rem; line-height: 1.6;">
+          story-map-app/<br>
+          &nbsp;&nbsp;src/<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;StoryMap.tsx &nbsp;&nbsp;&nbsp;← board component<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;Sticky.tsx &nbsp;&nbsp;&nbsp;&nbsp;← card component<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;main.tsx<br>
+          &nbsp;&nbsp;story-map.json &nbsp;← agent writes here<br>
+          &nbsp;&nbsp;package.json
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top: 0.75rem;">
+        <div class="pros"><h4>Pros</h4><ul><li>Real interactive UI</li><li>Drag/drop possible</li><li>Extendable over time</li><li>Shareable locally</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Needs npm install</li><li>Extra app to maintain</li><li>Build step to deploy</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Miro via REST API</h3>
+      <p>The skill pushes stickies directly to a Miro board via their REST API. As the agent works, stickies move from "To Do" to "Done" lanes in real Miro. Shareable with teammates, looks exactly like a real story map board.</p>
+      <div class="mockup" style="margin-top: 0.75rem;">
+        <div class="mockup-header">Miro Board — live, shareable URL</div>
+        <div class="mockup-body" style="font-size: 0.8rem; line-height: 1.6;">
+          Skill calls → <code>POST /v2/boards/:id/sticky_notes</code><br>
+          Agent completes sticky → <code>PATCH</code> to move it to Done lane<br>
+          Team sees live board at miro.com/…
+        </div>
+      </div>
+      <div class="pros-cons" style="margin-top: 0.75rem;">
+        <div class="pros"><h4>Pros</h4><ul><li>Real Miro board</li><li>Team-shareable</li><li>Full Miro features</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Requires Miro account + API key</li><li>External dependency</li><li>Rate limits</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+  <p class="label">My take</p>
+  <p>Start with <strong>A</strong> to validate the flow fast — zero friction, works today. Build <strong>B</strong> (React app) as the next iteration once the skill flow is solid — it becomes the real living UI. <strong>C</strong> (Miro) is the power move for team use, but save it for when you want to share with others.</p>
+</div>

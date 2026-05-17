@@ -2,6 +2,15 @@ This txt is just me thinking BEFORE I do the research using claude.
 I come back to this and think here first before going to claude. So I go back and fourth.
 This allows me to think simpler first and keep my thoughts tight.
 
+We are going to eat our own dog food as we go.  When we create claude hooks or other code, it'll run our /refactoring skill. This is not a thorough
+test of it, but it's at least testing out its prompting, and minor refactoring on some scripts to start. See how it flows, works on the simplest things
+such as scripts first.  Then when we get to real code it'll at least run and log shit. We'll have some of the walking skeleton worked out by then because
+we're testing it early. This also allows us to get fast feedback on our skill as we built out our skill right on the skill's own repo.
+
+By starting out with a more manual run of refactors by calling /refactor at times, I'm able to start training it on names and patterns.
+Because it creates a log file after each reactor and because it asks me for confirmation on each rename, I'm building a simple key / pair
+log that shows good vs bad names.  Over time I hope that this informs the refactor skill even more and it becomes smarter with those simple key value pairs along with the why for each change
+
 
 The Story Map is for review.
 The Feature Archive is for memory.
@@ -212,3 +221,55 @@ Walking Skeleton
 
 Delivery Lead Agent
 
+Other things to look at
+=======================
+    http://openai.com/index/open-source-codex-orchestration-symphony
+        https://github.com/openai/symphony - you can look at the symphony code
+            https://github.com/openai/symphony/blob/main/SPEC.md - core spec
+            They did NOT open source:
+
+            * proprietary Codex models
+            * internal OpenAI product codebases
+            * Sora app code
+            * ChatGPT code
+            * the actual applications they mention internally
+
+            What they did expose is the orchestration infrastructure they use around coding agents.
+
+            So you can inspect patterns like:
+
+            * isolated per-task workspaces
+            * agent supervision
+            * polling issue trackers
+            * orchestration daemons
+            * workflow-driven agent execution
+            * multi-agent coordination
+            * remote worker management
+
+Common Agent Roles
+==================
+    https://www.linkedin.com/posts/dr-annegret-junker-141a99a4_domaindrivendesign-ai-softwarearchitecture-share-7461036133116772352-LrGy
+    📝 Drafter — produces a first-draft artifact. Domain Story, OpenAPI spec, service skeleton. Concrete enough to be wrong. The team reacts to it rather than starting from scratch.
+    ⏹️ Validator — checks artifacts for internal consistency. Does the term in the new EventStorming match the Visual Glossary? Does the API enforce the Ubiquitous Language? Comparison work, at a scale where manual review is too expensive.
+    ❓  Provocateur — asks questions, surfaces assumptions, challenges decisions while they're still soft.
+
+
+For all my skills, they can be used for varying Use Cases: End to End Workflow, or just on a folder or a file.
+============================================================================================================
+	You can run them independently or they are run automatically by workflow
+	Every skill
+		Allows you to appyly it on greenfield or brownfield
+		Allows you to specify a specific folder to start applying the skill on
+		Can handle NodeJS or Python for now
+		Has some sort of log it creates just like the refactor-names skill
+
+Select a Hex Style from these people (reference not a path but a url to look at as well)
+They are presented with a list of popular names out in the XP community and the skill has context on those people (links, etc.)
+    - Uncle Bob
+    - Martin Fowler
+    - Kent Beck
+    - Alistair Cockburn
+    - Sandi Metz
+    just examples here, but there are many more
+
+    It'll incorporate their style as part of informing the hexagonal skill

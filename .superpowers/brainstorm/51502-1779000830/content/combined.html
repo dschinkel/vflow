@@ -1,0 +1,65 @@
+<h2>All Three Combined — One Skill</h2>
+<p class="subtitle">Each approach handles a different phase. Together they form a single end-to-end flow.</p>
+
+<div class="section">
+  <div class="mockup">
+    <div class="mockup-header">The Combined Flow</div>
+    <div class="mockup-body" style="font-family: monospace; font-size: 0.9rem; line-height: 2;">
+
+      <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border-left: 3px solid #6c8ebf; background: rgba(108,142,191,0.08); border-radius: 0 8px 8px 0;">
+        <span style="font-size: 1.4rem;">📝</span>
+        <div>
+          <p class="label" style="color: #6c8ebf;">Phase 1 — Drafter (from Approach C)</p>
+          <p style="margin: 0.25rem 0 0;"><code>/feature "payments flow"</code></p>
+          <p style="margin: 0.25rem 0 0; color: #aaa; font-size: 0.85rem;">Skill asks questions → builds Value Story (optional) → generates Story Map draft</p>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border-left: 3px solid #d6a35c; background: rgba(214,163,92,0.08); border-radius: 0 8px 8px 0;">
+        <span style="font-size: 1.4rem;">❓</span>
+        <div>
+          <p class="label" style="color: #d6a35c;">Phase 2 — Provocateur (from Approach C)</p>
+          <p style="margin: 0.25rem 0 0;">Challenges the draft before you approve it</p>
+          <p style="margin: 0.25rem 0 0; color: #aaa; font-size: 0.85rem;">"Is this sticky truly the smallest slice?" · "Who is this actually for?" · "What's out of scope?"</p>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border-left: 3px solid #63a67a; background: rgba(99,166,122,0.08); border-radius: 0 8px 8px 0;">
+        <span style="font-size: 1.4rem;">💾</span>
+        <div>
+          <p class="label" style="color: #63a67a;">Phase 3 — Persist (from Approach B)</p>
+          <p style="margin: 0.25rem 0 0;">Approved map saved as <code>story-map.md</code> with checkboxes</p>
+          <p style="margin: 0.25rem 0 0; color: #aaa; font-size: 0.85rem;">This file IS the backlog. Survives across sessions. Lives in the repo.</p>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; border-left: 3px solid #a67ac8; background: rgba(166,122,200,0.08); border-radius: 0 8px 8px 0;">
+        <span style="font-size: 1.4rem;">⚙️</span>
+        <div>
+          <p class="label" style="color: #a67ac8;">Phase 4 — Implement, sticky by sticky (from Approaches A + C)</p>
+          <p style="margin: 0.25rem 0 0;">Each session: skill reads map → user picks next sticky → implementation agent fires</p>
+          <p style="margin: 0.25rem 0 0; color: #aaa; font-size: 0.85rem;">Auto-invokes /hexagonal · TDD · /refactor · commits · checks off sticky · repeat</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 8px;">
+  <p class="label">What each approach contributes</p>
+  <table style="width:100%; border-collapse: collapse; font-size: 0.9rem;">
+    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+      <td style="padding: 0.5rem 1rem 0.5rem 0; color: #6c8ebf; font-weight: bold;">A — Conductor</td>
+      <td style="padding: 0.5rem 0;">Single <code>/feature</code> entry point, auto-invokes sub-skills, commits after each sticky</td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+      <td style="padding: 0.5rem 1rem 0.5rem 0; color: #63a67a; font-weight: bold;">B — Persistent Map</td>
+      <td style="padding: 0.5rem 0;">Story map as living <code>.md</code> file — resumable, version-controlled, always the source of truth</td>
+    </tr>
+    <tr>
+      <td style="padding: 0.5rem 1rem 0.5rem 0; color: #d6a35c; font-weight: bold;">C — Three Agents</td>
+      <td style="padding: 0.5rem 0;">Drafter builds the map, Provocateur challenges it, focused agent implements each sticky</td>
+    </tr>
+  </table>
+</div>

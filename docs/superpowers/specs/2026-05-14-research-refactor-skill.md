@@ -1,4 +1,6 @@
 # Refactor Skill — Research Notes
+
+> **Plans:** [Refactor Command Implementation Plan](../plans/2026-05-14-refactor-skill.md) · [Stop Hook Cleanup Trap](../plans/2026-05-15-stop-hook-cleanup-trap.md)
 _2026-05-14_
 Note: this was partly based on feeding it my thoughts from `refactor-skill.txt`.
 
@@ -142,7 +144,7 @@ Two shell scripts extend the `/refactor` skill via Claude Code's hook system. Bo
 **Hook events used:**
 
 - `UserPromptSubmit` — fires on every prompt submission, before Claude processes it. Lets a script inspect or block a prompt before it reaches the model.
-- `Stop` — fires when a Claude Code session ends.
+- `Stop` — fires after every agent response turn, not just when the full conversation ends. It runs silently after each Claude reply. In practice this means `end-refactor-log-session-stats.sh` runs constantly — it just exits early (0) when `~/.claude/refactor-session.tmp` doesn't exist, so it's invisible. It only becomes visible when that file is present.
 
 ### start-refactor-skill.sh (`UserPromptSubmit`)
 
@@ -152,7 +154,9 @@ Thresholds: Sonnet requires ≥ 90% remaining; Opus requires ≥ 80% remaining.
 
 ### end-refactor-log-session-stats.sh (`Stop`)
 
-Writes the session's total token count into the refactor session log after the session ends. Token tracking is a three-part handoff between the command, Claude Code's session storage, and this hook.
+Writes the session's total token count into the refactor session log. Fires after every agent response turn — but exits silently unless `~/.claude/refactor-session.tmp` exists, so it has no effect outside a `/refactor` session.
+
+**Stale state file:** If a `/refactor` session ends abruptly (e.g. context exhausted) without running the session-end flow, `~/.claude/refactor-session.tmp` is never deleted. The hook will then fire visibly on subsequent turns in any session until the file is manually removed (`rm ~/.claude/refactor-session.tmp`) or a new `/refactor` session overwrites it. Token tracking is a three-part handoff between the command, Claude Code's session storage, and this hook.
 
 **1. Session start — command writes a state file**
 

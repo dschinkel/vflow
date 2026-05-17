@@ -29,6 +29,9 @@ Agents pick this up automatically when building any feature slice. Users invoke 
 **Target story map UI:**
 ![Story map UI](2026-05-17-feature-skill-story-map-ui-final.png)
 
+**Decision Tree toggle view:**
+![Decision Tree view](2026-05-17-feature-skill-story-map-decision-tree.png)
+
 ---
 
 ## Invocation
@@ -184,7 +187,7 @@ Markdown is always written regardless of which visual option is in use. It is th
 
 ## Future Features
 
-- **Decision Tree view** — same story map data reoriented: activities become a horizontal spine, stickies become left-to-right tree branches. Toggle between Story Map and Decision Tree at any time without changing the underlying data. No timeline set — not in first version.
+- **Decision Tree view** — same story map data reoriented: activities become a horizontal spine, top-level task stickies hang below each activity, and sub-tasks fan out horizontally at each depth level. Toggle between Story Map and Decision Tree at any time without changing the underlying data. Title updates to match active view. No timeline set — not in first version. See reference: `2026-05-17-feature-skill-story-map-decision-tree.png`.
 - **Miro export** — `##` headings map to Miro activity stickies, `- [ ]` items map to task stickies beneath them, via Miro REST API.
 
 ---

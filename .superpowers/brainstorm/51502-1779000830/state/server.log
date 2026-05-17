@@ -1,0 +1,6 @@
+{"type":"server-started","port":63816,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:63816","screen_dir":"/Users/zevia/code/ai/vflow/.superpowers/brainstorm/51502-1779000830/content","state_dir":"/Users/zevia/code/ai/vflow/.superpowers/brainstorm/51502-1779000830/state"}
+{"type":"screen-added","file":"/Users/zevia/code/ai/vflow/.superpowers/brainstorm/51502-1779000830/content/approaches.html"}
+{"type":"screen-added","file":"/Users/zevia/code/ai/vflow/.superpowers/brainstorm/51502-1779000830/content/combined.html"}
+{"type":"screen-added","file":"/Users/zevia/code/ai/vflow/.superpowers/brainstorm/51502-1779000830/content/story-map-format.html"}
+{"type":"screen-added","file":"/Users/zevia/code/ai/vflow/.superpowers/brainstorm/51502-1779000830/content/living-ui-options.html"}
+{"type":"server-stopped","reason":"idle timeout"}
