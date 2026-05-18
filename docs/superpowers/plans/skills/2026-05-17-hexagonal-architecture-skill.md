@@ -1,6 +1,6 @@
 # /hexagonal Skill Pair Implementation Plan
 
-> **Spec:** [Hexagonal Architecture Skill — Design Spec](../specs/skills/2026-05-17-hexagonal-architecture-skill.md)
+> **Spec:** [Hexagonal Architecture Skill — Design Spec](../../specs/skills/hexagonal/2026-05-17-hexagonal-architecture-skill.md)
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 

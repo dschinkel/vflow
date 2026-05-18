@@ -3,8 +3,8 @@
 > **Plan:** _link to be added when implementation plan is written_
 >
 > **Related specs:**
-> - [Hexagonal Architecture Skill](../skills/2026-05-17-hexagonal-architecture-skill.md) — sub-skill invoked per non-cosmetic sticky
-> - [Hexagonal Invocation Modes — brainstorm in progress](../skills/2026-05-17-hexagonal-invocation-modes.md) — refines how `/hexagonal` is invoked from `/feature` (greenfield vs brownfield)
+> - [Hexagonal Architecture Skill](../skills/hexagonal/2026-05-17-hexagonal-architecture-skill.md) — sub-skill invoked per non-cosmetic sticky
+> - [Hexagonal Invocation Modes — brainstorm in progress](../skills/hexagonal/2026-05-17-hexagonal-invocation-modes.md) — refines how `/hexagonal` is invoked from `/feature` (greenfield vs brownfield)
 > - [TDD Skill](../skills/2026-05-17-tdd-skill-design.md) — sub-skill invoked per non-cosmetic sticky as the code-writing driver
 > - [Claude Design — research notes](../2026-05-17-claude-design-research.md) — why we decided not to depend on Claude Design for v1
 
@@ -266,7 +266,7 @@ Before invoking `/tdd`, `/feature` writes the state file with:
 - **TDD starting layer** is derived from `scope` per the table above.
 - `/tdd`'s opt-in question is still asked. (`cosmetic` stickies bypass `/tdd` entirely, so the opt-in only fires for non-cosmetic stickies.)
 
-**Cross-reference:** The brownfield invocation surface for `/hexagonal` is still being designed in the [Hexagonal Invocation Modes brainstorm](../skills/2026-05-17-hexagonal-invocation-modes.md). The `targetService` field above is what `/feature` passes to `/hexagonal` per the contract being shaped there.
+**Cross-reference:** The brownfield invocation surface for `/hexagonal` is still being designed in the [Hexagonal Invocation Modes brainstorm](../skills/hexagonal/2026-05-17-hexagonal-invocation-modes.md). The `targetService` field above is what `/feature` passes to `/hexagonal` per the contract being shaped there.
 
 ---
 
@@ -337,7 +337,7 @@ This spec is a **checkpoint** from a longer brainstorming session. The following
 - **`install.sh` changes** for pnpm install + Vite build (idempotency, error handling, what happens if pnpm isn't installed).
 
 ### Sibling specs
-- [Hexagonal Invocation Modes brainstorm](../skills/2026-05-17-hexagonal-invocation-modes.md) — open questions about brownfield invocation surface for `/hexagonal`.
+- [Hexagonal Invocation Modes brainstorm](../skills/hexagonal/2026-05-17-hexagonal-invocation-modes.md) — open questions about brownfield invocation surface for `/hexagonal`.
 
 ---
 

@@ -1,6 +1,6 @@
 # Hexagonal Architecture Skill — Design Spec
 
-> **Plan:** [/hexagonal Skill Pair Implementation Plan](../../plans/2026-05-17-hexagonal-architecture-skill.md)
+> **Plan:** [/hexagonal Skill Pair Implementation Plan](../../../plans/skills/2026-05-17-hexagonal-architecture-skill.md)
 >
 > **Sibling spec (in progress):** [Hexagonal Skill — Invocation Modes](2026-05-17-hexagonal-invocation-modes.md) — active brainstorm refining how `/hexagonal` is invoked for brownfield vs greenfield. Decisions there will fold back into this spec when finalized.
 

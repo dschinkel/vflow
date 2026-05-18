@@ -1,10 +1,10 @@
 # Hexagonal Scaffold Skill — Implementation Plan
 
-> **Status:** Archived — superseded by the unified [Hexagonal Skill Pair Implementation Plan](../../../2026-05-17-hexagonal-architecture-skill.md) (one plan covering both core + scaffold). Both `/hexagonal` and `/hexagonal-scaffold` are now shipped. Example markdown blocks below may contain stale relative paths from when the plan was active — they're preserved as historical context only.
+> **Status:** Archived — superseded by the unified [Hexagonal Skill Pair Implementation Plan](../../../skills/2026-05-17-hexagonal-architecture-skill.md) (one plan covering both core + scaffold). Both `/hexagonal` and `/hexagonal-scaffold` are now shipped. Example markdown blocks below may contain stale relative paths from when the plan was active — they're preserved as historical context only.
 >
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-> **Spec:** [Hexagonal Architecture Skill — Design Spec](../../../../specs/skills/2026-05-17-hexagonal-architecture-skill.md)
+> **Spec:** [Hexagonal Architecture Skill — Design Spec](../../../../specs/skills/hexagonal/2026-05-17-hexagonal-architecture-skill.md)
 
 > **Prerequisite:** [hexagonal-architecture-skill plan](2026-05-17-hexagonal-architecture-skill.md) must be complete — `commands/hexagonal.md` must exist before this plan is executed.
 

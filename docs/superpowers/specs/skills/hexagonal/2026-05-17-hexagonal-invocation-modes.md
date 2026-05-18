@@ -10,7 +10,7 @@
 
 The parent spec ([Hexagonal Architecture Skill — Design Spec](2026-05-17-hexagonal-architecture-skill.md)) describes `/hexagonal` primarily as a **greenfield scaffolder** invoked by the user (`/hexagonal payments`) or auto-triggered by the model on service-layer work via the skill's frontmatter description.
 
-While brainstorming `/feature` (the [Feature Skill spec](../feature/2026-05-17-feature-skill-design.md)), a gap surfaced: `/feature` needs to invoke `/hexagonal` for **every sticky** — both when scaffolding a new service (greenfield) and when extending an existing one (brownfield). The current parent spec's procedure only handles greenfield cleanly; brownfield invocation has no defined surface, and relying on auto-trigger via frontmatter description is too implicit for the visibility/determinism the user wants.
+While brainstorming `/feature` (the [Feature Skill spec](../../feature/2026-05-17-feature-skill-design.md)), a gap surfaced: `/feature` needs to invoke `/hexagonal` for **every sticky** — both when scaffolding a new service (greenfield) and when extending an existing one (brownfield). The current parent spec's procedure only handles greenfield cleanly; brownfield invocation has no defined surface, and relying on auto-trigger via frontmatter description is too implicit for the visibility/determinism the user wants.
 
 This spec captures the design conversation about how `/hexagonal`'s invocation should behave across both modes.
 
@@ -120,7 +120,7 @@ Once Q1–Q5 are resolved, the parent spec will need:
 - An explicit "Mode Detection" subsection at the top of `/hexagonal`'s procedure that decides greenfield vs brownfield from the target folder state
 - Removal of the implication that auto-trigger via frontmatter is the brownfield path
 
-### Feature spec ([link](../feature/2026-05-17-feature-skill-design.md))
+### Feature spec ([link](../../feature/2026-05-17-feature-skill-design.md))
 
 The Phase 4 per-sticky sequence will be locked to:
 
@@ -129,7 +129,7 @@ The Phase 4 per-sticky sequence will be locked to:
 3. **Invoke `/tdd "<sticky text>"`** — RED/GREEN/REFACTOR, per-increment commits, sticky check-off, `.tdd-context.json` cleanup.
 4. **Resume `/feature`** — regenerate `story-map.html`, surface next sticky.
 
-### TDD spec ([link](2026-05-17-tdd-skill-design.md))
+### TDD spec ([link](../2026-05-17-tdd-skill-design.md))
 
 If Q5 resolves to "state file" handoff (`.hexagonal-context.json`), `/tdd` needs to know to read it during GREEN-phase code generation. This is a small addition to its existing context-file pattern.
 

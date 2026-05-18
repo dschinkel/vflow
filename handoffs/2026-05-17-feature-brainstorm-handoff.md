@@ -30,7 +30,7 @@ Hooks: `end-refactor-log-session-stats.sh` (Stop, token counting), `start-refact
 6. **Cosmetic sticky shortcut:** `/feature` handles edit/test/commit/check-off directly. No `/tdd`, no `/hexagonal`.
 7. **Sub-skill composition mental model written into spec:** `/tdd` is the driver, `/hexagonal` is the shape, `/refactor` is the polish inside `/tdd`'s REFACTOR.
 8. **Composition contract via `.tdd-context.json`** locked: `/feature` writes `targetService` and `scope` in addition to existing fields.
-9. **Sibling spec created:** [Hexagonal Invocation Modes brainstorm](../docs/superpowers/specs/skills/2026-05-17-hexagonal-invocation-modes.md) — captures greenfield vs brownfield invocation surface for `/hexagonal`.
+9. **Sibling spec created:** [Hexagonal Invocation Modes brainstorm](../docs/superpowers/specs/skills/hexagonal/2026-05-17-hexagonal-invocation-modes.md) — captures greenfield vs brownfield invocation surface for `/hexagonal`.
 10. **New spec:** [Claude Design research notes](../docs/superpowers/specs/2026-05-17-claude-design-research.md) — Claude Design exists (Anthropic Labs, April 2026 launch), is a hosted prototyping product, not a fit as a dependency for `/feature` v1.
 11. **Feature spec checkpoint written** — new sections: UI Stack and Distribution, Sub-Skill Composition, Brainstorm In Progress (open questions). Phase 4 heavily rewritten. Story Map UI section adjusted for v1 read-only board.
 12. **New memories saved** (cross-conversation):
@@ -60,7 +60,7 @@ See [Open Questions section of /feature spec](../docs/superpowers/specs/feature/
 - **Visual layer:** detailed atomic inventory, polish-target specifics, yellow/blue sub-task color rule.
 - **Composition:** Mode-A bulk-review UX (combined vs separate tables), done signal / feature close-out format.
 - **Repo structure:** `feature-ui/` layout, `install.sh` changes for pnpm + Vite.
-- **`/hexagonal` brownfield invocation:** Q1–Q5 in the [Hexagonal Invocation Modes brainstorm](../docs/superpowers/specs/skills/2026-05-17-hexagonal-invocation-modes.md).
+- **`/hexagonal` brownfield invocation:** Q1–Q5 in the [Hexagonal Invocation Modes brainstorm](../docs/superpowers/specs/skills/hexagonal/2026-05-17-hexagonal-invocation-modes.md).
 
 ---
 
