@@ -10,10 +10,12 @@ This skill handles **naming refactors only**. More refactoring types will be add
 ## Invocation
 
 ```
-/refactor @<file-or-folder>
+/refactor @<file-or-folder> [--output <dir>]
 ```
 
 The `@` reference is required. If omitted, stop and ask for one before doing anything else.
+
+The optional `--output <dir>` flag overrides the default output directory. When present, all session artifacts (the flat log and the tree diagram) are written directly inside `<dir>` using the same filenames described below. When absent, the default `docs/refactorings/<folder>/` layout is used unchanged. This flag exists so other skills (e.g. `/tdd`) can redirect refactor logs into their own feature folder.
 
 > **Recommended model:** `claude-sonnet-4-6` — fast and accurate for mechanical naming refactors. Opus is unnecessary here.
 > To switch: `/model claude-sonnet-4-6`
@@ -26,18 +28,20 @@ The `@` reference is required. If omitted, stop and ask for one before doing any
 
 2. Record the session timestamp (format: `YYYY-MM-DDThh-mm-ss`).
 
-3. Determine the output path from the `@` reference:
-   - **Single file** (e.g., `src/utils/prompt.ts`):
-     - `<folder>` = immediate parent directory name (e.g., `utils`)
-     - `<stem>` = filename without extension (e.g., `prompt`)
-     - Output dir: `docs/refactorings/<folder>/`
-     - Log filename: `refactor-names-<folder>-<stem>-<timestamp>.md`
-     - Tree filename: `refactor-names-<folder>-<stem>-<timestamp>-tree.mmd`
-   - **Folder** (e.g., `src/utils/`):
-     - `<folder>` = the target folder name (e.g., `utils`)
-     - Output dir: `docs/refactorings/<folder>/`
-     - Log filename: `refactor-names-<folder>-<timestamp>.md`
-     - Tree filename: `refactor-names-<folder>-<timestamp>-tree.mmd`
+3. Determine the output path:
+   - **If `--output <dir>` was provided:** use `<dir>` verbatim as the output directory. Skip the `<folder>` derivation below. Filenames (log and tree) are computed exactly the same way as the default flow.
+   - **Otherwise — derive from the `@` reference:**
+     - **Single file** (e.g., `src/utils/prompt.ts`):
+       - `<folder>` = immediate parent directory name (e.g., `utils`)
+       - `<stem>` = filename without extension (e.g., `prompt`)
+       - Output dir: `docs/refactorings/<folder>/`
+       - Log filename: `refactor-names-<folder>-<stem>-<timestamp>.md`
+       - Tree filename: `refactor-names-<folder>-<stem>-<timestamp>-tree.mmd`
+     - **Folder** (e.g., `src/utils/`):
+       - `<folder>` = the target folder name (e.g., `utils`)
+       - Output dir: `docs/refactorings/<folder>/`
+       - Log filename: `refactor-names-<folder>-<timestamp>.md`
+       - Tree filename: `refactor-names-<folder>-<timestamp>-tree.mmd`
 
    Create the output directory if it doesn't exist.
 
