@@ -1,6 +1,6 @@
 # Hexagonal Architecture Skill — Design Spec
 
-> **Plan:** _link to be added when implementation plan is written_
+> **Plan:** [/hexagonal Skill Pair Implementation Plan](../../plans/2026-05-17-hexagonal-architecture-skill.md)
 
 ---
 
