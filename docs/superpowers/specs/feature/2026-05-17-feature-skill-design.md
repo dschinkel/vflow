@@ -21,22 +21,22 @@ Agents pick this up automatically when building any feature slice. Users invoke 
 ## Design References
 
 <p><strong>Combined flow diagram:</strong><br/>
-<img src="2026-05-17-feature-skill-combined-flow.png" alt="Combined flow" width="800"/></p>
+<img src="assets/2026-05-17-feature-skill-combined-flow.png" alt="Combined flow" width="800"/></p>
 
 <p><strong>Physical story map reference:</strong><br/>
-<img src="2026-05-17-feature-skill-story-map-photo.png" alt="Story map photo" width="800"/></p>
+<img src="assets/2026-05-17-feature-skill-story-map-photo.png" alt="Story map photo" width="800"/></p>
 
 <p><strong>Story map vs decision tree:</strong><br/>
-<img src="2026-05-17-feature-skill-story-map-vs-decision-tree.png" alt="Story map vs decision tree" width="800"/></p>
+<img src="assets/2026-05-17-feature-skill-story-map-vs-decision-tree.png" alt="Story map vs decision tree" width="800"/></p>
 
 <p><strong>Digital story map reference:</strong><br/>
-<img src="2026-05-17-feature-skill-story-map-digital-reference.png" alt="Digital story map reference" width="800"/></p>
+<img src="assets/2026-05-17-feature-skill-story-map-digital-reference.png" alt="Digital story map reference" width="800"/></p>
 
 <p><strong>Target story map UI:</strong><br/>
-<img src="2026-05-17-feature-skill-story-map-ui-final.png" alt="Story map UI" width="800"/></p>
+<img src="assets/2026-05-17-feature-skill-story-map-ui-final.png" alt="Story map UI" width="800"/></p>
 
 <p><strong>Decision Tree toggle view:</strong><br/>
-<img src="2026-05-17-feature-skill-story-map-decision-tree.png" alt="Decision Tree view" width="800"/></p>
+<img src="assets/2026-05-17-feature-skill-story-map-decision-tree.png" alt="Decision Tree view" width="800"/></p>
 
 ---
 
@@ -290,7 +290,7 @@ The visual board is a locally served React app (Koa + Vite + SSE — see [UI Sta
 
 **Polish target:** the spec screenshots are a *starting reference*, not a pixel target. v1 should be more refined than the rough screenshots — same overall shape and color language, more polish in spacing, typography, and atom-level details.
 
-**Reference UI screenshot:** `2026-05-17-feature-skill-story-map-ui-final.png`
+**Reference UI screenshot:** `assets/2026-05-17-feature-skill-story-map-ui-final.png`
 
 ---
 
@@ -308,7 +308,7 @@ Markdown is always written regardless of which visual option is in use. It is th
 
 ## Future Features
 
-- **Decision Tree view** — same story map data reoriented: activities become a horizontal spine, top-level task stickies hang below each activity, and sub-tasks fan out horizontally at each depth level. Toggle between Story Map and Decision Tree at any time without changing the underlying data. Title updates to match active view. No timeline set — not in first version. See reference: `2026-05-17-feature-skill-story-map-decision-tree.png`.
+- **Decision Tree view** — same story map data reoriented: activities become a horizontal spine, top-level task stickies hang below each activity, and sub-tasks fan out horizontally at each depth level. Toggle between Story Map and Decision Tree at any time without changing the underlying data. Title updates to match active view. No timeline set — not in first version. See reference: `assets/2026-05-17-feature-skill-story-map-decision-tree.png`.
 - **Miro export** — `##` headings map to Miro activity stickies, `- [ ]` items map to task stickies beneath them, via Miro REST API.
 
 ---
