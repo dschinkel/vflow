@@ -6,6 +6,7 @@ vflow is a personal collection of Claude Code commands. It contains no applicati
 
 - `commands/` — canonical source of truth for all commands. Each command is a single `.md` file.
 - `.claude/commands/` — symlink to `commands/`. Claude Code reads this to register slash commands when working inside this repo.
+- `.claude/hooks/` — Claude Code hook scripts (source). Symlinked from `~/.claude/hooks/` so edits are live immediately.
 - `docs/superpowers/` — brainstorming specs, plans, and research for commands under development.
 - `docs/todo/` — research and brainstorm docs that have no plan or implementation yet (backlog).
 - `docs/refactorings/` — session output from `/refactor` runs. Not committed (see `.gitignore`).
