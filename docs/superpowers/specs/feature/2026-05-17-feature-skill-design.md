@@ -14,23 +14,23 @@ Agents pick this up automatically when building any feature slice. Users invoke 
 
 ## Design References
 
-**Combined flow diagram:**
-![Combined flow](2026-05-17-feature-skill-combined-flow.png)
+<p><strong>Combined flow diagram:</strong><br/>
+<img src="2026-05-17-feature-skill-combined-flow.png" alt="Combined flow" width="800"/></p>
 
-**Physical story map reference:**
-![Story map photo](2026-05-17-feature-skill-story-map-photo.png)
+<p><strong>Physical story map reference:</strong><br/>
+<img src="2026-05-17-feature-skill-story-map-photo.png" alt="Story map photo" width="800"/></p>
 
-**Story map vs decision tree:**
-![Story map vs decision tree](2026-05-17-feature-skill-story-map-vs-decision-tree.png)
+<p><strong>Story map vs decision tree:</strong><br/>
+<img src="2026-05-17-feature-skill-story-map-vs-decision-tree.png" alt="Story map vs decision tree" width="800"/></p>
 
-**Digital story map reference:**
-![Digital story map reference](2026-05-17-feature-skill-story-map-digital-reference.png)
+<p><strong>Digital story map reference:</strong><br/>
+<img src="2026-05-17-feature-skill-story-map-digital-reference.png" alt="Digital story map reference" width="800"/></p>
 
-**Target story map UI:**
-![Story map UI](2026-05-17-feature-skill-story-map-ui-final.png)
+<p><strong>Target story map UI:</strong><br/>
+<img src="2026-05-17-feature-skill-story-map-ui-final.png" alt="Story map UI" width="800"/></p>
 
-**Decision Tree toggle view:**
-![Decision Tree view](2026-05-17-feature-skill-story-map-decision-tree.png)
+<p><strong>Decision Tree toggle view:</strong><br/>
+<img src="2026-05-17-feature-skill-story-map-decision-tree.png" alt="Decision Tree view" width="800"/></p>
 
 ---
 
@@ -63,8 +63,24 @@ From the answers the agent produces a draft story map: accomplishments become ac
 
 Before the user approves the draft, the skill challenges it with targeted questions:
 
-- "Is any sticky actually two stickies that should be separate?"
-- "What is explicitly out of scope — any stickies to mark as deferred?"
+- "Are there any stickies we could split further? Remember we want to work on the simplest thing possible. We're talking very, very small."
+  - **Why XP pushes for the smallest possible slice:**
+    - **Faster feedback** — a small slice that's "done" teaches us something *now*, not in two weeks. We find out we're wrong (or right) before we've sunk effort into the wrong direction.
+    - **Smaller blast radius** — when something breaks (and it will), a tiny commit is easy to revert. A big one is a debugging archaeology dig.
+    - **Better flow through RED → GREEN → REFACTOR** — small slices cycle cleanly; big ones get stuck half-done, half-tested, half-refactored.
+    - **Less cognitive load** — what fits in your head is what you can ship without bugs. Big slices hide complexity in places no one is looking.
+    - **Earlier value or earlier course-correction** — even a 30-minute slice can confirm or invalidate the design assumption underneath the whole feature.
+    - **Smaller integration cost** — small commits merge cleanly; big ones turn into conflict-resolution sessions.
+    - **Easier to pair on or hand off** — small slices have clear start and end points; big ones are hard to share.
+- "What's the smallest set we'd commit to right now, and what should we defer? We want low WIP and the most important work first; everything else either waits or gets cut."
+  - **Why XP and Lean limit WIP and force prioritization:**
+    - **Low WIP = faster flow** — fewer things in-flight means each thing finishes (and ships) sooner.
+    - **Prioritization forces value clarity** — if we can't say what's most important right now, we don't fully understand the feature yet.
+    - **Highest-priority first reduces risk** — if we have to stop, we've already shipped what mattered most. The opposite (everything half-done) leaves nothing usable.
+    - **Less context-switching** — a focused queue keeps the brain (and the test suite) on one thread instead of fragmenting attention across many parallel ideas.
+    - **Cut = saved effort** — anything we don't actually need is the best work to skip. YAGNI applied at the sticky level.
+    - **Deferred ≠ deleted** — deferred stickies stay visible on the board so they're not forgotten, but the model never suggests them as next.
+    - **Late prioritization is cheaper than early commitment** — deferring something now is easy; unwinding six weeks of code built around a wrong priority is not.
 - "Is the Value Story still accurate given this map?"
 - "Is there a persona missing from any column?"
 

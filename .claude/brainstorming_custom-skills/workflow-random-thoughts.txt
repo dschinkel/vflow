@@ -277,3 +277,5 @@ They are presented with a list of popular names out in the XP community and the 
 I want to be able to see little dots, red/gren/refactor show up on the task being worked on in the story map to know that it's
 actually being constrained by a TDD workflow.  Would just be neat to see that it's doing what we asked it to do and confident it is during
 runtime, not just after having the log file created.
+
+/persona creation skill
