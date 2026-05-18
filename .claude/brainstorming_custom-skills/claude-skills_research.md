@@ -159,6 +159,19 @@ Edits to the project source are then immediately live — no copy needed.
 }
 ```
 
+### <span style="color:#76a039">.tdd-context.json — runtime state file</span>
+
+`.tdd-context.json` is a runtime state file written by the `/tdd` skill during an active session. It does not exist in the repo — it is created at the project root when `/tdd` starts and deleted when the session completes or is cancelled. It is gitignored.
+
+Its job is to be a communication channel between the TDD skill, the rollback/recovery logic, and hooks:
+
+- Written at Phase 1 with task name, feature context, log folder path, and starting state
+- Updated after every phase transition (`currentIncrement`, `currentPhase`, `filesChanged`)
+- Read by rollback logic on next `/tdd` startup if a session was interrupted — drives clean recovery
+- Read by the `verify-tdd-logs` hook on every prompt to check whether a TDD session is active and where log files should be
+
+It lives at the **project root of the repo being TDD'd** — not in vflow itself.
+
 ### <span style="color:#76a039">Hooks in this repo</span>
 
 | Script | Event | Purpose |

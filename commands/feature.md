@@ -299,6 +299,8 @@ Prepend to `story-map.md` (insert after the `# <Feature Name>` title line):
 > *Completed: YYYY-MM-DD*
 ```
 
+If a plan file for this feature exists in `docs/superpowers/plans/`, move it to `docs/superpowers/plans/done/`.
+
 Stop the server:
 
 ```bash

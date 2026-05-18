@@ -34,7 +34,7 @@ No TDD log files exist anywhere in the repo. Neither `story-maps/`, `tdd/`, nor 
 
 When feature-ui was implemented, the TDD skill either was not properly invoked, or Phase 2 (plan generation) and Phase 4 (log files) were skipped entirely. The skill must write `tdd-plan.md` before any code and append to `tdd-implementation.md` after every cycle — this did not happen.
 
-**Resolution status:** Unresolved. This is a compliance failure — the skill already has the rules, they were just not followed. No fix was applied this session.
+**Resolution status:** Resolved. `verify-tdd-logs.sh` hook built and registered under `UserPromptSubmit` in `~/.claude/settings.json`. Blocks the next prompt if either log file is missing once a TDD session is active.
 
 **Proposed fixes:**
 1. Strengthen language in the skill — change permissive wording to hard "must", make log-writing steps explicit and non-skippable.

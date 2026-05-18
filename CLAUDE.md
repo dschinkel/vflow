@@ -68,6 +68,8 @@ This applies to both the main agent and any subagents. When `/feature` is invoke
 - `docs/refactorings/` is gitignored — do not commit session output.
 - `.tdd-context.json` is gitignored — state file written by `/tdd` during a session.
 - Naming is the only refactoring type currently in scope. More will be added iteratively.
+- When any plan in `docs/superpowers/plans/` is fully implemented, move it to `docs/superpowers/plans/done/`. Never leave a completed plan in the root plans folder.
+- When implementing from a plan, tick each step's checkbox (`- [ ]` → `- [x]`) immediately after that step is complete. Do not batch at the end.
 - `commands/` is the distribution source. `~/.claude/commands/` is where they land on the user's machine.
 - Use **pnpm** for any Node work, never npm.
 

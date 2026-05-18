@@ -27,7 +27,7 @@ Write `commands/feature.md` — the four-phase XP conductor (Drafter → Provoca
 **Files:**
 - Create: `commands/feature.md`
 
-- [ ] **Step 1: Create `commands/feature.md`**
+- [x] **Step 1: Create `commands/feature.md`**
 
 ```markdown
 ---
@@ -120,7 +120,7 @@ Proceed to Phase 2.
 ---
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add commands/feature.md
@@ -134,7 +134,7 @@ git commit -m "feat: feature.md — frontmatter, invocation, Phase 1 Drafter"
 **Files:**
 - Modify: `commands/feature.md`
 
-- [ ] **Step 1: Append Phase 2 — Provocateur**
+- [x] **Step 1: Append Phase 2 — Provocateur**
 
 ```markdown
 ## Phase 2 — Provocateur
@@ -173,7 +173,7 @@ Show the revised draft, then ask: *"Approve this map?"*
 ---
 ```
 
-- [ ] **Step 2: Append Phase 3 — Persist and server start**
+- [x] **Step 2: Append Phase 3 — Persist and server start**
 
 ```markdown
 ## Phase 3 — Persist
@@ -214,7 +214,7 @@ Print: *"Story map board is live at http://localhost:3847 — open it in your br
 ---
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add commands/feature.md
@@ -228,7 +228,7 @@ git commit -m "feat: feature.md — Phase 2 Provocateur + Phase 3 Persist + serv
 **Files:**
 - Modify: `commands/feature.md`
 
-- [ ] **Step 1: Append Phase 4 header, classification, and sticky selection loop**
+- [x] **Step 1: Append Phase 4 header, classification, and sticky selection loop**
 
 ```markdown
 ## Phase 4 — Implement, sticky by sticky
@@ -296,7 +296,7 @@ curl -s -X POST http://localhost:3847/active-sticky \
 ---
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add commands/feature.md
@@ -310,7 +310,7 @@ git commit -m "feat: feature.md — Phase 4 sticky selection and classification"
 **Files:**
 - Modify: `commands/feature.md`
 
-- [ ] **Step 1: Append scope routing flows**
+- [x] **Step 1: Append scope routing flows**
 
 ```markdown
 ### Per-sticky implementation — scope flows
@@ -403,7 +403,7 @@ Print: *"Feature '<name>' closed out. story-map.md marked complete."*
 ---
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add commands/feature.md
@@ -417,13 +417,13 @@ git commit -m "feat: feature.md — Phase 4 scope flows, done signal, server sto
 **Files:**
 - Create: `.claude/commands/feature.md`
 
-- [ ] **Step 1: Copy**
+- [x] **Step 1: Copy**
 
 ```bash
 cp commands/feature.md .claude/commands/feature.md
 ```
 
-- [ ] **Step 2: Verify identical**
+- [x] **Step 2: Verify identical**
 
 ```bash
 diff commands/feature.md .claude/commands/feature.md
@@ -431,7 +431,7 @@ diff commands/feature.md .claude/commands/feature.md
 
 Expected: no output.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add .claude/commands/feature.md
@@ -446,7 +446,7 @@ git commit -m "feat: mirror feature.md to .claude/commands/"
 - Modify: `CLAUDE.md`
 - Modify: `docs/superpowers/specs/feature/2026-05-17-feature-skill.md`
 
-- [ ] **Step 1: Add `/feature` to the shipped commands table in `CLAUDE.md`**
+- [x] **Step 1: Add `/feature` to the shipped commands table in `CLAUDE.md`**
 
 The table currently ends with the `/hexagonal-scaffold` row. Add:
 
@@ -454,7 +454,7 @@ The table currently ends with the `/hexagonal-scaffold` row. Add:
 | `/feature` | `commands/feature.md` — Drafter → Provocateur → Persist → Implement; story map board at `localhost:3847` |
 ```
 
-- [ ] **Step 2: Replace plan-link placeholder in the spec**
+- [x] **Step 2: Replace plan-link placeholder in the spec**
 
 The spec line 3 reads:
 
@@ -468,7 +468,7 @@ Replace with:
 > **Plan:** [feature-ui](../../plans/2026-05-18-feature-ui.md) · [feature skill](../../plans/2026-05-18-feature-skill.md)
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add CLAUDE.md docs/superpowers/specs/feature/2026-05-17-feature-skill.md

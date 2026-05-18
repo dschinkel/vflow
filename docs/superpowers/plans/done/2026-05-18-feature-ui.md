@@ -3,7 +3,7 @@
 > **Spec:** [Feature Skill — Design Spec](../../specs/skills/feature/2026-05-17-feature-skill.md)
 > **Skill plan:** [/feature Skill Plan](2026-05-18-feature-skill.md)
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 ### <span style="color:#76a039">Goal</span>
 
@@ -81,7 +81,7 @@ Open questions from the spec resolved here:
 - Create: `feature-ui/vite.config.js`
 - Create: `feature-ui/index.html`
 
-- [ ] **Step 1: Create `feature-ui/package.json`**
+- [x] **Step 1: Create `feature-ui/package.json`**
 
 ```json
 {
@@ -115,7 +115,7 @@ Open questions from the spec resolved here:
 }
 ```
 
-- [ ] **Step 2: Create `feature-ui/tsconfig.json`**
+- [x] **Step 2: Create `feature-ui/tsconfig.json`**
 
 ```json
 {
@@ -137,7 +137,7 @@ Open questions from the spec resolved here:
 }
 ```
 
-- [ ] **Step 3: Create `feature-ui/vite.config.js`**
+- [x] **Step 3: Create `feature-ui/vite.config.js`**
 
 ```javascript
 import { defineConfig } from 'vite'
@@ -155,7 +155,7 @@ export default defineConfig({
 })
 ```
 
-- [ ] **Step 4: Create `feature-ui/index.html`**
+- [x] **Step 4: Create `feature-ui/index.html`**
 
 ```html
 <!DOCTYPE html>
@@ -172,7 +172,7 @@ export default defineConfig({
 </html>
 ```
 
-- [ ] **Step 5: Install dependencies**
+- [x] **Step 5: Install dependencies**
 
 ```bash
 pnpm --dir feature-ui install
@@ -180,7 +180,7 @@ pnpm --dir feature-ui install
 
 Expected: `feature-ui/node_modules/` created, no errors.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add feature-ui/package.json feature-ui/tsconfig.json feature-ui/vite.config.js feature-ui/index.html feature-ui/pnpm-lock.yaml
@@ -196,7 +196,7 @@ git commit -m "feat: scaffold feature-ui/ with TypeScript + React + Vite"
 - Create: `feature-ui/server/boardStream.ts`
 - Create: `feature-ui/server/index.ts`
 
-- [ ] **Step 1: Create `feature-ui/server/parseStoryMap.ts`**
+- [x] **Step 1: Create `feature-ui/server/parseStoryMap.ts`**
 
 ```typescript
 import fs from 'fs'
@@ -222,7 +222,7 @@ export function parseStoryMap(filePath: string): StoryMapState {
       activities.push(current)
     } else if (current && line.startsWith('- [x] ')) {
       current.stickies.push({ text: line.slice(6).trim(), state: 'done' })
-    } else if (current && line.startsWith('- [ ] ')) {
+    } else if (current && line.startsWith('- [x] ')) {
       current.stickies.push({ text: line.slice(6).trim(), state: 'todo' })
     } else if (current) {
       const deferred = line.match(/^- ~~(.+)~~ \*\(deferred\)\*$/)
@@ -234,7 +234,7 @@ export function parseStoryMap(filePath: string): StoryMapState {
 }
 ```
 
-- [ ] **Step 2: Verify parser with a sample file**
+- [x] **Step 2: Verify parser with a sample file**
 
 ```bash
 (cd feature-ui && node_modules/.bin/tsx -e "
@@ -247,7 +247,7 @@ fs.writeFileSync('/tmp/test-feature/story-map.md', \`# Payments Flow
 
 ## User starts checkout
 - [x] View cart summary
-- [ ] Proceed to checkout
+- [x] Proceed to checkout
 - ~~Email receipt~~ *(deferred)*
 \`)
 console.log(JSON.stringify(parseStoryMap('/tmp/test-feature/story-map.md'), null, 2))
@@ -273,7 +273,7 @@ Expected:
 }
 ```
 
-- [ ] **Step 3: Create `feature-ui/server/boardStream.ts`**
+- [x] **Step 3: Create `feature-ui/server/boardStream.ts`**
 
 Manages the board stream. Holds HTTP response objects open and writes `data: ...\n\n` chunks to all of them whenever the story map changes. The browser's `EventSource` reads the same connection as a stream. When a tab closes, the `close` event fires and removes the response from the set automatically.
 
@@ -298,7 +298,7 @@ export function streamToAll(data: StoryMapState): void {
 }
 ```
 
-- [ ] **Step 4: Create `feature-ui/server/index.ts`**
+- [x] **Step 4: Create `feature-ui/server/index.ts`**
 
 ```typescript
 import Koa from 'koa'
@@ -352,7 +352,7 @@ app.use(router.routes())
 app.listen(port, () => console.log(`feature-ui: http://localhost:${port}`))
 ```
 
-- [ ] **Step 5: Verify server starts, serves state, and accepts active-sticky**
+- [x] **Step 5: Verify server starts, serves state, and accepts active-sticky**
 
 ```bash
 feature-ui/node_modules/.bin/tsx feature-ui/server/index.ts /tmp/test-feature/story-map.md 3847 &
@@ -374,7 +374,7 @@ Expected: `{"ok":true}`
 kill $(lsof -ti:3847) 2>/dev/null || true
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add feature-ui/server/
@@ -388,7 +388,7 @@ git commit -m "feat: Koa server with board stream, story-map parser, and active-
 **Files:**
 - Create: `feature-ui/src/types.ts`
 
-- [ ] **Step 1: Create `feature-ui/src/types.ts`**
+- [x] **Step 1: Create `feature-ui/src/types.ts`**
 
 ```typescript
 export type StickyState = 'todo' | 'done' | 'deferred' | 'active'
@@ -411,7 +411,7 @@ export interface StoryMapState {
 }
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add feature-ui/src/types.ts
@@ -430,7 +430,7 @@ git commit -m "feat: shared TypeScript types for story map state"
 - Create: `feature-ui/src/component-library/atoms/ColumnHeader.tsx`
 - Create: `feature-ui/src/component-library/atoms/GridBackground.tsx`
 
-- [ ] **Step 1: Create `feature-ui/src/component-library/atoms/Sticky.tsx`**
+- [x] **Step 1: Create `feature-ui/src/component-library/atoms/Sticky.tsx`**
 
 `state` drives CSS class and which accessory renders (checkmark for done, badge for active).
 
@@ -455,7 +455,7 @@ export default function Sticky({ text, state }: Props) {
 }
 ```
 
-- [ ] **Step 2: Create `feature-ui/src/component-library/atoms/ArrowUp.tsx`**
+- [x] **Step 2: Create `feature-ui/src/component-library/atoms/ArrowUp.tsx`**
 
 ```tsx
 export default function ArrowUp() {
@@ -463,7 +463,7 @@ export default function ArrowUp() {
 }
 ```
 
-- [ ] **Step 3: Create `feature-ui/src/component-library/atoms/Checkbox.tsx`**
+- [x] **Step 3: Create `feature-ui/src/component-library/atoms/Checkbox.tsx`**
 
 ```tsx
 export default function Checkbox() {
@@ -471,7 +471,7 @@ export default function Checkbox() {
 }
 ```
 
-- [ ] **Step 4: Create `feature-ui/src/component-library/atoms/Badge.tsx`**
+- [x] **Step 4: Create `feature-ui/src/component-library/atoms/Badge.tsx`**
 
 ```tsx
 export default function Badge() {
@@ -479,7 +479,7 @@ export default function Badge() {
 }
 ```
 
-- [ ] **Step 5: Create `feature-ui/src/component-library/atoms/ColumnHeader.tsx`**
+- [x] **Step 5: Create `feature-ui/src/component-library/atoms/ColumnHeader.tsx`**
 
 ```tsx
 interface Props {
@@ -497,7 +497,7 @@ export default function ColumnHeader({ index, name }: Props) {
 }
 ```
 
-- [ ] **Step 6: Create `feature-ui/src/component-library/atoms/GridBackground.tsx`**
+- [x] **Step 6: Create `feature-ui/src/component-library/atoms/GridBackground.tsx`**
 
 ```tsx
 export default function GridBackground() {
@@ -505,7 +505,7 @@ export default function GridBackground() {
 }
 ```
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add feature-ui/src/component-library/atoms/
@@ -522,7 +522,7 @@ git commit -m "feat: React atoms with TypeScript props"
 - Create: `feature-ui/src/component-library/organisms/ActivityColumn.tsx`
 - Create: `feature-ui/src/component-library/organisms/SuggestionBar.tsx`
 
-- [ ] **Step 1: Create `feature-ui/src/component-library/molecules/StickyWithArrow.tsx`**
+- [x] **Step 1: Create `feature-ui/src/component-library/molecules/StickyWithArrow.tsx`**
 
 Used for stickies at index > 0 within a column.
 
@@ -546,7 +546,7 @@ export default function StickyWithArrow({ text, state }: Props) {
 }
 ```
 
-- [ ] **Step 2: Create `feature-ui/src/component-library/molecules/SuggestionBarContent.tsx`**
+- [x] **Step 2: Create `feature-ui/src/component-library/molecules/SuggestionBarContent.tsx`**
 
 ```tsx
 interface Props {
@@ -563,7 +563,7 @@ export default function SuggestionBarContent({ stickyText }: Props) {
 }
 ```
 
-- [ ] **Step 3: Create `feature-ui/src/component-library/organisms/ActivityColumn.tsx`**
+- [x] **Step 3: Create `feature-ui/src/component-library/organisms/ActivityColumn.tsx`**
 
 First sticky has no arrow; all subsequent ones use `StickyWithArrow`.
 
@@ -595,7 +595,7 @@ export default function ActivityColumn({ index, name, stickies }: Props) {
 }
 ```
 
-- [ ] **Step 4: Create `feature-ui/src/component-library/organisms/SuggestionBar.tsx`**
+- [x] **Step 4: Create `feature-ui/src/component-library/organisms/SuggestionBar.tsx`**
 
 ```tsx
 import SuggestionBarContent from '../molecules/SuggestionBarContent'
@@ -613,7 +613,7 @@ export default function SuggestionBar({ stickyText }: Props) {
 }
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add feature-ui/src/component-library/molecules/ feature-ui/src/component-library/organisms/
@@ -630,7 +630,7 @@ git commit -m "feat: React molecules and organisms with TypeScript props"
 - Create: `feature-ui/src/main.tsx`
 - Create: `feature-ui/src/styles/main.css`
 
-- [ ] **Step 1: Create `feature-ui/src/component-library/templates/BoardLayout.tsx`**
+- [x] **Step 1: Create `feature-ui/src/component-library/templates/BoardLayout.tsx`**
 
 ```tsx
 import type { Activity } from '../../types'
@@ -664,7 +664,7 @@ export default function BoardLayout({ title, valueStory, activities, suggestedNe
 }
 ```
 
-- [ ] **Step 2: Create `feature-ui/src/use-cases/ViewStoryMap.tsx`**
+- [x] **Step 2: Create `feature-ui/src/use-cases/ViewStoryMap.tsx`**
 
 Owns the board stream connection. Injects `active` state into the matching sticky and derives the suggested next sticky. `suggestedNextText` is the first `todo` sticky across all activities.
 
@@ -717,7 +717,7 @@ export default function ViewStoryMap() {
 }
 ```
 
-- [ ] **Step 3: Create `feature-ui/src/main.tsx`**
+- [x] **Step 3: Create `feature-ui/src/main.tsx`**
 
 ```tsx
 import React from 'react'
@@ -732,7 +732,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 ```
 
-- [ ] **Step 4: Create `feature-ui/src/styles/main.css`**
+- [x] **Step 4: Create `feature-ui/src/styles/main.css`**
 
 ```css
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -818,7 +818,7 @@ body {
 .loading { display: flex; align-items: center; justify-content: center; height: 100vh; color: #888; }
 ```
 
-- [ ] **Step 5: Build and verify TypeScript compiles cleanly**
+- [x] **Step 5: Build and verify TypeScript compiles cleanly**
 
 ```bash
 pnpm --dir feature-ui build
@@ -826,7 +826,7 @@ pnpm --dir feature-ui build
 
 Expected: `feature-ui/dist/` created, no TypeScript errors, no build errors.
 
-- [ ] **Step 6: Verify in browser**
+- [x] **Step 6: Verify in browser**
 
 ```bash
 feature-ui/node_modules/.bin/tsx feature-ui/server/index.ts /tmp/test-feature/story-map.md 3847 &
@@ -840,7 +840,7 @@ Expected: board renders — "Payments Flow" title, activity column with done/tod
 kill $(lsof -ti:3847) 2>/dev/null || true
 ```
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add feature-ui/src/
@@ -854,7 +854,7 @@ git commit -m "feat: React UI — component-library, use-cases/ViewStoryMap, Typ
 **Files:**
 - Modify: `install.sh`
 
-- [ ] **Step 1: Add feature-ui build + deploy block to `install.sh`**
+- [x] **Step 1: Add feature-ui build + deploy block to `install.sh`**
 
 After the commands loop (after the line `echo "installed command: $(basename "$f")"`), insert:
 
@@ -880,7 +880,7 @@ else
 fi
 ```
 
-- [ ] **Step 2: Run install.sh and verify**
+- [x] **Step 2: Run install.sh and verify**
 
 ```bash
 bash install.sh
@@ -894,7 +894,7 @@ ls ~/.claude/feature-ui/
 
 Expected: `dist/  node_modules/  package.json  server/`
 
-- [ ] **Step 3: Verify deployed server starts**
+- [x] **Step 3: Verify deployed server starts**
 
 ```bash
 ~/.claude/feature-ui/node_modules/.bin/tsx \
@@ -907,7 +907,7 @@ kill $(lsof -ti:3847) 2>/dev/null || true
 
 Expected: output starts with `{"title":"Payments Flow"`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add install.sh
