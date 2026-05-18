@@ -1,14 +1,14 @@
-# Brainstorm
+# <span style="color:#76a039">Brainstorm</span>
 Info on how Claude Skills and Rules work.
 
 ---
 
-## Local .claude Folder & Custom Skills
+## <span style="color:#76a039">Local .claude Folder & Custom Skills</span>
 
 The `.claude/` folder at the project root is Claude Code's local configuration directory.
 It is project-scoped, so settings and skills here only apply when working in this repo.
 
-### Option 1: `.claude/commands/` (native Claude Code)
+### <span style="color:#76a039">Option 1: `.claude/commands/` (native Claude Code)</span>
 
 ```
 .claude/
@@ -32,7 +32,7 @@ Skills in `.claude/commands/` are local (project-only). Skills placed in
 **Tradeoff:** Zero setup, works out of the box today. One file per skill with no place for
 examples or templates — limited structure for complex skills.
 
-### Option 2: `.claude/skills/` (custom framework)
+### <span style="color:#76a039">Option 2: `.claude/skills/` (custom framework)</span>
 
 ```
 .claude/
@@ -54,7 +54,7 @@ structure.
 **Tradeoff:** Richer organization — better for complex skills with multiple templates and
 examples. Requires building or adopting the framework that powers it.
 
-### Rules: project-wide vs. skill-specific
+### <span style="color:#76a039">Rules: project-wide vs. skill-specific</span>
 
 These two things are complementary, not redundant.
 
@@ -79,7 +79,7 @@ skill's operation.
 
 ---
 
-## Auto-created `.claude/` at Project Root
+## <span style="color:#76a039">Auto-created `.claude/` at Project Root</span>
 
 When you open a project in Claude Code, it automatically creates a `.claude/` folder at
 the root of the working directory if one doesn't already exist. This is not something you
@@ -90,12 +90,12 @@ It contains a `settings.local.json` file for project-level Claude Code configura
 should typically be gitignored if it contains local-only settings.
 
 
-## Local .claude Folder & Custom Skills
+## <span style="color:#76a039">Local .claude Folder & Custom Skills</span>
 
 The `.claude/` folder at the project root is Claude Code's local configuration directory.
 It is project-scoped, so settings and skills here only apply when working in this repo.
 
-### Option 1: `.claude/commands/` (native Claude Code)
+### <span style="color:#76a039">Option 1: `.claude/commands/` (native Claude Code)</span>
 
 ```
 .claude/
@@ -119,7 +119,7 @@ Skills in `.claude/commands/` are local (project-only). Skills placed in
 **Tradeoff:** Zero setup, works out of the box today. One file per skill with no place for
 examples or templates — limited structure for complex skills.
 
-### Option 2: `.claude/skills/` (custom framework)
+### <span style="color:#76a039">Option 2: `.claude/skills/` (custom framework)</span>
 
 ```
 .claude/
@@ -141,7 +141,7 @@ structure.
 **Tradeoff:** Richer organization — better for complex skills with multiple templates and
 examples. Requires building or adopting the framework that powers it.
 
-### Rules: project-wide vs. skill-specific
+### <span style="color:#76a039">Rules: project-wide vs. skill-specific</span>
 
 These two things are complementary, not redundant.
 

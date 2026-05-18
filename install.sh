@@ -68,5 +68,25 @@ else
   echo "registered UserPromptSubmit hook in $SETTINGS"
 fi
 
+# --- feature-ui ---
+FEATURE_UI_SRC="$REPO_DIR/feature-ui"
+FEATURE_UI_DEST="$CLAUDE_DIR/feature-ui"
+
+if command -v pnpm >/dev/null 2>&1; then
+  echo "building feature-ui..."
+  pnpm --dir "$FEATURE_UI_SRC" install --silent
+  pnpm --dir "$FEATURE_UI_SRC" build 2>/dev/null
+
+  mkdir -p "$FEATURE_UI_DEST"
+  cp -r "$FEATURE_UI_SRC/server"       "$FEATURE_UI_DEST/"
+  cp -r "$FEATURE_UI_SRC/dist"         "$FEATURE_UI_DEST/"
+  cp    "$FEATURE_UI_SRC/package.json" "$FEATURE_UI_DEST/"
+
+  pnpm --dir "$FEATURE_UI_DEST" install --prod --silent
+  echo "installed feature-ui → $FEATURE_UI_DEST"
+else
+  echo "warning: pnpm not found — skipping feature-ui. Install pnpm and re-run install.sh."
+fi
+
 echo ""
 echo "Done. Restart Claude Code for hook changes to take effect."

@@ -3,7 +3,7 @@ description: Internal operation invoked by /hexagonal during greenfield scaffold
 allowed-tools: "Write Bash"
 ---
 
-# Hexagonal Scaffold Operation
+# <span style="color:#76a039">Hexagonal Scaffold Operation</span>
 
 Creates a Hexagonal Architecture folder layout for a new service and writes a master `README.md` documenting the pattern in the selected language's idiomatic style.
 
@@ -11,7 +11,7 @@ This skill is invoked by `/hexagonal` during the greenfield flow. It is not inte
 
 ---
 
-## Inputs (provided by caller)
+## <span style="color:#76a039">Inputs (provided by caller)</span>
 
 - `serviceName` — string, e.g. `payments`
 - `language` — `node` or `python`
@@ -22,7 +22,7 @@ If any input is missing or invalid, halt and report the issue to the caller. Do 
 
 ---
 
-## What It Produces
+## <span style="color:#76a039">What It Produces</span>
 
 ```
 <destination>/
@@ -37,14 +37,14 @@ No `domain/` folder. No code files. No framework boilerplate. The README is the 
 
 ---
 
-## Procedure
+## <span style="color:#76a039">Procedure</span>
 
-### Step 1 — Verify destination
+### <span style="color:#76a039">Step 1 — Verify destination</span>
 
 - If `<destination>` exists and is non-empty → halt with: *"Destination `<destination>` already exists and contains files. Pick a different name or remove the existing directory first."*
 - If `<destination>` does not exist → create it.
 
-### Step 2 — Create the four layer folders
+### <span style="color:#76a039">Step 2 — Create the four layer folders</span>
 
 Create empty directories (no placeholder files, no `.gitkeep` — keep it clean):
 
@@ -57,11 +57,11 @@ mkdir -p <destination>/data
 
 Use the `Bash` tool for the `mkdir -p` calls.
 
-### Step 3 — Write the master README
+### <span style="color:#76a039">Step 3 — Write the master README</span>
 
 Write `<destination>/README.md` using the template below, substituting `<service-name>` and inserting the language-specific pseudocode block. If `styleNotes` is non-empty, append a "Style Conventions (from reference codebase)" section at the bottom.
 
-#### README template (both languages share the structure)
+#### <span style="color:#76a039">README template (both languages share the structure)</span>
 
 ```markdown
 # <service-name>
@@ -120,7 +120,7 @@ Each arrow means "depends on (calls into)". Nothing flows backward. Use cases ne
 <OPTIONAL-STYLE-NOTES-SECTION>
 ```
 
-#### Node.js pseudocode block
+#### <span style="color:#76a039">Node.js pseudocode block</span>
 
 When `language === "node"`, insert this where `<LANGUAGE-SPECIFIC-PSEUDOCODE-GOES-HERE>` appears:
 
@@ -189,7 +189,7 @@ export const orderController = ({ processOrder }: { processOrder: ProcessOrder }
 - **TypeScript types** on all public-facing function signatures.
 ````
 
-#### Python pseudocode block
+#### <span style="color:#76a039">Python pseudocode block</span>
 
 When `language === "python"`, insert this where `<LANGUAGE-SPECIFIC-PSEUDOCODE-GOES-HERE>` appears:
 
@@ -197,7 +197,7 @@ When `language === "python"`, insert this where `<LANGUAGE-SPECIFIC-PSEUDOCODE-G
 ### Data adapter (driven)
 
 ```python
-# data/payment_gateway.py
+# <span style="color:#76a039">data/payment_gateway.py</span>
 from typing import TypedDict
 
 class ChargeResult(TypedDict):
@@ -211,7 +211,7 @@ def charge(amount: int, token: str, http_client) -> ChargeResult:
 ### Repository (port)
 
 ```python
-# repositories/payment_repository.py
+# <span style="color:#76a039">repositories/payment_repository.py</span>
 from typing import TypedDict
 from data import payment_gateway
 
@@ -228,7 +228,7 @@ def record_charge(amount: int, token: str, http_client) -> Charge:
 ### Use case (application logic)
 
 ```python
-# use_cases/process_order.py
+# <span style="color:#76a039">use_cases/process_order.py</span>
 from typing import TypedDict
 from repositories import payment_repository
 
@@ -250,7 +250,7 @@ def place_order(order_input: OrderInput, http_client) -> Order:
 ### Controller (driving adapter)
 
 ```python
-# controllers/order_controller.py
+# <span style="color:#76a039">controllers/order_controller.py</span>
 from use_cases import process_order
 
 def handle_post_order(request, http_client):
@@ -266,7 +266,7 @@ def handle_post_order(request, http_client):
 - **Type hints** on all public-facing function signatures.
 ````
 
-#### Optional style-notes section
+#### <span style="color:#76a039">Optional style-notes section</span>
 
 If `styleNotes` is non-empty, append this section to the end of the README (replacing `<OPTIONAL-STYLE-NOTES-SECTION>`):
 
@@ -280,7 +280,7 @@ The following conventions were extracted from the reference codebase and apply a
 
 If `styleNotes` is empty, omit the heading entirely (delete the `<OPTIONAL-STYLE-NOTES-SECTION>` placeholder line).
 
-### Step 4 — Report back to the caller
+### <span style="color:#76a039">Step 4 — Report back to the caller</span>
 
 Print:
 ```
@@ -296,7 +296,7 @@ The caller (`/hexagonal`) is responsible for any user-facing success message bey
 
 ---
 
-## Error Handling
+## <span style="color:#76a039">Error Handling</span>
 
 - **Destination exists and is non-empty** → halt with the exact message from Step 1. Do not partially populate.
 - **`mkdir -p` fails** → halt and surface the underlying error.

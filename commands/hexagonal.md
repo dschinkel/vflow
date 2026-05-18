@@ -3,7 +3,7 @@ description: Use when implementing any feature that involves service-layer code 
 allowed-tools: "Read Edit Write Bash Glob"
 ---
 
-# Hexagonal Architecture Skill
+# <span style="color:#76a039">Hexagonal Architecture Skill</span>
 
 Governs how all service-layer code is structured. Two roles:
 
@@ -14,7 +14,7 @@ Governs how all service-layer code is structured. Two roles:
 
 ---
 
-## Invocation
+## <span style="color:#76a039">Invocation</span>
 
 ```
 /hexagonal payments                  # greenfield scaffold, base rules only
@@ -25,7 +25,7 @@ Governs how all service-layer code is structured. Two roles:
 
 ---
 
-## Layer Rules (always enforced)
+## <span style="color:#76a039">Layer Rules (always enforced)</span>
 
 | Layer | Folder | Responsibility |
 |---|---|---|
@@ -35,7 +35,7 @@ Governs how all service-layer code is structured. Two roles:
 | Data | `data/` | Driven adapters. Wrap external APIs, DBs, AI SDKs. **Only place where external service details live.** |
 | Domain | `domain/` | **Not scaffolded by default.** Only introduced when logic is genuinely duplicated across 2+ modules and can be grouped under a well-named entity with like responsibilities. |
 
-### What repositories must NOT do
+### <span style="color:#76a039">What repositories must NOT do</span>
 
 - No retry logic
 - No model fallback strategy
@@ -46,14 +46,14 @@ These belong in the use case.
 
 ---
 
-## Enforced Style Rules (language-agnostic)
+## <span style="color:#76a039">Enforced Style Rules (language-agnostic)</span>
 
 - **Business logic stays in use cases.** Logic specific to one use case lives inside that use case. It is not extracted to the domain layer unless genuinely shared by 2+ modules.
 - **Repositories are thin.** They translate between the use case's world and the data adapter's world. No business logic leaks in.
 - **Test names in prose.** Written in domain language and layman's terms. No function names, no implementation references. Example: *"generates a lifestyle image at the requested temperature"* — not *"passes temperature to generationConfig"*.
 - **One use case per file, one responsibility per use case.**
 
-### Node.js style rules
+### <span style="color:#76a039">Node.js style rules</span>
 
 - **JS Module Pattern** — closures returning plain objects with named methods.
 - **No `create` prefix** on factory functions.
@@ -61,7 +61,7 @@ These belong in the use case.
 - **camelCase** file names and identifiers.
 - **TypeScript types on all public-facing function signatures.**
 
-### Python style rules
+### <span style="color:#76a039">Python style rules</span>
 
 - **Idiomatic functional Python** — module-level functions, no unnecessary classes.
 - Dependencies injected as function parameters.
@@ -71,15 +71,15 @@ These belong in the use case.
 
 ---
 
-## Greenfield Flow (user-invoked)
+## <span style="color:#76a039">Greenfield Flow (user-invoked)</span>
 
 When the user runs `/hexagonal <service-name>` or `/hexagonal <service-name> @<reference-path>`:
 
-### Step 1 — Resolve service name
+### <span style="color:#76a039">Step 1 — Resolve service name</span>
 
 If the argument is missing, ask: *"What's the service name?"* Use the answer.
 
-### Step 2 — Ask for language
+### <span style="color:#76a039">Step 2 — Ask for language</span>
 
 Always ask, never auto-detect:
 
@@ -93,7 +93,7 @@ Which language?
 
 Record the choice. Both `hexagonal.md` and `hexagonal-scaffold.md` honor it.
 
-### Step 3 — Resolve scaffold destination
+### <span style="color:#76a039">Step 3 — Resolve scaffold destination</span>
 
 Probe the project root:
 - If a `src/` directory exists → propose `src/<service-name>/`.
@@ -101,7 +101,7 @@ Probe the project root:
 
 Ask: *"Create the service at `<proposed-path>`? (yes / specify a different path)"*. Use whatever the user confirms.
 
-### Step 4 — Optional reference-codebase analysis
+### <span style="color:#76a039">Step 4 — Optional reference-codebase analysis</span>
 
 If the invocation included a `@<reference-path>` argument:
 
@@ -117,7 +117,7 @@ If the invocation included a `@<reference-path>` argument:
 
 If no `@<reference-path>` was provided, skip this step entirely.
 
-### Step 5 — Confirmation gate (greenfield with reference only)
+### <span style="color:#76a039">Step 5 — Confirmation gate (greenfield with reference only)</span>
 
 If reference analysis ran:
 
@@ -129,7 +129,7 @@ If reference analysis ran:
 
 When no `@<reference-path>` was provided, skip the gate — base rules are already known.
 
-### Step 6 — Dispatch the scaffold
+### <span style="color:#76a039">Step 6 — Dispatch the scaffold</span>
 
 Invoke `hexagonal-scaffold` with the resolved context:
 
@@ -140,7 +140,7 @@ Invoke `hexagonal-scaffold` with the resolved context:
 
 The scaffold skill produces the folder structure and the master `README.md`. This skill (`hexagonal.md`) does not write any files directly during the greenfield flow.
 
-### Step 7 — Done
+### <span style="color:#76a039">Step 7 — Done</span>
 
 Print:
 ```
@@ -152,25 +152,25 @@ Scaffold complete at <destination>/.
 
 ---
 
-## Auto-Invocation Flow (agent feature-slice work)
+## <span style="color:#76a039">Auto-Invocation Flow (agent feature-slice work)</span>
 
 When an agent is writing or modifying any file inside an existing service directory, this skill governs the work automatically.
 
-### Detection
+### <span style="color:#76a039">Detection</span>
 
 The skill considers itself auto-invoked when *any* of the following holds:
 
 - The file being created/edited is inside a `controllers/`, `use-cases/`, `repositories/`, or `data/` folder.
 - The user is describing a new use case, repository, data adapter, or controller in plain language.
 
-### Behavior
+### <span style="color:#76a039">Behavior</span>
 
 - Apply all layer rules and style constraints automatically.
 - **Language is inferred from existing files** in the surrounding service. No prompt.
 - If the agent is editing files inside an existing service directory, **treat that directory as the style reference automatically** — no user prompt, no confirmation gate. Read enough sibling files to mirror their conventions.
 - **No confirmation gate during auto-invocation** — the agent already knows the rules and applies them directly.
 
-### What the agent must NOT do during auto-invocation
+### <span style="color:#76a039">What the agent must NOT do during auto-invocation</span>
 
 - Create a `domain/` folder speculatively.
 - Add retry logic or orchestration inside a repository.
@@ -181,7 +181,7 @@ The skill considers itself auto-invoked when *any* of the following holds:
 
 ---
 
-## Composition with Other Skills
+## <span style="color:#76a039">Composition with Other Skills</span>
 
 - `/hexagonal-scaffold` — internal operation, invoked by this skill during the greenfield flow (Step 6). Not user-facing.
 - `/feature` (future) — auto-invokes this skill when generating service-layer code per sticky.
@@ -190,7 +190,7 @@ The skill considers itself auto-invoked when *any* of the following holds:
 
 ---
 
-## Future Operations (not yet implemented)
+## <span style="color:#76a039">Future Operations (not yet implemented)</span>
 
 - `hexagonal-review.md` — brownfield analysis. Reports what code is in the wrong layer.
 - `hexagonal-refactor.md` — brownfield. Moves misplaced code to the correct layer.
@@ -199,7 +199,7 @@ These will be added in future iterations and dispatched from this skill the same
 
 ---
 
-## Error Handling
+## <span style="color:#76a039">Error Handling</span>
 
 - **Service-name missing and user supplies none** → halt with: *"I need a service name to proceed. Try `/hexagonal <service-name>`."*
 - **Reference path (`@<path>`) does not exist** → halt with: *"The reference path `<path>` was not found. Provide an existing folder, or omit the `@<path>` argument to use base rules only."*

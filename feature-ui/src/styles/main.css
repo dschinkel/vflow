@@ -1,0 +1,81 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+.grid-background {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(#e5e5e5 1px, transparent 1px),
+    linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.board-layout { position: relative; z-index: 1; padding: 0 24px 32px; min-height: 100vh; }
+.board-header { padding: 20px 0 8px; }
+.board-title { font-size: 22px; font-weight: 700; }
+.board-value-story { font-size: 13px; color: #555; margin-top: 4px; font-style: italic; }
+.board-columns { display: flex; gap: 16px; align-items: flex-start; padding-top: 16px; overflow-x: auto; }
+
+.suggestion-bar {
+  background: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+.suggestion__text strong { color: #2563eb; }
+.suggestion__empty { color: #888; }
+
+.activity-column { min-width: 160px; display: flex; flex-direction: column; gap: 8px; }
+.activity-column__stickies { display: flex; flex-direction: column; gap: 0; }
+
+.column-header {
+  background: #f0f0f0;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  padding: 6px 10px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.column-header__index { font-size: 11px; font-weight: 700; color: #888; }
+.column-header__name { font-size: 12px; font-weight: 600; }
+
+.sticky {
+  background: #86efac;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.sticky--done     { background: #bbf7d0; color: #888; }
+.sticky--deferred { background: #fecdd3; text-decoration: line-through; color: #999; }
+.sticky--active   { border-color: #eab308; box-shadow: 0 0 0 2px #fef08a; }
+.sticky__text { flex: 1; }
+
+.sticky-with-arrow { display: flex; flex-direction: column; align-items: center; }
+.arrow-up { font-size: 14px; color: #888; line-height: 1; padding: 2px 0; }
+
+.checkbox { font-size: 11px; color: #16a34a; font-weight: 700; }
+
+.badge {
+  font-size: 9px; font-weight: 700;
+  background: #eab308; color: #fff;
+  padding: 1px 5px; border-radius: 3px;
+  white-space: nowrap;
+}
+
+.loading { display: flex; align-items: center; justify-content: center; height: 100vh; color: #888; }

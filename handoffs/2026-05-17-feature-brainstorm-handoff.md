@@ -1,11 +1,11 @@
-# vflow — Hand-off: /feature Brainstorm + Codebase Audit
+# <span style="color:#76a039">vflow — Hand-off: /feature Brainstorm + Codebase Audit</span>
 _2026-05-17_
 
 > Companion to the prior [2026-05-17-hand-off.md](2026-05-17-hand-off.md). That doc summarizes the repo as it stood after `/refactor`, `/tdd`, and `/hexagonal` shipped. This one picks up after the heavy `/feature` brainstorm and a codebase reflection pass.
 
 ---
 
-## What's Shipped (unchanged from prior hand-off)
+## <span style="color:#76a039">What's Shipped (unchanged from prior hand-off)</span>
 
 | Command | Status | Location | Notes |
 |---|---|---|---|
@@ -18,7 +18,7 @@ Hooks: `end-refactor-log-session-stats.sh` (Stop, token counting), `start-refact
 
 ---
 
-## What Got Done This Session
+## <span style="color:#76a039">What Got Done This Session</span>
 
 1. **Refined `/feature` Provocateur questions** — first two bullets rewritten:
    - "Are there any stickies we could split further?" + 7 XP reasons (smallest-slice rationale)
@@ -30,8 +30,8 @@ Hooks: `end-refactor-log-session-stats.sh` (Stop, token counting), `start-refact
 6. **Cosmetic sticky shortcut:** `/feature` handles edit/test/commit/check-off directly. No `/tdd`, no `/hexagonal`.
 7. **Sub-skill composition mental model written into spec:** `/tdd` is the driver, `/hexagonal` is the shape, `/refactor` is the polish inside `/tdd`'s REFACTOR.
 8. **Composition contract via `.tdd-context.json`** locked: `/feature` writes `targetService` and `scope` in addition to existing fields.
-9. **Sibling spec created:** [Hexagonal Invocation Modes brainstorm](../docs/superpowers/specs/skills/hexagonal/2026-05-17-hexagonal-invocation-modes.md) — captures greenfield vs brownfield invocation surface for `/hexagonal`.
-10. **New spec:** [Claude Design research notes](../docs/superpowers/specs/2026-05-17-claude-design-research.md) — Claude Design exists (Anthropic Labs, April 2026 launch), is a hosted prototyping product, not a fit as a dependency for `/feature` v1.
+9. **Sibling spec created:** [Hexagonal Invocation Modes brainstorm](../docs/todo/2026-05-17-hexagonal-invocation-modes.md) — captures greenfield vs brownfield invocation surface for `/hexagonal`. _(Moved to docs/todo/ on 2026-05-18 since no plan/implementation exists yet.)_
+10. **New spec:** [Claude Design research notes](../docs/superpowers/specs/other/2026-05-17-claude-design-research.md) — Claude Design exists (Anthropic Labs, April 2026 launch), is a hosted prototyping product, not a fit as a dependency for `/feature` v1.
 11. **Feature spec checkpoint written** — new sections: UI Stack and Distribution, Sub-Skill Composition, Brainstorm In Progress (open questions). Phase 4 heavily rewritten. Story Map UI section adjusted for v1 read-only board.
 12. **New memories saved** (cross-conversation):
     - `feedback_smallest-slice.md` — push for the smallest possible slice always
@@ -40,7 +40,7 @@ Hooks: `end-refactor-log-session-stats.sh` (Stop, token counting), `start-refact
 
 ---
 
-## Key Decisions Locked In
+## <span style="color:#76a039">Key Decisions Locked In</span>
 
 - **Feature = potentially multi-service.** A feature can span multiple services (decomposed by domain/use case). Per-sticky `targetService` is real, not implicit.
 - **`/feature` invokes `/hexagonal` for every non-cosmetic sticky** — explicit invocation, brownfield mode dominant. Greenfield mode only fires when the sticky's `targetService` is a new service that doesn't exist yet. Auto-trigger via frontmatter description is NOT the brownfield path.
@@ -52,40 +52,40 @@ Hooks: `end-refactor-log-session-stats.sh` (Stop, token counting), `start-refact
 
 ---
 
-## Open Questions (Continue Brainstorm)
+## <span style="color:#76a039">Open Questions (Continue Brainstorm)</span>
 
-See [Open Questions section of /feature spec](../docs/superpowers/specs/feature/2026-05-17-feature-skill-design.md#brainstorm-in-progress--open-questions). High-level groups:
+See [Open Questions section of /feature spec](../docs/superpowers/specs/skills/feature/2026-05-17-feature-skill-design.md#brainstorm-in-progress--open-questions). High-level groups:
 
 - **UI behavior:** server lifecycle (PID, port, cleanup), markdown→JSON pipeline, SSE endpoint design, v2 click-to-select.
 - **Visual layer:** detailed atomic inventory, polish-target specifics, yellow/blue sub-task color rule.
 - **Composition:** Mode-A bulk-review UX (combined vs separate tables), done signal / feature close-out format.
 - **Repo structure:** `feature-ui/` layout, `install.sh` changes for pnpm + Vite.
-- **`/hexagonal` brownfield invocation:** Q1–Q5 in the [Hexagonal Invocation Modes brainstorm](../docs/superpowers/specs/skills/hexagonal/2026-05-17-hexagonal-invocation-modes.md).
+- **`/hexagonal` brownfield invocation:** Q1–Q5 in the [Hexagonal Invocation Modes brainstorm](../docs/todo/2026-05-17-hexagonal-invocation-modes.md).
 
 ---
 
-## Discrepancies / Issues Found (Codebase Audit)
+## <span style="color:#76a039">Discrepancies / Issues Found (Codebase Audit)</span>
 
 > **Cleanup pass status — updated 2026-05-17 (post-archive):**
-> - ✅ **A, B** — both orphan-plan groups archived to `docs/superpowers/plans/archive/` with `git mv` (history preserved). Each archived file gained a `Status: Archived` header explaining what superseded it. Relative paths inside the archived plans were re-anchored to their new locations, and the 2 inbound links from refactor research docs were repointed to the archive paths.
+> - ✅ **A, B** — both orphan-plan groups archived to `docs/superpowers/plans/done/` with `git mv` (history preserved). Each archived file gained a `Status: Archived` header explaining what superseded it. Relative paths inside the archived plans were re-anchored to their new locations, and the 2 inbound links from refactor research docs were repointed to the archive paths.
 > - ❌ **C, D, E, J** — not addressed in this cleanup pass.
 > - ⚠️ **Broken cross-links** — partial: 2 of the original 4 resolved (1 directly via archive, 1 because its container moved into a code fence). 2 still broken: the `/tdd` plan body reference and the hexagonal plan self-references.
 
-### Stale / orphan files
+### <span style="color:#76a039">Stale / orphan files</span>
 
-**A. Obsolete hexagonal plans (no inbound spec link).** ✅ **RESOLVED** — archived 2026-05-17 to `docs/superpowers/plans/archive/skills/hexagonal/`. Earlier brainstorm produced a split-pair plan that's been superseded by the unified plan we wrote and committed. The original orphan files were:
+**A. Obsolete hexagonal plans (no inbound spec link).** ✅ **RESOLVED** — archived 2026-05-17 to `docs/superpowers/plans/done/skills/hexagonal/`. Earlier brainstorm produced a split-pair plan that's been superseded by the unified plan we wrote and committed. The original orphan files were:
 - `docs/superpowers/plans/skills/hexagonal/2026-05-17-hexagonal-architecture-skill.md`
 - `docs/superpowers/plans/skills/hexagonal/2026-05-17-hexagonal-scaffold-skill.md`
 
 **Canonical now:** `docs/superpowers/plans/2026-05-17-hexagonal-architecture-skill.md` (the spec's `Plan:` link points only here).
 
-**B. Orphan refactor plan.** ✅ **RESOLVED** — archived 2026-05-17 to `docs/superpowers/plans/archive/skills/2026-05-14-refactor-skill.md`. The 2 inbound links from `docs/superpowers/specs/skills/refactor-skill/*.md` were repointed to the archive path with an "(archived)" annotation noting that `/refactor` has since gained the `--output <dir>` flag.
+**B. Orphan refactor plan.** ✅ **RESOLVED** — archived 2026-05-17 to `docs/superpowers/plans/done/skills/2026-05-14-refactor-skill.md`. The 2 inbound links from `docs/superpowers/specs/skills/refactor-skill/*.md` were repointed to the archive path with an "(archived)" annotation noting that `/refactor` has since gained the `--output <dir>` flag.
 
 **C. Orphan research specs.** ❌ **NOT RESOLVED** — still pending. Files in question:
 - `docs/superpowers/specs/2026-05-14-research-vflow-plugin-distribution.md` — no inbound links.
 - `docs/superpowers/specs/models-research.md` — no date prefix (convention is `YYYY-MM-DD-...`), no inbound links.
 
-### Broken cross-links
+### <span style="color:#76a039">Broken cross-links</span>
 
 Python check originally found **4 actually broken `.md` links** (after correcting for `realpath -m` macOS incompatibility). Status update post-archive:
 
@@ -95,7 +95,7 @@ Python check originally found **4 actually broken `.md` links** (after correctin
 
 **Reality check on the original prediction.** The hand-off originally said "If you archive/delete the obsolete plans (issue A), 3 of these 4 disappear automatically." That turned out to be optimistic — the archive resolved 1, but the moves themselves introduced 4 new breakages (relative paths inside the archived files now assumed the wrong levels). Those 4 were fixed inline during the archive. Net result: 2 of the original 4 broken links remain.
 
-### Documentation drift
+### <span style="color:#76a039">Documentation drift</span>
 
 **D. `README.md` is an empty stub.** ❌ **NOT RESOLVED** — still pending. Just `# vflow` and nothing else. Anyone landing on the repo via GitHub sees nothing. Should at minimum point to `CLAUDE.md` for orientation.
 
@@ -107,7 +107,7 @@ Python check originally found **4 actually broken `.md` links** (after correctin
 
 Either update `CLAUDE.md` now to reflect shipped state, or note it'll be updated when `/feature` lands.
 
-### Forward-looking spec/skill gaps (will block `/feature` implementation)
+### <span style="color:#76a039">Forward-looking spec/skill gaps (will block `/feature` implementation)</span>
 
 These aren't bugs in shipped code — they're known mismatches between `/feature`'s spec and what its sub-skills currently support. Each needs an update when `/feature` is implemented.
 
@@ -131,11 +131,11 @@ Needed when `/feature` lands:
 
 **I. Hook registration in `install.sh` is hand-listed per hook.** `STOP_HOOK_COMMAND` and `SKILL_START_HOOK_COMMAND` are hardcoded strings for the refactor hooks. When future hooks are added (none currently planned for `/tdd`/`/hexagonal`/`/feature` per their specs, but the door is open), `install.sh` needs a per-hook addition. Worth noting as low-grade maintenance debt; not urgent.
 
-### Naming inconsistencies
+### <span style="color:#76a039">Naming inconsistencies</span>
 
 **J. `models-research.md` lacks date prefix.** ❌ **NOT RESOLVED** — still pending. Convention everywhere else is `YYYY-MM-DD-<topic>.md`. Either rename to `2026-05-14-models-research.md` (best guess at original date) or leave as a known exception.
 
-### Things that are FINE (worth recording as "verified")
+### <span style="color:#76a039">Things that are FINE (worth recording as "verified")</span>
 
 - All shipped commands have matching files in both `commands/` and `.claude/commands/` (no drift between canonical and mirror).
 - `/tdd` spec ↔ plan cross-links resolve correctly (top-of-file `Spec:`/`Plan:` headers both work post-move).
@@ -146,7 +146,7 @@ Needed when `/feature` lands:
 
 ---
 
-## What to Pick Up Next
+## <span style="color:#76a039">What to Pick Up Next</span>
 
 In rough priority order (whichever feels right):
 
@@ -162,7 +162,7 @@ In rough priority order (whichever feels right):
 
 ---
 
-## Memories Active This Session
+## <span style="color:#76a039">Memories Active This Session</span>
 
 Saved cross-conversation in `~/.claude/projects/-Users-zevia-code-ai-vflow/memory/`:
 

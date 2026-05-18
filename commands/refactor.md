@@ -3,11 +3,11 @@ description: Use when user runs /refactor, asks to rename identifiers, variables
 allowed-tools: "Read Edit Bash"
 ---
 
-# Refactor Skill
+# <span style="color:#76a039">Refactor Skill</span>
 
 This skill handles **naming refactors only**. More refactoring types will be added in future iterations.
 
-## Invocation
+## <span style="color:#76a039">Invocation</span>
 
 ```
 /refactor @<file-or-folder> [--output <dir>]
@@ -22,7 +22,7 @@ The optional `--output <dir>` flag overrides the default output directory. When 
 
 ---
 
-## On Start
+## <span style="color:#76a039">On Start</span>
 
 1. Print: *"This skill currently handles naming refactors only. More refactoring types will be added in future iterations."*
 
@@ -119,7 +119,7 @@ The optional `--output <dir>` flag overrides the default output directory. When 
 
 ---
 
-## Processing Each File
+## <span style="color:#76a039">Processing Each File</span>
 
 Always display `[File: <relative-path>]` at the top of every message while processing.
 
@@ -135,7 +135,7 @@ For each file, repeat this sequence:
 
 ---
 
-## Proposal Format
+## <span style="color:#76a039">Proposal Format</span>
 
 Present each rename as:
 
@@ -150,7 +150,7 @@ Why: The name includes the type ("String") which is an implementation detail, no
 Accept? (yes / no)
 ```
 
-### Accept / Reject Flow
+### <span style="color:#76a039">Accept / Reject Flow</span>
 
 - **yes** → apply the rename in the file, append to session log, move to next candidate.
 - **no** → generate one alternative suggestion with a different name and explanation. Present in same format. Ask again.
@@ -158,7 +158,7 @@ Accept? (yes / no)
 
 ---
 
-## Naming Principles
+## <span style="color:#76a039">Naming Principles</span>
 
 Apply in order:
 
@@ -170,7 +170,7 @@ Apply in order:
 
 ---
 
-## Session Log
+## <span style="color:#76a039">Session Log</span>
 
 After each proposal resolves, append to the session log (`docs/refactorings/<folder>/<log-filename>`) under the appropriate section.
 
@@ -219,7 +219,7 @@ Rules:
 
 ---
 
-## At Session End — Analysis
+## <span style="color:#76a039">At Session End — Analysis</span>
 
 Before generating the tree diagram, produce the experiment analysis:
 
@@ -239,13 +239,13 @@ Approve or reject this analysis?
 
 ---
 
-## At Session End — Tree Diagram
+## <span style="color:#76a039">At Session End — Tree Diagram</span>
 
 When all files have been processed, generate a Mermaid tree diagram using the claude-mermaid MCP tool and save it to `docs/refactorings/<folder>/<tree-filename>` (the tree filename was determined in step 3 of On Start).
 
 The tree mirrors the **code structure** — not the construct-type grouping in the flat log. It shows which file was processed, which functions were entered, and what was renamed inside each function.
 
-### Diagram Structure
+### <span style="color:#76a039">Diagram Structure</span>
 
 ```
 %%{init: {"flowchart": {"useMaxWidth": false, "wrappingWidth": 1200}}}%%
@@ -256,7 +256,7 @@ graph TD
   FN --> RENAME2["fn <oldName> → <newName> ✗"]
 ```
 
-### Node Styling
+### <span style="color:#76a039">Node Styling</span>
 
 | Node type | Fill | Stroke | Extra |
 |-----------|------|--------|-------|
@@ -265,7 +265,7 @@ graph TD
 | Accepted rename | `#d4edda` | `#28a745` | — |
 | Rejected rename | `#f8d7da` | `#dc3545` | — |
 
-### Rules
+### <span style="color:#76a039">Rules</span>
 
 - Always use `%%{init: {"flowchart": {"useMaxWidth": false, "wrappingWidth": 1200}}}%%` so node text does not wrap.
 - Every proposed rename (accepted or rejected) appears in the tree.
@@ -274,7 +274,7 @@ graph TD
 
 ---
 
-## Error Handling
+## <span style="color:#76a039">Error Handling</span>
 
 - **`@` reference not found** → halt immediately. Print: *"The file or folder `[path]` was not found. Please check the path and try again."*
 - **File has no functions** → tell the user, skip the file, and continue to the next file if processing a folder.

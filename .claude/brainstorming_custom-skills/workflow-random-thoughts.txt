@@ -279,3 +279,22 @@ actually being constrained by a TDD workflow.  Would just be neat to see that it
 runtime, not just after having the log file created.
 
 /persona creation skill
+
+We need a /ui skill that ensures stuff like this happens
+      1. we want typescript components in React - .tsx and .ts
+      2. we also want domain driven design on the frontend so for react components like feature-ui/src/pages/StoryMapPage.tsx it should just be use cases so lets do feature-ui/src/use-cases/ViewStoryMap.tsx
+      3. lets put the atoms, molecules, and organism components into a folder called component-library
+      4. have it look at guidelines and tell it which parts of guidelines.md to port over
+      5. We do not want spagetti JSX code
+        <div className="board-columns">
+                {activities.map((a, i) => (
+                  <ActivityColumn key={a.name} index={i} name={a.name} stickies={a.stickies} />
+                ))}
+              </div>
+      6. Custom Test Doubles
+      7. Better Describe and Test names
+            Bad Examples
+            describe('ViewStoryMap', () => {}
+                it('renders the feature title once the board state arrives', async () => { }
+                it('marks the active sticky with the NOW badge when activeStickyText is set', () => { }
+                it('closes the board stream connection when unmounted', () => {}

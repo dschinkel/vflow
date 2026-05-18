@@ -1,6 +1,6 @@
-# Research Agent Skill Workflow
+# <span style="color:#76a039">Research Agent Skill Workflow</span>
 
-## Workflow Overview
+## <span style="color:#76a039">Workflow Overview</span>
 
 Note: the following is partially generated from thoughts from `workflow.txt`.
 
@@ -26,61 +26,61 @@ Note: the following is partially generated from thoughts from `workflow.txt`.
 ---
 Note: some of the human in the loop steps could end up being a new agent in the workflow down the road.
 
-### 👤 1. Initial Feature Request
+### <span style="color:#76a039">👤 1. Initial Feature Request</span>
 
 The raw feature ask from a human — a sentence, ticket, or idea in any form. The starting trigger for the whole workflow.
 
-### Skill 1: Value Story Interview
+### <span style="color:#76a039">Skill 1: Value Story Interview</span>
 
 Interviews the human conversationally to surface the persona, their friction, and what success looks like for them.
 
-### Skill 2: Generate Value Story
+### <span style="color:#76a039">Skill 2: Generate Value Story</span>
 
 Drafts the structured persona-level value story from the interview transcript.
 
-### 👤 4. Reviews Value Story
+### <span style="color:#76a039">👤 4. Reviews Value Story</span>
 
 Human approves or refines the generated value story before moving forward.
 
-### Skill 3: Story Map Interview
+### <span style="color:#76a039">Skill 3: Story Map Interview</span>
 
 Interviews the human about the feature flow — backbone features, tasks, and the first release slice.
 
-### Skill 4: Generate Story Map / Flows / Slices from Value Story
+### <span style="color:#76a039">Skill 4: Generate Story Map / Flows / Slices from Value Story</span>
 
 Generates the story map artifact from the interview, including features, tasks, and the proposed first slice.
 
-### 👤 7. Reviews Story Map
+### <span style="color:#76a039">👤 7. Reviews Story Map</span>
 
 Human approves or refines the story map before implementation planning begins.
 
-### Skill 5: Generate Feature Archive
+### <span style="color:#76a039">Skill 5: Generate Feature Archive</span>
 
 Generates a pre-implementation archive documenting the planned feature — the source of truth before a line of code is written.
 
-### 👤 9. Implementation
+### <span style="color:#76a039">👤 9. Implementation</span>
 
 Human or dev team builds the feature.
 
-### Skill 6: Generate Feature Implementation Archive
+### <span style="color:#76a039">Skill 6: Generate Feature Implementation Archive</span>
 
 Documents what was actually built during implementation, capturing any decisions or deviations made along the way.
 
-### Skill 7: Generate Drift Report
+### <span style="color:#76a039">Skill 7: Generate Drift Report</span>
 
 Compares the planned feature archive against the implementation archive to surface any drift between intent and delivery.
 
-### Skill 8: Retrospective
+### <span style="color:#76a039">Skill 8: Retrospective</span>
 
 Reflects on the full workflow — what went well, what to improve, and what to carry forward to the next feature.
 
 ---
 
-## Skill 1: Value Story Interview
+## <span style="color:#76a039">Skill 1: Value Story Interview</span>
 
 <img src="value-story-example.jpg" width="300" /> <img src="value-story-example2.png" width="300" /> <img src="value-story-example3.jpg" width="300" />
 
-### Value Story Structure
+### <span style="color:#76a039">Value Story Structure</span>
 
 A value story file has three sections. Each section is its own value story.
 For every new feature, you always start with Section 1.
@@ -110,12 +110,12 @@ This skill interviews specifically for Section 1 — the persona-level value sto
 
 ---
 
-### Interview style: structured vs. conversational
+### <span style="color:#76a039">Interview style: structured vs. conversational</span>
 
-#### Structured
+#### <span style="color:#76a039">Structured</span>
 Ask a fixed list of questions in sequence,
 
-#### Conversational
+#### <span style="color:#76a039">Conversational</span>
 Ask an opening question and dynamically follow up based on answers. 
 
 Conversational feels more natural but requires the
@@ -124,7 +124,7 @@ skill to know when it has enough to stop.
 Lean conversational with a loose framework
 underneath — enough structure to ensure the right topics get covered, but not a rigid form.
 
-### What "enough" looks like
+### <span style="color:#76a039">What "enough" looks like</span>
 The interview needs a stopping condition. Since this skill targets Section 1 (persona),
 it aims to surface:
 - Who the persona is
@@ -134,7 +134,7 @@ it aims to surface:
 When it has confident answers to all three, it wraps up and drafts the persona-level
 value story rather than continuing to ask questions.
 
-### Personas
+### <span style="color:#76a039">Personas</span>
 
 Any persona surfaced during the interview is saved to a shared `personas.md` file.
 This file lives outside of feature folders since personas are reusable across features:
@@ -154,12 +154,12 @@ numbered list of existing personas to choose from, or the option to create a new
 If an existing persona is chosen, the interview skips persona discovery and focuses on
 the feature-specific friction and success criteria for that persona.
 
-### Output
+### <span style="color:#76a039">Output</span>
 One generated `.md` file containing the Value Story followed by the full interview
 transcript below it for reference. Everything in one place — no hand-off, no separate
 files.
 
-#### Output file naming options
+#### <span style="color:#76a039">Output file naming options</span>
 
 **Option A — kebab-case, descriptive**
 ```
@@ -183,7 +183,7 @@ features/
 Each feature gets a folder; each skill in the workflow writes its artifact into it.
 Scales naturally as the workflow grows.
 
-### Framework alignment (open question)
+### <span style="color:#76a039">Framework alignment (open question)</span>
 Decide which story mapping framework to anchor to before writing the prompt:
 - Jeff Patton's User Story Mapping
 - Jobs-to-be-Done
@@ -193,20 +193,20 @@ The choice shapes which questions the interviewer prioritizes.
 
 ---
 
-## Skill 3: Story Map Interview
+## <span style="color:#76a039">Skill 3: Story Map Interview</span>
 
 Takes the approved value story as input and interviews the user to gather what is needed
 to build the story map. Where Skill 1 focused on the persona and their friction, this
 interview focuses on the feature itself — the user features, tasks, and first slice.
 
-### Input
+### <span style="color:#76a039">Input</span>
 
 Reads the `value-story.md` from the feature folder to anchor the interview on the
 already-approved persona, goal, and outcome before asking any questions. Also reads the
 original Initial Feature Request for any feature ideas or scope hints the user expressed
 up front.
 
-### Pre-populating the story map from prior context
+### <span style="color:#76a039">Pre-populating the story map from prior context</span>
 
 Before asking the user anything, the skill mines the two prior artifacts for story map
 seed material:
@@ -236,19 +236,19 @@ to add the first feature manually.
 detail yet to sketch the story map. What's a feature you'd like to start with?"* — and
 uses their answer as the first item on the map before continuing the interview.
 
-### What the interview surfaces
+### <span style="color:#76a039">What the interview surfaces</span>
 
 - The backbone: the high-level user features involved in achieving the goal
 - The tasks under each feature (the walking skeleton)
 - The first release slice — the minimum set of tasks that delivers real value
 
-### Interview style
+### <span style="color:#76a039">Interview style</span>
 
 Same conversational-with-structure approach as Skill 1. Opens by summarizing the value
 story so the user can confirm or correct the framing, then presents any pre-populated
 map seeds before moving into the feature flow.
 
-### What "enough" looks like
+### <span style="color:#76a039">What "enough" looks like</span>
 
 The interview wraps when it has:
 - One or more backbone features but limit it to one at a time as the default.  
@@ -257,7 +257,7 @@ The interview wraps when it has:
 - At least one layer of tasks under each feature
 - A proposed first slice identified
 
-### Iterative map building: the "Add Feature" loop
+### <span style="color:#76a039">Iterative map building: the "Add Feature" loop</span>
 
 Once the story map has its first feature added (via a separate **Add Feature** skill
 that appends a feature to the map), the skill does not stop — it prompts the user to
@@ -276,7 +276,7 @@ the user chooses "Done for now."
 Each iteration can either add a new backbone activity + tasks or deepen an existing one,
 letting the map grow organically across the conversation.
 
-### Output
+### <span style="color:#76a039">Output</span>
 
 Appends a `story-map-interview.md` to the feature folder alongside `value-story.md`.
 Skill 4 reads this file to generate the story map artifact.
