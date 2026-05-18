@@ -188,8 +188,8 @@ Two sources, combined:
 
 ### Step 3 — Derive the log folder
 
-| Source | Log folder |
-|---|---|
+| Source                               | Log folder |
+|--------------------------------------|------------|
 | Feature-invoked (state file present) | `story-maps/<feature>/tdd/<sticky-slug>/` |
 | Standalone (no state file) | `tdd/<task-slug>/` (relative to project root) |
 
@@ -345,8 +345,8 @@ Drive every increment in sequence using the plan as the guide. Update `.tdd-cont
 
 ### Mode comparison
 
-| Mode | Plan review | Commit prompts | Phase gates |
-|---|---|---|---|
+| Mode               | Plan review    | Commit prompts | Phase gates |
+|--------------------|----------------|----------------|-------------|
 | Conductor mode | Silent | Auto-commit | None |
 | Human-in-the-loop | Show + approve | Ask each time | RED, GREEN, REFACTOR |
 
@@ -474,8 +474,8 @@ The refactor log written by `/refactor` lands inside the log folder (because `/t
 
 Two cases.
 
-| Case | Trigger |
-|---|---|
+| Case            | Trigger |
+|-----------------|---------|
 | A — intentional | User says "stop" or "cancel" at any gate prompt during Phase 3 |
 | B — unexpected | `.tdd-context.json` is present at session start (previous session ended mid-increment) |
 
@@ -516,8 +516,8 @@ When `.tdd-context.json` exists at the very start of a new `/tdd` invocation:
 
 ### What gets rolled back vs kept
 
-| Artifact | Action |
-|---|---|
+| Artifact                                   | Action |
+|--------------------------------------------|--------|
 | Uncommitted test files (mid-RED) | Rolled back |
 | Uncommitted production code (mid-GREEN) | Rolled back |
 | Uncommitted refactor changes (mid-REFACTOR) | Rolled back |
@@ -666,8 +666,8 @@ Print: *"All artifacts in place. Run `bash install.sh` if you want to install to
 
 **Spec coverage (against `docs/superpowers/specs/skills/2026-05-17-tdd-skill-design.md`):**
 
-| Spec section | Implemented by |
-|---|---|
+| Spec section                                              | Implemented by |
+|-----------------------------------------------------------|----------------|
 | Invocation (with/without argument, feature-invoked) | Task 3, "Invocation" section of tdd.md |
 | Context passing (Option A + B hybrid) | Task 3, "On Start — Context Resolution" steps 2–4 |
 | Log location derivation | Task 3, "On Start" Step 3 |

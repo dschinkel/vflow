@@ -113,8 +113,8 @@ Governs how all service-layer code is structured. Two roles:
 
 ## Layer Rules (always enforced)
 
-| Layer | Folder | Responsibility |
-|---|---|---|
+| Layer        | Folder | Responsibility |
+|--------------|--------|----------------|
 | Controllers | `controllers/` | Driving adapters. Translate external input (HTTP, CLI, events) into plain objects. Pass to use cases. **No business logic.** |
 | Use Cases | `use-cases/` | Application logic. Orchestrates repositories and data adapters. **No I/O of its own.** One use case per business operation. |
 | Repositories | `repositories/` | Ports for persistence/external data. Accept a data adapter as a dependency. **Know nothing about HTTP or frameworks.** |
@@ -740,8 +740,8 @@ Print: *"All artifacts in place. Run `bash install.sh` if you want to install to
 
 **Spec coverage (against `docs/superpowers/specs/skills/hexagonal/2026-05-17-hexagonal-architecture-skill.md`):**
 
-| Spec section | Implemented by |
-|---|---|
+| Spec section                                              | Implemented by |
+|-----------------------------------------------------------|----------------|
 | Skill Structure (two-file pair) | Tasks 2 + 3 |
 | Trigger description (`hexagonal.md`) | Task 2, frontmatter |
 | Invocation forms (greenfield + auto-invoke) | Task 2, "Invocation" + "Greenfield Flow" + "Auto-Invocation Flow" |

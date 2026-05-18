@@ -12,8 +12,8 @@ vflow is a personal collection of Claude Code commands. It contains no applicati
 
 ## <span style="color:#76a039">Shipped commands</span>
 
-| Command | File |
-|---|---|
+| Command               | File |
+|-----------------------|---|
 | `/refactor` | `commands/refactor.md` — renames symbols/files/folders; supports `--output <dir>` |
 | `/tdd` | `commands/tdd.md` — RED/GREEN/REFACTOR conductor with state file (`.tdd-context.json`) and rollback |
 | `/hexagonal` | `commands/hexagonal.md` — enforces Hexagonal Architecture rules; greenfield scaffold dispatch |

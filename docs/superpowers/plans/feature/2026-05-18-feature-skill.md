@@ -245,8 +245,8 @@ Before any sticky runs, classify all unchecked stickies. Ask once:
 
 Examine each unchecked sticky and the workspace (look for existing service folders). Produce a table:
 
-| Sticky | Target service | Scope |
-|---|---|---|
+| Sticky               | Target service | Scope |
+|----------------------|----------------|-------|
 | Proceed to checkout | checkout | ui-only |
 | Enter card details | payments | ui-and-server |
 | Validate card number | payments | server-only |

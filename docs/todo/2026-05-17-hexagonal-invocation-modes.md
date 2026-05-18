@@ -48,8 +48,8 @@ The caller (either the user or another skill) emits `/hexagonal …` literally. 
 
 `/hexagonal` needs to know which mode it's being invoked in, because its procedure differs. The mode is determined by whether a service folder already exists at the target path.
 
-| Mode | Trigger | What the skill does |
-|---|---|---|
+| Mode        | Trigger | What the skill does |
+|-------------|---------|---------------------|
 | Greenfield | Target service folder does not exist | Resolves language → resolves destination → optional reference-codebase analysis → optional confirmation gate → dispatches `hexagonal-scaffold` to create the layout + README |
 | Brownfield | Target service folder exists with at least one of `controllers/`, `use-cases/`, `repositories/`, `data/` | (Procedure being designed — see Open Questions below) |
 

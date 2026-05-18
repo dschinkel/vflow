@@ -40,8 +40,8 @@ The feature skill writes `.tdd-context.json` immediately before invoking the TDD
 
 **Options considered and not selected:**
 
-| Option | Description | Why not selected |
-|---|---|---|
+| Option   | Description | Why not selected |
+|----------|-------------|-----------------|
 | A only | Argument carries all context | Complex argument strings needed for feature name + sticky name |
 | B only | State file carries all context | Staleness risk if not written immediately before invoke; hidden coupling |
 | C | Skill always asks the user | Breaks auto-invocation UX; user already confirmed the sticky |
@@ -89,8 +89,8 @@ Answer drives increment ordering in the plan.
 
 **Direction options:**
 
-| Option | Description | Status |
-|---|---|---|
+| Option      | Description | Status |
+|-------------|-------------|--------|
 | outside-in | Start at highest layer (UI/hook/controller), work down. Tests define the public contract first; lower layers emerge from need. | Default |
 | inside-out | Start at lowest layer (domain/data), work up. Core logic is solid before wiring up delivery. | Available |
 
@@ -108,8 +108,8 @@ Either answer: plan is always generated and written to `tdd-plan.md`.
 
 This question controls the autonomy dial for the entire session:
 
-| Mode | Plan review | Commit prompts | Phase gates |
-|---|---|---|---|
+| Mode               | Plan review    | Commit prompts | Phase gates |
+|--------------------|----------------|----------------|-------------|
 | Conductor mode | Silent | Auto-commit | None |
 | Human-in-the-loop | Show + approve | Ask each time | RED, GREEN, REFACTOR |
 
@@ -287,8 +287,8 @@ The refactor log entry links to the `/refactor` session log by relative path —
 
 Triggered by two cases:
 
-| Case | Trigger |
-|---|---|
+| Case            | Trigger |
+|-----------------|---------|
 | A — intentional | User says "stop" or "cancel" during any gate prompt |
 | B — unexpected | Session ended mid-increment; detected on next session start via `.tdd-context.json` + git status |
 
@@ -326,8 +326,8 @@ Detected at the start of a new session when `.tdd-context.json` exists:
 
 ### <span style="color:#76a039">What gets rolled back vs kept</span>
 
-| Artifact | Action |
-|---|---|
+| Artifact                                   | Action |
+|--------------------------------------------|--------|
 | Uncommitted test files (mid-RED) | Rolled back |
 | Uncommitted production code (mid-GREEN) | Rolled back |
 | Uncommitted refactor changes (mid-REFACTOR) | Rolled back |
@@ -356,8 +356,8 @@ The state file must track current phase and increment so rollback knows exactly 
 
 ## <span style="color:#76a039">Refactor Log Location</span>
 
-| Invocation | Refactor log location |
-|---|---|
+| Invocation                       | Refactor log location |
+|----------------------------------|-----------------------|
 | `/refactor` run manually | `docs/refactorings/<folder>/` (existing behavior, unchanged) |
 | `/refactor` invoked by TDD skill | `story-maps/<feature>/tdd/<sticky-slug>/` alongside `tdd-plan.md` and `tdd-implementation.md` |
 

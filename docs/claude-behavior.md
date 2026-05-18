@@ -4,8 +4,8 @@
 
 When you want Claude to reliably do something across sessions, where you put the instruction matters:
 
-| Location | Reliability | Why |
-|---|---|---|
+| Location                  | Reliability | Why |
+|---------------------------|-------------|-----|
 | `CLAUDE.md` | Highest | Loaded as project instructions. Claude is told to treat these as binding overrides over default behavior. Hard to miss. |
 | Memory (`/memory/*.md`) | Medium | Loaded at session start, but competes with everything else in context. Claude can drift from it under pressure. |
 | Nothing | None | Claude will forget between sessions. |

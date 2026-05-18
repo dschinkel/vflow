@@ -46,8 +46,8 @@ Invoked by the core skill (or directly) when the user explicitly wants to create
 
 ## <span style="color:#76a039">Layer Rules (always enforced)</span>
 
-| Layer | Folder | Responsibility |
-|---|---|---|
+| Layer        | Folder | Responsibility |
+|--------------|--------|----------------|
 | Controllers | `controllers/` | Driving adapters. Translate external input (HTTP, CLI, events) into plain objects. Pass to use cases. No business logic. |
 | Use Cases | `use-cases/` | Application logic. Orchestrates repositories and data adapters. No I/O of its own. One use case per business operation. |
 | Repositories | `repositories/` | Ports for persistence/external data. Accept a data adapter as a dependency. Know nothing about HTTP or frameworks. |

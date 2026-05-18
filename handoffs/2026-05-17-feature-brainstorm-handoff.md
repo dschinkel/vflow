@@ -7,8 +7,8 @@ _2026-05-17_
 
 ## <span style="color:#76a039">What's Shipped (unchanged from prior hand-off)</span>
 
-| Command | Status | Location | Notes |
-|---|---|---|---|
+| Command               | Status      | Location                      | Notes |
+|-----------------------|-------------|-------------------------------|-------|
 | `/refactor` | Shipped, in use | `commands/refactor.md` | Now accepts `--output <dir>` (added during `/tdd` impl) |
 | `/tdd` | Shipped | `commands/tdd.md` | Full RED/GREEN/REFACTOR conductor with state file + rollback |
 | `/hexagonal` (core) | Shipped | `commands/hexagonal.md` | Greenfield-shaped; brownfield procedure still being designed |

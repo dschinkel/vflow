@@ -4,8 +4,8 @@ A personal collection of Claude Code slash commands for disciplined software dev
 
 ## <span style="color:#76a039">Commands</span>
 
-| Command | What it does |
-|---|---|
+| Command               | What it does |
+|-----------------------|---|
 | `/refactor` | Renames symbols, variables, files, and folders across a codebase following user-defined naming rules. Supports `--output <dir>`. |
 | `/tdd` | Drives a full RED → GREEN → REFACTOR cycle, one increment at a time, with state tracking and rollback. |
 | `/hexagonal` | Enforces Hexagonal Architecture rules on service-layer code; scaffolds new services (greenfield). |

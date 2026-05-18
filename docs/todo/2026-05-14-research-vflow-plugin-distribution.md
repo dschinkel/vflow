@@ -98,8 +98,8 @@ nWave explicitly documents that the plugin marketplace is **not recommended** an
 
 ### <span style="color:#76a039">Comparison</span>
 
-| | `/plugins` approach (Superpowers/vflow) | CLI installer (nWave) |
-|---|---|---|
+|                        | `/plugins` approach (Superpowers/vflow) | CLI installer (nWave) |
+|------------------------|----------------------------------------|----------------------|
 | **Install method** | `/plugins add marketplace` + `/plugins install` | `pip install` + `nwave-ai install` |
 | **What gets installed** | Skills, MCP servers | Skills, agents, commands, hooks, Python lib |
 | **Hook support** | No (`${CLAUDE_PLUGIN_ROOT}` not populated) | Yes (copies directly to `~/.claude/`) |
@@ -118,8 +118,8 @@ vflow currently delivers **skills only** — no hooks. The `/plugins` approach i
 
 The thing Claude Code *natively* understands is `.claude/commands/`. These are parallel concepts from different layers:
 
-| | Superpowers | Native Claude Code |
-|---|---|---|
+|                | Superpowers | Native Claude Code |
+|----------------|-------------|-------------------|
 | Folder | `.claude/skills/` | `.claude/commands/` |
 | File | `SKILL.md` | `<command-name>.md` |
 | Metadata | `.skillfish.json` | None |
@@ -158,8 +158,8 @@ done
 
 ### <span style="color:#76a039">Trade-offs vs Other Approaches</span>
 
-| | Clone + Symlink | CLI Installer (nWave-style) |
-|---|---|---|
+|                   | Clone + Symlink | CLI Installer (nWave-style) |
+|-------------------|-----------------|----------------------------|
 | **Setup time** | ~30 seconds | ~5 minutes + Python req |
 | **Updates** | `git pull` | `uv tool upgrade nwave-ai` |
 | **Hook support** | Yes (files live in `~/.claude/`) | Yes |
