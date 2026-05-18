@@ -267,15 +267,15 @@ If the user answers "stop" or "cancel" at any prompt, perform **Rollback Case A*
 
 ## <span style="color:#76a039">Phase 4 — Log Files</span>
 
-Two files, both inside the log folder.
+Two files, both inside the log folder. Existence of both is enforced by the `verify-tdd-logs` hook — the next prompt will be blocked if either file is missing once a TDD session is active. Write them at the moments described below; do not wait.
 
 ### <span style="color:#76a039">`tdd-plan.md`</span>
 
-Written once at the end of Phase 2. Never modified after. Full structure shown in Phase 2.
+Written once at the end of Phase 2, before any code. Never modified after. Full structure shown in Phase 2.
 
 ### <span style="color:#76a039">`tdd-implementation.md`</span>
 
-Initialized at the start of Phase 3 with a header. Appended to after each cycle completes.
+Initialized at the start of Phase 3 with a header (before increment 1 begins). Appended to after each cycle completes.
 
 **Header (written once):**
 

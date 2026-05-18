@@ -91,6 +91,33 @@ should typically be gitignored if it contains local-only settings.
 
 ---
 
+## <span style="color:#76a039">When to use a Hook vs Rule vs Skill</span>
+
+The key distinction is **who enforces it**:
+
+| Mechanism | Enforced by | Depends on model compliance | When it runs |
+|---|---|---|---|
+| Hook | The harness | No | Lifecycle events — always |
+| Rule (CLAUDE.md) | The model | Yes | Every conversation — always loaded |
+| Skill | The model | Yes | On demand — only when invoked |
+
+**The real question to ask: can the model skip this?**
+
+- If yes and that's acceptable → rule or skill
+- If yes and that's *not* acceptable → hook
+
+**Hook** — use when you need a hard guarantee. The model cannot skip, forget, or rationalize past it. Best for: blocking bad state, verifying artifacts exist, enforcing preconditions. Tradeoff: hooks are dumb bash — no judgment, just checks.
+
+**Rule** — use when something applies universally and you want the model to know and reason about it across every session. Best for: preferences, conventions, standing orders. Tradeoff: the model can still drift.
+
+**Skill** — use when a task has complex multi-step logic that requires model judgment. Best for: workflows, phases, conditional behavior. Tradeoff: compliance-dependent.
+
+**The boundary in practice:** the *workflow* (what to do, when, where) belongs in the skill. The *enforcement* (did it actually happen) belongs in a hook. Skills define intent; hooks verify reality.
+
+In practice most things are rules or skills. Hooks are reserved for things where drift is unacceptable.
+
+---
+
 ## <span style="color:#76a039">Claude Code Hooks</span>
 
 Hooks are bash scripts that fire at specific Claude Code lifecycle events. They are
@@ -138,3 +165,4 @@ Edits to the project source are then immediately live — no copy needed.
 |---|---|---|
 | `end-refactor-log-session-stats.sh` | `Stop` | Sums token counts from session JSONL and writes total into the refactor log |
 | `start-refactor-skill.sh` | `UserPromptSubmit` | Blocks `/refactor` invocations when context window is too full (Sonnet: 90% min remaining, Opus: 80%) |
+| `verify-tdd-logs.sh` | `UserPromptSubmit` | Blocks next prompt if `tdd-plan.md` or `tdd-implementation.md` are missing during an active TDD session |
