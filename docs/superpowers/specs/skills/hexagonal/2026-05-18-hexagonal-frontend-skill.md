@@ -94,6 +94,8 @@ Named as `use` + the use case component name: `useViewCompany`, `useEditAddress`
 
 The hook orchestrates the repository. It handles loading state, error state, and any business decisions (branching on response, validation). It knows nothing about rendering.
 
+**Humble views.** By pushing all behavior into the hook, the use case component becomes a humble view — it knows only how to render what it is given and which user events to report. It holds no logic of its own. This separation is what makes the view testable in isolation and the behavior testable without a rendering environment.
+
 ---
 
 ## <span style="color:#76a039">Atoms and Domain Compositions</span>
@@ -135,7 +137,7 @@ Domain compositions must not call hooks or repositories. They receive all data v
 ### <span style="color:#76a039">Use case components</span>
 
 - Named `[Action][Domain].tsx`. PascalCase. One component per file.
-- Delegates all behavior to its companion hook (`use[Action][Domain].ts`).
+- **Humble view** — delegates all behavior to its companion hook (`use[Action][Domain].ts`). The component renders what it is given and reports user events. Nothing more.
 - Must not call a repository directly.
 - Props are plain domain objects — not raw API response shapes.
 - No business logic in JSX.
@@ -254,4 +256,5 @@ All open questions resolved:
 ## <span style="color:#76a039">What This Spec Does Not Cover</span>
 
 - The actual pseudocode for the scaffold README (that belongs in the plan/implementation)
-- How `hexagonal-frontend-review.md` or `hexagonal-frontend-refactor.md` would work (future brownfield operations)
+- Brownfield analysis — see [hexagonal-frontend-review spec](../../../../../todo/2026-05-18-hexagonal-frontend-review-skill.md)
+- Brownfield refactoring — see [hexagonal-frontend-refactor spec](../../../../../todo/2026-05-18-hexagonal-frontend-refactor-skill.md)
