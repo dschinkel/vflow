@@ -88,20 +88,22 @@ Work on "<task name>" — do you want this TDD'd?
 
 ### <span style="color:#76a039">Question 2 — Direction</span>
 
-If `.tdd-context.json` is present (feature-invoked), skip this question and use **outside-in** automatically.
-
-Otherwise:
+If `.tdd-context.json` is present (feature-invoked), skip this question and print:
 
 ```
-Outside-in or inside-out?
-
-  outside-in  — start at the highest layer (UI/hook/controller), work down.
-                Tests define the public contract first; lower layers emerge from need.
-  inside-out  — start at the lowest layer (domain/data), work up.
-                Core logic is solid before wiring up delivery.
-
-Which fits this task better?
+Direction: outside-in, starting at the React Hook layer (view layer is scaffold-only, not TDD'd).
 ```
+
+Otherwise, show the default and offer an override:
+
+```
+Direction: outside-in at the React Hook layer (default).
+  — Views are scaffold-only; TDD begins at the hook layer and works down.
+  — Type inside-out to override, or press enter to accept.
+```
+
+- If the user accepts (or types nothing): use **outside-in**, hook layer entry point.
+- If the user types **inside-out**: use inside-out, lowest layer first.
 
 Record the answer. Drives increment ordering in the plan.
 
@@ -178,9 +180,10 @@ COMMIT: feat: <sticky-slug>: cleanup: <behavior>
 
 ### <span style="color:#76a039">Rules baked into plan generation</span>
 
-- **Outside-in:** increments ordered highest layer → lowest. Never domain-first.
+- **Outside-in (React):** Increment 1 is the component scaffold — non-TDD, no RED phase. TDD entry point is the hook layer (Increment 2). Increments ordered hook → lower layers. Never view-first, never domain-first.
+- **Outside-in (non-React):** increments ordered highest layer (controller/API) → lowest. Never domain-first.
 - **Inside-out:** increments ordered lowest layer → highest.
-- **React tasks:** Increment 1 is always the component scaffold — non-TDD, no RED phase. TDD begins at the hook layer (Increment 2 and below). No tests at the controller layer.
+- **No tests at the controller layer** (React or non-React).
 - **Test names:** prose and domain language only. No function names, no technical patterns, no "should", no framework terms (e.g. `describe`, `it`).
 - **One behavior per increment:** an "and" in a test name means split the increment.
 - **Always write the plan**, even if the user chose not to review it.
@@ -243,8 +246,9 @@ If the user answers "stop" or "cancel" at any prompt, perform **Rollback Case A*
 
 ### <span style="color:#76a039">React-specific handling</span>
 
-- Increment 1 (component scaffold): no RED phase. Write the component layer directly.
-- TDD begins at Increment 2 (hook layer) and below.
+- Increment 1 (component scaffold): no RED phase. Write the view layer directly — this is not TDD'd.
+- TDD entry point is Increment 2: the hook layer. This is "outside-in" for React — starting under the skin, not at the view.
+- Work down from the hook layer through subsequent increments.
 - No tests at the controller layer.
 
 ### <span style="color:#76a039">Cleanup & Verification (final increment)</span>
