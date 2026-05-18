@@ -508,7 +508,7 @@ export default function GridBackground() {
 - [x] **Step 7: Commit**
 
 ```bash
-git add feature-ui/src/component-library/atoms/
+git add feature-ui/src/components/atoms/
 git commit -m "feat: React atoms with TypeScript props"
 ```
 
@@ -616,7 +616,7 @@ export default function SuggestionBar({ stickyText }: Props) {
 - [x] **Step 5: Commit**
 
 ```bash
-git add feature-ui/src/component-library/molecules/ feature-ui/src/component-library/organisms/
+git add feature-ui/src/components/molecules/ feature-ui/src/components/organisms/
 git commit -m "feat: React molecules and organisms with TypeScript props"
 ```
 
@@ -671,7 +671,7 @@ Owns the board stream connection. Injects `active` state into the matching stick
 ```tsx
 import { useState, useEffect } from 'react'
 import type { StoryMapState, Activity, StickyItem } from '../types'
-import BoardLayout from '../component-library/templates/BoardLayout'
+import BoardLayout from '../components/templates/BoardLayout'
 
 function withActiveState(activities: Activity[], activeStickyText: string | null): Activity[] {
   return activities.map(a => ({

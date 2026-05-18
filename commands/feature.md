@@ -157,6 +157,15 @@ Print: *"Story map board is live at http://localhost:3847 — open it in your br
 
 ### Step 3 — Proceed to Phase 4
 
+Print:
+
+```
+Story map is ready. Phase 4 (implementation) works best in a fresh session — the
+planning conversation has done its job and a clean context window keeps implementation
+sharp. Start a new Claude Code session and run /feature to resume; it will detect the
+story map and jump straight to Phase 4.
+```
+
 ---
 
 ## Phase 4 — Implement, sticky by sticky
