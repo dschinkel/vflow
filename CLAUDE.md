@@ -55,3 +55,14 @@ Practical consequences:
 - Naming is the only refactoring type currently in scope. More will be added iteratively.
 - `commands/` is the distribution source. `~/.claude/commands/` is where they land on the user's machine.
 - Use **pnpm** for any Node work, never npm.
+
+## <span style="color:#76a039">Gap and drift logging</span>
+
+When any conversation involves a skill being skipped, a rule not followed, a misunderstanding about what was done vs. what should have been done, or a missing rule discovered in a skill — log it immediately to `gaps/<YYYY-MM-DD>-session-gaps.md`.
+
+- One file per Claude session. Use today's date in the filename.
+- Each entry includes the user's prompt verbatim and Claude's admission or finding.
+- Append to the file if it already exists for this session; never create a duplicate.
+- Do not wait until the end of the session — log it as soon as the gap is identified.
+
+See `docs/claude-behavior.md` for why this lives in `CLAUDE.md` rather than memory.

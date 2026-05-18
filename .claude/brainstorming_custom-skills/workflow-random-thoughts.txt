@@ -298,3 +298,8 @@ We need a /ui skill that ensures stuff like this happens
                 it('renders the feature title once the board state arrives', async () => { }
                 it('marks the active sticky with the NOW badge when activeStickyText is set', () => { }
                 it('closes the board stream connection when unmounted', () => {}
+
+I am logging the following
+    - TDD plan and implementation
+    - sessions where we found drift or instances where claude did not follow my skill properly in /gaps
+    - refactoring log where it shows the refactors made and refactor suggestion rejections and why
