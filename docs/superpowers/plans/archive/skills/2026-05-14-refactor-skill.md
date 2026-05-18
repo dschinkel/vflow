@@ -1,6 +1,8 @@
 # Refactor Command Implementation Plan
 
-> **Specs:** [Refactor Skill — Research Notes](../../specs/skills/refactor-skill/2026-05-14-research-refactor-skill.md) · [Naming Research](../../specs/skills/refactor-skill/2026-05-14-research-refactor-skill_naming.md)
+> **Status:** Archived — original `/refactor` build plan. `/refactor` has since gained the `--output <dir>` flag; see `commands/refactor.md` for current behavior.
+>
+> **Specs:** [Refactor Skill — Research Notes](../../../specs/skills/refactor-skill/2026-05-14-research-refactor-skill.md) · [Naming Research](../../../specs/skills/refactor-skill/2026-05-14-research-refactor-skill_naming.md)
 
 **Goal:** Create a `/refactor` Claude Code custom command that proposes naming refactors using business domain language, following an inside-out strategy through the code structure.
 

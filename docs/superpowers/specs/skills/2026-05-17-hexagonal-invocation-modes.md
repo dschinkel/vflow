@@ -129,7 +129,7 @@ The Phase 4 per-sticky sequence will be locked to:
 3. **Invoke `/tdd "<sticky text>"`** — RED/GREEN/REFACTOR, per-increment commits, sticky check-off, `.tdd-context.json` cleanup.
 4. **Resume `/feature`** — regenerate `story-map.html`, surface next sticky.
 
-### TDD spec ([link](../2026-05-17-tdd-skill-design.md))
+### TDD spec ([link](2026-05-17-tdd-skill-design.md))
 
 If Q5 resolves to "state file" handoff (`.hexagonal-context.json`), `/tdd` needs to know to read it during GREEN-phase code generation. This is a small addition to its existing context-file pattern.
 

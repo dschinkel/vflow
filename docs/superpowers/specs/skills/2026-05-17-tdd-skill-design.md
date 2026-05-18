@@ -1,6 +1,6 @@
 # TDD Skill — Design Spec
 
-> **Plan:** [/tdd Skill Implementation Plan](../plans/2026-05-17-tdd-skill-design.md)
+> **Plan:** [/tdd Skill Implementation Plan](../../plans/2026-05-17-tdd-skill-design.md)
 
 ---
 

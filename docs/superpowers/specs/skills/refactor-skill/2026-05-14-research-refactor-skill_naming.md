@@ -1,6 +1,6 @@
 # Refactor Skill — Naming Research Notes
 
-> **Plan:** [Refactor Command Implementation Plan](../../../plans/skills/2026-05-14-refactor-skill.md)
+> **Plan (archived):** [Refactor Command Implementation Plan](../../../plans/archive/skills/2026-05-14-refactor-skill.md) — original `/refactor` build plan. `/refactor` has since been enhanced with the `--output <dir>` flag (see `commands/refactor.md` for current behavior).
 _2026-05-14_
 
 Naming-specific research for the `/refactor` skill. For general skill notes see `2026-05-14-research-refactor-skill.md`.
