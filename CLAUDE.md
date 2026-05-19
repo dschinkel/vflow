@@ -75,11 +75,11 @@ This applies to both the main agent and any subagents. When `/feature` is invoke
 
 ## <span style="color:#76a039">Gap and drift logging</span>
 
-When any conversation involves a skill being skipped, a rule not followed, a misunderstanding about what was done vs. what should have been done, or a missing rule discovered in a skill — log it immediately to `gaps.md` and each gap section should have a timestamp below its header.
+When any conversation involves a skill being skipped, a rule not followed, a misunderstanding about what was done vs. what should have been done, or a missing rule discovered in a skill — log it immediately to `gaps.md` at the repo root and each gap section should have a date stamp below its header.
 
-- One file per Claude session. Use today's date in the filename.
-- Each entry includes the user's prompt verbatim and Claude's admission or finding.
-- Append to the file if it already exists for this session; never create a duplicate.
+- Single file: `gaps.md` at the repo root. Do not create per-session files or a `gaps/` directory.
+- Organize gaps under `## Session — <YYYY-MM-DD> (<short descriptor>)` headers. Append new sessions to the bottom.
+- Each gap is an `### Gap N — <title>` entry with a date stamp on the next line (`*YYYY-MM-DD*`), the user's prompt verbatim, and Claude's admission or finding.
 - Do not wait until the end of the session — log it as soon as the gap is identified.
 
 See `docs/claude-behavior.md` for why this lives in `CLAUDE.md` rather than memory.
