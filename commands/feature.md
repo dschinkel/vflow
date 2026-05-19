@@ -170,6 +170,18 @@ story map and jump straight to Phase 4.
 
 ## Phase 4 — Implement, sticky by sticky
 
+### One-time auto-commit toggle at Phase 4 start
+
+Before classification, ask once:
+
+*"Auto-commit each sticky as it's completed? [Y/n] (default: yes)"*
+
+Remember the answer for the rest of this `/feature` run. Default is `yes`.
+
+**Autonomous mode (this skill invoked by a subagent or otherwise non-interactively):** skip the prompt and use the default (auto-commit `yes`).
+
+This toggle governs the commit step in the `cosmetic` flow below. (Commits made by `/tdd` during the `ui-only`, `ui-and-server`, and `server-only` flows are owned by `/tdd` and are not affected by this toggle.)
+
 ### One-time classification at Phase 4 start
 
 Before any sticky runs, classify all unchecked stickies. Ask once:
@@ -182,12 +194,12 @@ Before any sticky runs, classify all unchecked stickies. Ask once:
 
 Examine each unchecked sticky and the workspace (look for existing service folders). Produce a table:
 
-| Sticky | Target service | Scope |
-|---|---|---|
-| Proceed to checkout | checkout | ui-only |
-| Enter card details | payments | ui-and-server |
-| Validate card number | payments | server-only |
-| Show order summary | orders | ui-only |
+| Sticky | Target service | Scope | Skills |
+|---|---|---|---|
+| Proceed to checkout | checkout | ui-only | /hexagonal + /tdd |
+| Enter card details | payments | ui-and-server | /hexagonal + /tdd |
+| Validate card number | payments | server-only | /hexagonal + /tdd |
+| Show order summary | orders | cosmetic | direct edit |
 
 Scope values:
 - `cosmetic` — pure visual/text change, no logic.
@@ -195,11 +207,17 @@ Scope values:
 - `ui-and-server` — frontend AND backend layers.
 - `server-only` — backend controller → use-case → repository → data only.
 
+Skills values (derived from Scope — no user input needed):
+- `cosmetic` → `direct edit`
+- `ui-only` → `/hexagonal + /tdd`
+- `ui-and-server` → `/hexagonal + /tdd`
+- `server-only` → `/hexagonal + /tdd`
+
 Ask: *"Edit any row, then say 'approve'."* Apply all edits at once.
 
 **Mode B — user specifies per sticky:**
 
-Before each sticky, ask: *"Sticky '<text>' — target service? scope?"*
+Before each sticky, ask: *"Sticky '<text>' — target service? scope? (skills will be shown based on scope)"*
 
 **Switching modes:** user can say "switch to mode B" or "switch to mode A" at any time.
 
@@ -238,7 +256,31 @@ curl -s -X POST http://localhost:3847/active-sticky \
 
 1. Make the edit directly with the Edit tool.
 2. Run the project's existing test suite to confirm nothing broke.
-3. Commit: `git commit -m "feat: <feature-slug>/<sticky-slug>: <sticky text>"`.
+3. If the auto-commit toggle is `yes`, commit using the canonical multi-line format below. If `no`, skip this step — leave staging and committing to the user.
+
+   **Canonical commit message format:**
+
+   - **Subject:** `<type>: <feature-slug>/<sticky-slug>: <sticky text>`
+     - Pick the type that matches the change: `feat` (new behavior), `fix` (bug), `docs` (docs-only), `refactor`, `chore`, `test`, etc. Default is `feat` for /feature work.
+     - Keep the subject ≤ 72 characters. Trim the sticky text if needed.
+   - **Blank line.**
+   - **Body:** a short paragraph (3–6 lines, wrapped at ~72 characters) explaining WHAT changed and WHY/CONTEXT — not a restatement of the subject. Mention any non-obvious decisions or follow-ups.
+   - **No `Co-Authored-By` trailer.** No `Generated with Claude Code` trailer. No emoji.
+
+   Use a HEREDOC so the body keeps its line breaks:
+
+   ```bash
+   git commit -m "$(cat <<'EOF'
+   <type>: <feature-slug>/<sticky-slug>: <sticky text>
+
+   <Body paragraph: what the sticky changed and why. Keep it tight —
+   the reader should be able to understand the change without opening
+   the diff. Reference related stickies or files only when it adds
+   context the subject line cannot carry.>
+   EOF
+   )"
+   ```
+
 4. Check off the sticky in `story-map.md` (change `- [ ]` to `- [x]`).
 5. Loop.
 
@@ -251,9 +293,12 @@ curl -s -X POST http://localhost:3847/active-sticky \
 {
   "feature": "<feature-slug>",
   "sticky": "<sticky text>",
-  "storyMapPath": "story-maps/<feature-slug>/story-map.md"
+  "storyMapPath": "story-maps/<feature-slug>/story-map.md",
+  "autoCommit": <value from Phase-4-start toggle — true or false>
 }
 ```
+
+`autoCommit` carries the Phase-4-start toggle's value into `/tdd`. If the toggle is `no`, set this to `false` and `/tdd` will suppress every commit during this sticky's TDD session (the canonical commit message is still recorded in the implementation log, marked `(suppressed)`).
 
 3. Invoke `/tdd "<sticky text>"`. Outside-in TDD is automatic (state file present). Component scaffold (the View) is Step 1, non-TDD. `/tdd` handles per-increment commits, sticky check-off in `story-map.md`, and `.tdd-context.json` cleanup on exit.
 4. After `/tdd` exits, loop. (Do NOT check off the sticky — `/tdd` already did.)
@@ -271,9 +316,12 @@ Same as `ui-only` but `/hexagonal` enforces both frontend AND backend hex layers
 {
   "feature": "<feature-slug>",
   "sticky": "<sticky text>",
-  "storyMapPath": "story-maps/<feature-slug>/story-map.md"
+  "storyMapPath": "story-maps/<feature-slug>/story-map.md",
+  "autoCommit": <value from Phase-4-start toggle — true or false>
 }
 ```
+
+`autoCommit` carries the Phase-4-start toggle's value into `/tdd`. If the toggle is `no`, set this to `false` and `/tdd` will suppress every commit during this sticky's TDD session (the canonical commit message is still recorded in the implementation log, marked `(suppressed)`).
 
 3. Invoke `/tdd "<sticky text>"`. Outside-in TDD from the controller layer.
 4. After `/tdd` exits, loop. (Do NOT check off — `/tdd` already did.)

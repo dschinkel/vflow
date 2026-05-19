@@ -62,6 +62,7 @@ Write the state file at the project root with the resolved context. Schema:
   "sticky": "<task name>",
   "storyMapPath": "<path or null>",
   "logFolder": "<derived log folder>",
+  "autoCommit": true,
   "currentIncrement": 0,
   "currentPhase": "INIT",
   "filesChanged": []
@@ -69,6 +70,8 @@ Write the state file at the project root with the resolved context. Schema:
 ```
 
 Update `currentIncrement`, `currentPhase`, and `filesChanged` after each transition. This is the rollback ground truth.
+
+**`autoCommit` field:** When `/tdd` is invoked from `/feature`, this field is written by `/feature`'s Phase-4-start auto-commit toggle. Default is `true` (or when invoked standalone with no incoming value). If `false`, every `git commit` step in this session is suppressed — `/tdd` runs the full RED/GREEN/REFACTOR/cleanup flow but never commits. The user stages and commits manually after the session ends. See "Canonical commit message format" in Phase 3 below for the exact suppression rules.
 
 ---
 
@@ -187,6 +190,7 @@ COMMIT: feat: <sticky-slug>: cleanup: <behavior>
 - **Test names:** prose and domain language only. No function names, no technical patterns, no "should", no framework terms (e.g. `describe`, `it`).
 - **One behavior per increment:** an "and" in a test name means split the increment.
 - **Always write the plan**, even if the user chose not to review it.
+- **`COMMIT:` lines in `tdd-plan.md` show the planned subject only.** The full commit message (subject + blank line + body) is generated at commit time in Phase 3 per the canonical format. The plan template stays subject-only so it remains skimmable.
 
 ### <span style="color:#76a039">Plan review gate</span>
 
@@ -205,6 +209,35 @@ COMMIT: feat: <sticky-slug>: cleanup: <behavior>
 
 Drive every increment in sequence using the plan as the guide. Update `.tdd-context.json` (`currentIncrement`, `currentPhase`, `filesChanged`) after each transition.
 
+### <span style="color:#76a039">Canonical commit message format</span>
+
+Every commit made by `/tdd` — GREEN, REFACTOR, or cleanup, in conductor or human-in-the-loop mode — uses this format. Same shape as `/feature`'s cosmetic-flow commits.
+
+- **Subject:** one of:
+  - GREEN: `<type>: <sticky-slug>: <behavior>`
+  - REFACTOR: `<type>: <sticky-slug>: refactor: <behavior>`
+  - Cleanup: `<type>: <sticky-slug>: cleanup: <behavior>`
+
+  Type is `feat` by default. Use `fix`, `docs`, `refactor`, `chore`, `test`, etc. when more accurate (e.g. a REFACTOR commit that only renames should use `refactor:` as the type). Keep the subject ≤ 72 chars — trim the behavior text if needed.
+- **Blank line.**
+- **Body:** 3–6 wrapped lines (~72 chars wide) explaining WHAT the increment did and WHY/CONTEXT — not a restatement of the subject. For REFACTOR commits, name the rename(s) or structural change. For cleanup commits, name what was finalized (lint, last-mile tests, etc.).
+- **No `Co-Authored-By` trailer.** No `Generated with Claude Code` trailer. No emoji.
+
+Use a HEREDOC so the body keeps its line breaks:
+
+```bash
+git commit -m "$(cat <<'EOF'
+<type>: <sticky-slug>: <behavior>
+
+<Body paragraph: what the increment changed and why. Keep it tight —
+the reader should understand the change without opening the diff.
+For REFACTOR/cleanup, name the specific rename or finalization.>
+EOF
+)"
+```
+
+**Auto-commit suppression:** If `.tdd-context.json` has `autoCommit: false`, every `git commit` step below is skipped — `/tdd` still drives RED, GREEN (writes the code), REFACTOR (invokes `/refactor`), and cleanup, but never runs `git commit`. The working tree stays dirty; the user commits manually after the session. The implementation log still records what *would have been* committed (subject + body), labeled `=== COMMIT (suppressed) ===` so the history is intact.
+
 ### <span style="color:#76a039">Mode comparison</span>
 
 | Mode               | Plan review    | Commit prompts | Phase gates |
@@ -216,23 +249,28 @@ Drive every increment in sequence using the plan as the guide. Update `.tdd-cont
 
 ```
 RED      → write one failing test → run suite → confirm fails for right reason → auto-proceed
-GREEN    → write minimal code → run suite → confirm all pass → auto-commit
-REFACTOR → invoke /refactor with --output <log folder> → re-run suite → confirm still green → auto-commit
+GREEN    → write minimal code → run suite → confirm all pass → auto-commit (canonical format)
+REFACTOR → invoke /refactor with --output <log folder> → re-run suite → confirm still green → auto-commit (canonical format)
 LOG      → append cycle entry to tdd-implementation.md → next increment
 ```
 
-No prompts. No gates. Commits fire automatically.
+No prompts. No gates. Commits fire automatically using the canonical multi-line format defined above. If `autoCommit: false` in `.tdd-context.json`, commits are suppressed (no prompt, no commit) and the log records `=== COMMIT (suppressed) ===` blocks.
 
 ### <span style="color:#76a039">Human-in-the-loop mode</span>
 
 ```
 RED      → write one failing test → run suite → show failing output → "Proceed to GREEN?"
-GREEN    → write minimal code → run suite → show passing output → "Commit? feat: <slug>: <behavior>"
+GREEN    → write minimal code → run suite → show passing output →
+           show the full canonical commit message (subject + body) →
+           "Commit this? (yes / edit / skip)"
 REFACTOR → invoke /refactor with --output <log folder> → re-run suite →
-           "Commit refactor? feat: <slug>: refactor: <behavior>"
-           (user can answer "skip" to skip the refactor commit and move to next increment)
+           show the full canonical refactor commit message →
+           "Commit this? (yes / edit / skip)"
+           (skip → no commit, move to next increment)
 LOG      → append cycle entry to tdd-implementation.md → next increment
 ```
+
+`edit` lets the user revise either the subject or body before committing. `skip` suppresses the commit for that increment only. If `autoCommit: false` in `.tdd-context.json`, the prompt is bypassed entirely — commits are suppressed and the log records `=== COMMIT (suppressed) ===` blocks.
 
 If the user answers "stop" or "cancel" at any prompt, perform **Rollback Case A**.
 
@@ -256,8 +294,9 @@ If the user answers "stop" or "cancel" at any prompt, perform **Rollback Case A*
 ```
 → Run full test suite
 → Fix any lint errors
-→ Conductor mode: auto-commit
-  Human-in-the-loop: "Commit cleanup? feat: <slug>: cleanup: <behavior>"
+→ Commit step (skipped entirely if autoCommit: false):
+    Conductor mode: auto-commit using canonical format
+    Human-in-the-loop: show full canonical cleanup message → "Commit this? (yes / edit / skip)"
 → If invoked from /feature: check off the sticky in <storyMapPath>
 → Delete .tdd-context.json
 → Print: "TDD complete for '<task name>'. Log: <log folder>/tdd-implementation.md"
@@ -304,7 +343,7 @@ FILES CHANGED: <paths>
 OUTPUT: GREEN — all tests passing
 
 === COMMIT ===
-feat: <sticky-slug>: <behavior>
+<full canonical commit message — subject + blank line + body, exactly as committed>
 
 === REFACTOR ===
 /refactor invoked on: <files>
@@ -312,20 +351,24 @@ Refactor log: <relative path to refactor-names-...md>
 OUTPUT: GREEN — all tests still passing
 
 === COMMIT (REFACTOR) ===
-feat: <sticky-slug>: refactor: <behavior>
+<full canonical refactor commit message — subject + blank line + body>
 
 ---
 ```
 
-If the REFACTOR phase was skipped (user said "skip" or no candidates), omit the two REFACTOR blocks for that increment.
+If the REFACTOR phase was skipped (user said "skip" or no candidates), omit the two REFACTOR blocks for that increment. If commits were suppressed (`autoCommit: false`), replace the `=== COMMIT ===` / `=== COMMIT (REFACTOR) ===` headers with `=== COMMIT (suppressed) ===` / `=== COMMIT (REFACTOR, suppressed) ===` and record the message that *would have been* committed in the same canonical format — so the user can reconstruct intended history when they commit manually.
 
 **Final entry (appended after Cleanup & Verification):**
 
 ```markdown
 ## Cleanup & Verification
 All tests passing. Lint clean.
-COMMIT: feat: <sticky-slug>: cleanup: <behavior>
+
+=== COMMIT (cleanup) ===
+<full canonical cleanup commit message — subject + blank line + body>
 ```
+
+If cleanup commit was suppressed, replace with `=== COMMIT (cleanup, suppressed) ===` and record the intended message.
 
 ### <span style="color:#76a039">Refactor log linking</span>
 
