@@ -1,5 +1,6 @@
 import type { Activity } from '../../types'
 import GridBackground from '../atoms/GridBackground'
+import ValueStory from '../atoms/ValueStory'
 import FeatureBanner from '../organisms/FeatureBanner'
 import SuggestionBar from '../organisms/SuggestionBar'
 import ActivityColumn from '../organisms/ActivityColumn'
@@ -16,7 +17,7 @@ export default function BoardLayout({ title, valueStory, activities, suggestedNe
     <div className="relative z-10 px-6 pb-8 min-h-screen">
       <GridBackground />
       <FeatureBanner title={title} activities={activities} />
-      {valueStory && <p className="text-sm text-gray-500 -mt-1 mb-2 italic">{valueStory}</p>}
+      {valueStory && <div className="-mt-1 mb-2"><ValueStory text={valueStory} /></div>}
       <SuggestionBar stickyText={suggestedNextText} />
       <div className="flex gap-4 items-start pt-4 overflow-x-auto">
         {activities.map((a, i) => (

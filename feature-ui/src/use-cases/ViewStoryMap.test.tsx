@@ -50,7 +50,8 @@ describe('ViewStoryMap', () => {
     const es = makeFakeEventSource()
     render(<ViewStoryMap />)
     act(() => { es.emit(baseState) })
-    expect(screen.getByText('As a buyer, I want to pay.')).toBeInTheDocument()
+    expect(screen.getByText(/I want to pay/)).toBeInTheDocument()
+    expect(screen.getByText('buyer')).toBeInTheDocument()
   })
 
   it('shows the first uncompleted sticky as the suggested next sticky', () => {
