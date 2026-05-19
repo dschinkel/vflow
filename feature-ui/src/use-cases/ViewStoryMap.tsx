@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { StoryMapState, Activity, StickyItem } from '../types'
-import BoardLayout from '../component-library/templates/BoardLayout'
+import BoardLayout from '../components/templates/BoardLayout'
 
 function withActiveState(activities: Activity[], activeStickyText: string | null): Activity[] {
   return activities.map(a => ({
