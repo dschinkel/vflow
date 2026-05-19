@@ -1,8 +1,10 @@
 export type StickyState = 'todo' | 'done' | 'deferred' | 'active' | 'streaming'
+export type StickyType = 'activity' | 'task'
 
 export interface StickyItem {
   text: string
   state: StickyState
+  type: StickyType
 }
 
 export interface Activity {
