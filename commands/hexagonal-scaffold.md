@@ -41,7 +41,7 @@ No `domain/` folder. No code files. No framework boilerplate. The README is the 
 
 ### <span style="color:#76a039">Step 1 — Verify destination</span>
 
-- If `<destination>` exists and is non-empty → halt with: *"Destination `<destination>` already exists and contains files. Pick a different name or remove the existing directory first."*
+- If `<destination>` exists and is non-empty → halt with: 🟤 *"Destination `<destination>` already exists and contains files. Pick a different name or remove the existing directory first."*
 - If `<destination>` does not exist → create it.
 
 ### <span style="color:#76a039">Step 2 — Create the four layer folders</span>

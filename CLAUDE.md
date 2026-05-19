@@ -73,6 +73,19 @@ This applies to both the main agent and any subagents. When `/feature` is invoke
 - `commands/` is the distribution source. `~/.claude/commands/` is where they land on the user's machine.
 - Use **pnpm** for any Node work, never npm.
 
+## <span style="color:#76a039">Skill output markers — 🟠 prompts, 🟤 notices</span>
+
+Every user-facing string emitted by a skill in `commands/` must be prefixed with a colored-circle marker so the reader's eye lands on it immediately and instantly knows whether to respond.
+
+- **🟠 (orange)** — prompts that **await a user response**. Questions, confirmation gates, accept/reject prompts, mode-selection prompts.
+  - Canonical shape on its own line: `> 🟠 *"<question text>"*` (blockquote).
+  - Inline shape inside code-block pipeline diagrams: `🟠 "<question text>"`.
+- **🟤 (brown)** — informational **notices** that do **not** await a response. Halts, status messages, completion messages, "live at http://..." notices.
+  - Canonical shape on its own line: `> 🟤 *"<notice text>"*` (blockquote).
+  - Inline shape inside a flowing sentence: `... print 🟤 *"<notice text>"* ...`.
+
+These markers are the substitute for foreground/background color, which does not render in the Claude Code terminal UI. Strings that are internal log/comment content (not actually printed to the user) do not get a marker. The Phase 1 `NEW FEATURE` banner in `/feature` uses 🔴🟠🟡🟢🔵🟣 as **content** (rainbow story-map nodes) — those are not signals and must not be reinterpreted as prompt markers.
+
 ## <span style="color:#76a039">Gap and drift logging</span>
 
 When any conversation involves a skill being skipped, a rule not followed, a misunderstanding about what was done vs. what should have been done, or a missing rule discovered in a skill — log it immediately to `gaps.md` at the repo root and each gap section should have a date stamp below its header.

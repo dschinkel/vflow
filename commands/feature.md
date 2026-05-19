@@ -32,9 +32,40 @@ Before running Phase 1, check for an in-progress map in the current project:
 
      > 🟠 *"Found in-progress feature: '<feature name>'. Resume it or start a new one?"*
 
-   - **Resume** → skip Phases 1–3, jump to Phase 4 with that feature's slug and map path.
+   - **Resume** → invoke the **Reset story map server** procedure below with that feature's map path, then skip Phases 1–3 and jump to Phase 4 with that feature's slug and map path.
    - **New** → proceed to Phase 1.
 3. If none found, proceed to Phase 1.
+
+### Reset story map server
+
+Used by the Resume path above. Guarantees the UI starts clean — fresh in-memory state (no stuck `activeStickyText`), serving the resumed feature's `story-map.md`. The previous server (if any) is killed and a new one is launched.
+
+Why kill-and-relaunch rather than POST `/active-sticky` with `null`: the prior server may be dead (in which case the in-place POST fails) or may be serving a different feature's `mapPath` from a previous run (in which case clearing active-sticky doesn't fix the structural mismatch). Restarting the process handles all three end-states uniformly — alive-with-stale-state, dead, alive-with-wrong-map.
+
+Run this block, substituting `<mapPath>` with the resumed feature's `story-maps/<feature-slug>/story-map.md`:
+
+```bash
+PID_FILE="$HOME/.claude/feature-ui/.server.pid"
+if [ -f "$PID_FILE" ]; then
+  OLD_PID="$(cat "$PID_FILE")"
+  kill "$OLD_PID" 2>/dev/null || true
+  rm -f "$PID_FILE"
+  # Give the port a moment to free.
+  sleep 0.5
+fi
+"$HOME/.claude/feature-ui/node_modules/.bin/tsx" \
+  "$HOME/.claude/feature-ui/server/index.ts" \
+  "<mapPath>" 3847 &
+echo $! > "$PID_FILE"
+```
+
+Then print:
+
+> 🟤 *"Story map server restarted on http://localhost:3847 — refresh the browser tab if it doesn't update on its own."*
+
+The browser's SSE connection will reconnect automatically and receive a fresh state payload with `activeStickyText: null`.
+
+Phase 3 Step 2 (new-feature server launch) also invokes this procedure so that starting a new feature while a prior server is alive on port 3847 doesn't fail — the prior server is killed first and the port is freed before the new server launches.
 
 ---
 
@@ -171,14 +202,9 @@ Create `story-maps/<feature-slug>/story-map.md` in the current project directory
 
 ### Step 2 — Start the story map server
 
-```bash
-"$HOME/.claude/feature-ui/node_modules/.bin/tsx" \
-  "$HOME/.claude/feature-ui/server/index.ts" \
-  "story-maps/<feature-slug>/story-map.md" 3847 &
-echo $! > "$HOME/.claude/feature-ui/.server.pid"
-```
+Invoke the **Reset story map server** procedure (defined in On Start above) with `<mapPath>` set to `story-maps/<feature-slug>/story-map.md`. The procedure kills any prior server PID, waits for port 3847 to free, and launches a fresh server pointing at this feature's map. Replace the procedure's restart-message print with this fresh-launch message instead:
 
-Print: *"Story map board is live at http://localhost:3847 — open it in your browser."*
+> 🟤 *"Story map board is live at http://localhost:3847 — open it in your browser."*
 
 ### Step 3 — Proceed to Phase 4
 
@@ -401,7 +427,9 @@ kill "$(cat "$HOME/.claude/feature-ui/.server.pid")" 2>/dev/null || true
 rm -f "$HOME/.claude/feature-ui/.server.pid"
 ```
 
-Print: *"Feature '<name>' closed out. story-map.md marked complete."*
+Print:
+
+> 🟤 *"Feature '<name>' closed out. story-map.md marked complete."*
 
 **No:** Leave the map as-is. Server keeps running. Resume anytime with `/feature`.
 

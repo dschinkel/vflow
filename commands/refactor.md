@@ -24,7 +24,9 @@ The optional `--output <dir>` flag overrides the default output directory. When 
 
 ## <span style="color:#76a039">On Start</span>
 
-1. Print: *"This skill currently handles naming refactors only. More refactoring types will be added in future iterations."*
+1. Print:
+
+   > 🟤 *"This skill currently handles naming refactors only. More refactoring types will be added in future iterations."*
 
 2. Record the session timestamp (format: `YYYY-MM-DDThh-mm-ss`).
 
@@ -85,7 +87,7 @@ The optional `--output <dir>` flag overrides the default output directory. When 
 
 5. If a **folder** was given:
    - Scan all files, order by complexity simplest first (fewest functions, smallest LOC).
-   - Print: *"Processing files in this order:"* followed by the ordered list.
+   - Print: 🟤 *"Processing files in this order:"* followed by the ordered list.
 
 6. If a **single file** was given, proceed directly to step 7.
 
@@ -274,7 +276,7 @@ graph TD
 
 ## <span style="color:#76a039">Error Handling</span>
 
-- **`@` reference not found** → halt immediately. Print: *"The file or folder `[path]` was not found. Please check the path and try again."*
+- **`@` reference not found** → halt immediately. Print: 🟤 *"The file or folder `[path]` was not found. Please check the path and try again."*
 - **File has no functions** → tell the user, skip the file, and continue to the next file if processing a folder.
 - **`docs/refactorings/` can't be created** → halt and explain the problem. Do not proceed without a log file.
-- **Mermaid MCP unavailable at session end** → write the `.mmd` source to disk anyway and note: *"Diagram source saved to `[path]`. The Mermaid MCP tool was unavailable — open the file to render it manually."*
+- **Mermaid MCP unavailable at session end** → write the `.mmd` source to disk anyway and note: 🟤 *"Diagram source saved to `[path]`. The Mermaid MCP tool was unavailable — open the file to render it manually."*

@@ -91,7 +91,7 @@ Three questions, asked in sequence. Wait for each answer before asking the next.
 
 > 🟠 *"Work on '<task name>' — do you want this TDD'd? (yes / no)"*
 
-- **no** → delete `.tdd-context.json`, print *"Skipping TDD. Continue however you'd like."*, exit cleanly. No log files written.
+- **no** → delete `.tdd-context.json`, print 🟤 *"Skipping TDD. Continue however you'd like."*, exit cleanly. No log files written.
 - **yes** → proceed to Question 2.
 
 ### <span style="color:#76a039">Question 2 — Direction</span>
@@ -402,7 +402,9 @@ When the user says "stop" or "cancel" at any Phase 3 gate:
    Rolled back: <comma-separated list of files reverted or deleted>
    ```
 4. Delete `.tdd-context.json`.
-5. Print: *"Rolled back <files>. Session ended cleanly. Log preserved at <log folder>/tdd-implementation.md."*
+5. Print:
+
+   > 🟤 *"Rolled back <files>. Session ended cleanly. Log preserved at <log folder>/tdd-implementation.md."*
 6. Exit.
 
 ### <span style="color:#76a039">Case B — Unexpected termination (detected on next startup)</span>
@@ -437,7 +439,7 @@ When `.tdd-context.json` exists at the very start of a new `/tdd` invocation:
 
 ## <span style="color:#76a039">Error Handling</span>
 
-- **No argument and user supplies no name** → halt with: *"I need a task name to proceed. Try `/tdd \"Your task name\"`."*
+- **No argument and user supplies no name** → halt with: 🟤 *"I need a task name to proceed. Try `/tdd \"Your task name\"`."*
 - **Disagreement between argument and state file** → halt and ask which is correct (see On Start, Step 2).
 - **Log folder cannot be created** → halt with the underlying error. Do not proceed without a log destination.
 - **Test runner not detected (no `package.json` test script, no `pytest`, no `go test` config)** → ask the user:

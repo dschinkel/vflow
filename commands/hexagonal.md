@@ -213,7 +213,7 @@ These will be added in future iterations and dispatched from this skill the same
 
 ## <span style="color:#76a039">Error Handling</span>
 
-- **Service-name missing and user supplies none** → halt with: *"I need a service name to proceed. Try `/hexagonal <service-name>`."*
-- **Reference path (`@<path>`) does not exist** → halt with: *"The reference path `<path>` was not found. Provide an existing folder, or omit the `@<path>` argument to use base rules only."*
-- **Destination directory already exists and is non-empty** → halt with: *"Destination `<path>` already exists and contains files. Pick a different name or remove the existing directory first."*
+- **Service-name missing and user supplies none** → halt with: 🟤 *"I need a service name to proceed. Try `/hexagonal <service-name>`."*
+- **Reference path (`@<path>`) does not exist** → halt with: 🟤 *"The reference path `<path>` was not found. Provide an existing folder, or omit the `@<path>` argument to use base rules only."*
+- **Destination directory already exists and is non-empty** → halt with: 🟤 *"Destination `<path>` already exists and contains files. Pick a different name or remove the existing directory first."*
 - **Filesystem write fails** → halt and surface the underlying error. Do not leave a partial scaffold behind.
