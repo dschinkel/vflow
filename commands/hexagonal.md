@@ -77,19 +77,20 @@ When the user runs `/hexagonal <service-name>` or `/hexagonal <service-name> @<r
 
 ### <span style="color:#76a039">Step 1 — Resolve service name</span>
 
-If the argument is missing, ask: *"What's the service name?"* Use the answer.
+If the argument is missing, ask:
+
+> 🟠 *"What's the service name?"*
+
+Use the answer.
 
 ### <span style="color:#76a039">Step 2 — Ask for language</span>
 
 Always ask, never auto-detect:
 
-```
-Which language?
-  1. Node.js (TypeScript) — JS Module Pattern
-  2. Python — idiomatic functional
-
-(1 / 2)
-```
+> 🟠 *"Which language?
+> 1. Node.js (TypeScript) — JS Module Pattern
+> 2. Python — idiomatic functional
+> (1 / 2)"*
 
 Record the choice. Both `hexagonal.md` and `hexagonal-scaffold.md` honor it.
 
@@ -99,7 +100,11 @@ Probe the project root:
 - If a `src/` directory exists → propose `src/<service-name>/`.
 - Otherwise → propose `<service-name>/` at the project root.
 
-Ask: *"Create the service at `<proposed-path>`? (yes / specify a different path)"*. Use whatever the user confirms.
+Ask:
+
+> 🟠 *"Create the service at `<proposed-path>`? (yes / specify a different path)"*
+
+Use whatever the user confirms.
 
 ### <span style="color:#76a039">Step 4 — Optional reference-codebase analysis</span>
 
@@ -123,9 +128,16 @@ If reference analysis ran:
 
 1. Print a brief summary of what was found.
 2. Show the proposed structure: folder layout, file names, style being applied, any conflicts and how they're being resolved.
-3. Ask: *"Does this structure look right? If not, I can fall back to the default Hexagonal structure instead."*
+3. Ask:
+
+   > 🟠 *"Does this structure look right? If not, I can fall back to the default Hexagonal structure instead."*
+
 4. **yes** → proceed to Step 6 with the blended structure.
-5. **no** → present the default structure (base rules only) and ask once: *"Use the default structure? (yes / cancel)"*. If yes → proceed. If cancel → exit, nothing created.
+5. **no** → present the default structure (base rules only) and ask once:
+
+   > 🟠 *"Use the default structure? (yes / cancel)"*
+
+   If yes → proceed. If cancel → exit, nothing created.
 
 When no `@<reference-path>` was provided, skip the gate — base rules are already known.
 

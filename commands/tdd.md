@@ -34,11 +34,19 @@ If `.tdd-context.json` exists in the project root, a previous TDD session was in
 
 Two sources, combined:
 
-- **Argument (primary truth):** the sticky/task name passed after `/tdd`. If absent, ask the user: *"What task are we TDD-ing? Give me a short name."* Use the user's answer as the task name.
+- **Argument (primary truth):** the sticky/task name passed after `/tdd`. If absent, ask the user:
+
+  > 🟠 *"What task are we TDD-ing? Give me a short name."*
+
+  Use the user's answer as the task name.
 - **State file (supplementary):** if the feature skill wrote `.tdd-context.json` before invoking, read `feature` and `storyMapPath` from it.
 
 **Disagreement handling:**
-- If both the argument and the state file's `sticky` field are present and they disagree, halt. Show both values and ask: *"The argument says '<arg>' but the state file says '<state-sticky>'. Which is correct?"* Use the user's choice and update the state file to match.
+- If both the argument and the state file's `sticky` field are present and they disagree, halt. Show both values and ask:
+
+  > 🟠 *"The argument says '<arg>' but the state file says '<state-sticky>'. Which is correct?"*
+
+  Use the user's choice and update the state file to match.
 - If only the argument is present (no state file), proceed as standalone — no feature context.
 
 ### <span style="color:#76a039">Step 3 — Derive the log folder</span>
@@ -81,10 +89,7 @@ Three questions, asked in sequence. Wait for each answer before asking the next.
 
 ### <span style="color:#76a039">Question 1 — Opt-in</span>
 
-```
-Work on "<task name>" — do you want this TDD'd?
-(yes / no)
-```
+> 🟠 *"Work on '<task name>' — do you want this TDD'd? (yes / no)"*
 
 - **no** → delete `.tdd-context.json`, print *"Skipping TDD. Continue however you'd like."*, exit cleanly. No log files written.
 - **yes** → proceed to Question 2.
@@ -99,11 +104,9 @@ Direction: outside-in, starting at the React Hook layer (view layer is scaffold-
 
 Otherwise, show the default and offer an override:
 
-```
-Direction: outside-in at the React Hook layer (default).
-  — Views are scaffold-only; TDD begins at the hook layer and works down.
-  — Type inside-out to override, or press enter to accept.
-```
+> 🟠 *"Direction: outside-in at the React Hook layer (default).
+> — Views are scaffold-only; TDD begins at the hook layer and works down.
+> — Type `inside-out` to override, or press enter to accept."*
 
 - If the user accepts (or types nothing): use **outside-in**, hook layer entry point.
 - If the user types **inside-out**: use inside-out, lowest layer first.
@@ -112,10 +115,7 @@ Record the answer. Drives increment ordering in the plan.
 
 ### <span style="color:#76a039">Question 3 — Plan review</span>
 
-```
-Want to review the TDD plan before I start implementing?
-(yes / no)
-```
+> 🟠 *"Want to review the TDD plan before I start implementing? (yes / no)"*
 
 - **yes** → human-in-the-loop mode for the rest of the session.
 - **no** → conductor mode for the rest of the session.
@@ -196,9 +196,9 @@ COMMIT: feat: <sticky-slug>: cleanup: <behavior>
 
 - **Conductor mode:** plan is written silently. Skill proceeds straight to Phase 3.
 - **Human-in-the-loop:** plan is shown in full and the user is asked:
-  ```
-  Plan approved? (yes / revise / cancel)
-  ```
+
+  > 🟠 *"Plan approved? (yes / revise / cancel)"*
+
   - **yes** → proceed to Phase 3.
   - **revise** → ask what to change, regenerate the plan, re-present.
   - **cancel** → delete `.tdd-context.json`, exit cleanly. Plan file is kept on disk.
@@ -259,16 +259,18 @@ No prompts. No gates. Commits fire automatically using the canonical multi-line 
 ### <span style="color:#76a039">Human-in-the-loop mode</span>
 
 ```
-RED      → write one failing test → run suite → show failing output → "Proceed to GREEN?"
+RED      → write one failing test → run suite → show failing output → 🟠 "Proceed to GREEN?"
 GREEN    → write minimal code → run suite → show passing output →
            show the full canonical commit message (subject + body) →
-           "Commit this? (yes / edit / skip)"
+           🟠 "Commit this? (yes / edit / skip)"
 REFACTOR → invoke /refactor with --output <log folder> → re-run suite →
            show the full canonical refactor commit message →
-           "Commit this? (yes / edit / skip)"
+           🟠 "Commit this? (yes / edit / skip)"
            (skip → no commit, move to next increment)
 LOG      → append cycle entry to tdd-implementation.md → next increment
 ```
+
+All user-facing prompts in this pipeline must be emitted prefixed with 🟠 (orange circle) to visually distinguish them from regular skill output. The pipeline diagram above shows the literal prefix in place — match it when the prompt fires.
 
 `edit` lets the user revise either the subject or body before committing. `skip` suppresses the commit for that increment only. If `autoCommit: false` in `.tdd-context.json`, the prompt is bypassed entirely — commits are suppressed and the log records `=== COMMIT (suppressed) ===` blocks.
 
@@ -296,7 +298,7 @@ If the user answers "stop" or "cancel" at any prompt, perform **Rollback Case A*
 → Fix any lint errors
 → Commit step (skipped entirely if autoCommit: false):
     Conductor mode: auto-commit using canonical format
-    Human-in-the-loop: show full canonical cleanup message → "Commit this? (yes / edit / skip)"
+    Human-in-the-loop: show full canonical cleanup message → 🟠 "Commit this? (yes / edit / skip)"
 → If invoked from /feature: check off the sticky in <storyMapPath>
 → Delete .tdd-context.json
 → Print: "TDD complete for '<task name>'. Log: <log folder>/tdd-implementation.md"
@@ -438,7 +440,11 @@ When `.tdd-context.json` exists at the very start of a new `/tdd` invocation:
 - **No argument and user supplies no name** → halt with: *"I need a task name to proceed. Try `/tdd \"Your task name\"`."*
 - **Disagreement between argument and state file** → halt and ask which is correct (see On Start, Step 2).
 - **Log folder cannot be created** → halt with the underlying error. Do not proceed without a log destination.
-- **Test runner not detected (no `package.json` test script, no `pytest`, no `go test` config)** → ask the user: *"How do I run the tests for this project?"* Use the user's command verbatim for all suite runs in this session.
+- **Test runner not detected (no `package.json` test script, no `pytest`, no `go test` config)** → ask the user:
+
+  > 🟠 *"How do I run the tests for this project?"*
+
+  Use the user's command verbatim for all suite runs in this session.
 - **`/refactor` invocation fails** → leave the REFACTOR phase incomplete, surface the error, skip to next increment (do not commit). User can re-invoke `/refactor` manually after the session.
 
 ---

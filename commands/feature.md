@@ -28,7 +28,10 @@ Before running Phase 1, check for an in-progress map in the current project:
 
 1. Look for any `story-maps/*/story-map.md` in the current working directory.
 2. If one exists with unchecked `- [ ]` stickies:
-   - Print: *"Found in-progress feature: '<feature name>'. Resume it or start a new one?"*
+   - Ask:
+
+     > 🟠 *"Found in-progress feature: '<feature name>'. Resume it or start a new one?"*
+
    - **Resume** → skip Phases 1–3, jump to Phase 4 with that feature's slug and map path.
    - **New** → proceed to Phase 1.
 3. If none found, proceed to Phase 1.
@@ -37,36 +40,56 @@ Before running Phase 1, check for an in-progress map in the current project:
 
 ## Phase 1 — Drafter
 
+### Banner — print first, before any prompt
+
+The very first thing emitted in Phase 1 is this banner. Print it verbatim inside a fenced code block so leading whitespace is preserved. The six node emojis (🔴🟠🟡🟢🔵🟣) supply the rainbow effect — modern terminals render them as colored dots. Do not substitute, rearrange, or recolor them. Do not wrap them in `<span>` tags. The banner fires regardless of whether the feature name came from the `/feature` argument or has to be asked for next — it announces "new feature, fresh story map" either way.
+
+```
+       NEW FEATURE
+
+           🔴
+          ╱ ╲
+         🟠   🟡
+        ╱ ╲   ╲
+       🟢  🔵  🟣
+```
+
+After the banner is printed, proceed to Question 1.
+
+### Questions
+
 Ask these questions one at a time. Wait for the answer before asking the next.
 
 ### Question 1 — Feature name
 
 If a name was passed as an argument to `/feature`, use it and skip this question.
 
-Otherwise: *"What feature are we building?"*
+Otherwise, ask:
+
+> 🟠 *"What feature are we building?"*
 
 Derive the feature slug: lowercase, spaces → `-`, strip everything except alphanumerics and hyphens.
 Examples: "Payments Flow" → `payments-flow`, "User Auth v2" → `user-auth-v2`.
 
 ### Question 2 — Value Story (optional)
 
-*"What's the value story? (skip to continue) — As a [persona], I want [goal], so that [outcome]."*
+> 🟠 *"What's the value story? (skip to continue) — As a [persona], I want [goal], so that [outcome]."*
 
 If skipped, omit the value story from the map.
 
 ### Question 3 — Personas
 
-*"Who are the people involved in this feature?"*
+> 🟠 *"Who are the people involved in this feature?"*
 
 ### Question 4 — Accomplishments
 
-*"What are the main things each persona needs to accomplish?"*
+> 🟠 *"What are the main things each persona needs to accomplish?"*
 
 Each distinct accomplishment becomes an activity column.
 
 ### Question 5 — Steps
 
-*"For each accomplishment, what are the individual steps to get there?"*
+> 🟠 *"For each accomplishment, what are the individual steps to get there?"*
 
 Each step becomes a task sticky beneath its activity.
 
@@ -93,29 +116,31 @@ Challenge the draft with four questions in sequence. Present each as a direct ch
 
 ### Challenge 1 — Smallest slice
 
-*"Are there any stickies we could split further? We want very, very small — a 30-minute slice is better than a half-day slice. What can we split?"*
+> 🟠 *"Are there any stickies we could split further? We want very, very small — a 30-minute slice is better than a half-day slice. What can we split?"*
 
 Update the draft if stickies are split.
 
 ### Challenge 2 — WIP and priority
 
-*"What's the smallest set we'd commit to right now? Most important first — everything else waits or gets cut. What should we defer?"*
+> 🟠 *"What's the smallest set we'd commit to right now? Most important first — everything else waits or gets cut. What should we defer?"*
 
 Mark deferred stickies as `~~text~~ *(deferred)*` in the draft.
 
 ### Challenge 3 — Value Story accuracy
 
-*"Is the value story still accurate given this map?"*
+> 🟠 *"Is the value story still accurate given this map?"*
 
 Update if needed.
 
 ### Challenge 4 — Missing personas
 
-*"Is there a persona missing from any column?"*
+> 🟠 *"Is there a persona missing from any column?"*
 
 Add any missing stickies or columns.
 
-Show the revised draft, then ask: *"Approve this map?"*
+Show the revised draft, then ask:
+
+> 🟠 *"Approve this map?"*
 
 - **Yes** → Phase 3.
 - **No** → ask what to change, update, re-ask.
@@ -174,7 +199,7 @@ story map and jump straight to Phase 4.
 
 Before classification, ask once:
 
-*"Auto-commit each sticky as it's completed? [Y/n] (default: yes)"*
+> 🟠 *"Auto-commit each sticky as it's completed? [Y/n] (default: yes)"*
 
 Remember the answer for the rest of this `/feature` run. Default is `yes`.
 
@@ -186,9 +211,9 @@ This toggle governs the commit step in the `cosmetic` flow below. (Commits made 
 
 Before any sticky runs, classify all unchecked stickies. Ask once:
 
-*"How should I classify each sticky's service and scope?
-  (a) I propose, you review and approve in bulk.
-  (b) You specify per sticky as we go."*
+> 🟠 *"How should I classify each sticky's service and scope?
+> (a) I propose, you review and approve in bulk.
+> (b) You specify per sticky as we go."*
 
 **Mode A — agent proposes, bulk review:**
 
@@ -213,11 +238,17 @@ Skills values (derived from Scope — no user input needed):
 - `ui-and-server` → `/hexagonal + /tdd`
 - `server-only` → `/hexagonal + /tdd`
 
-Ask: *"Edit any row, then say 'approve'."* Apply all edits at once.
+Ask:
+
+> 🟠 *"Edit any row, then say 'approve'."*
+
+Apply all edits at once.
 
 **Mode B — user specifies per sticky:**
 
-Before each sticky, ask: *"Sticky '<text>' — target service? scope? (skills will be shown based on scope)"*
+Before each sticky, ask:
+
+> 🟠 *"Sticky '<text>' — target service? scope? (skills will be shown based on scope)"*
 
 **Switching modes:** user can say "switch to mode B" or "switch to mode A" at any time.
 
@@ -228,7 +259,10 @@ Before each sticky, ask: *"Sticky '<text>' — target service? scope? (skills wi
 Each iteration:
 
 1. Read `story-map.md` top to bottom. Find the first unchecked `- [ ]` sticky (skip deferred `~~...~~`).
-2. Print: *"Suggested next: '<text>' — confirm, or name a different sticky."*
+2. Ask:
+
+   > 🟠 *"Suggested next: '<text>' — confirm, or name a different sticky."*
+
 3. On confirm (or user-named sticky), set it active on the board:
 
 ```bash
@@ -346,7 +380,9 @@ Feature complete: <Feature Name>
 | N stickies | M stickies |
 ```
 
-Ask: *"Ready to close out this feature?"*
+Ask:
+
+> 🟠 *"Ready to close out this feature?"*
 
 **Yes:**
 

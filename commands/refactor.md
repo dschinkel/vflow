@@ -93,26 +93,22 @@ The optional `--output <dir>` flag overrides the default output directory. When 
 
    Present the hypothesis with a default pre-filled:
 
-   ```
-   What's your hypothesis for this refactor session?
-   (press Enter to accept default, or type your own)
-
-   Default: "I suspect not all the names in here are domain driven and some are not
-   written in prose and are instead written based on technology or implementation
-   based terms."
-   ```
+   > 🟠 *"What's your hypothesis for this refactor session?
+   > (press Enter to accept default, or type your own)
+   >
+   > Default: 'I suspect not all the names in here are domain driven and some are not
+   > written in prose and are instead written based on technology or implementation
+   > based terms.'"*
 
    Then present the prediction with a default pre-filled:
 
-   ```
-   What's your prediction — what specifically would you expect to see if your hypothesis is true?
-   (press Enter to accept default, or type your own)
-
-   Default: "I expect to find a mix — some names will be fine, others will reference
-   technology concepts (String, Array, Handler, Manager, Utils) or describe what the
-   code does mechanically rather than what it means in the business. I don't expect
-   it to be uniformly bad."
-   ```
+   > 🟠 *"What's your prediction — what specifically would you expect to see if your hypothesis is true?
+   > (press Enter to accept default, or type your own)
+   >
+   > Default: 'I expect to find a mix — some names will be fine, others will reference
+   > technology concepts (String, Array, Handler, Manager, Utils) or describe what the
+   > code does mechanically rather than what it means in the business. I don't expect
+   > it to be uniformly bad.'"*
 
    If the user presses Enter or says "default" / "yes" / "ok", use the default text verbatim.
    Record both responses. Write them immediately to the `## Hypothesis` and `## Prediction` sections of the session log.
@@ -147,7 +143,7 @@ Why: The name includes the type ("String") which is an implementation detail, no
      behavior. The name already implies it builds something; the return type is
      evident from context.
 
-Accept? (yes / no)
+🟠 Accept? (yes / no)
 ```
 
 ### <span style="color:#76a039">Accept / Reject Flow</span>
@@ -230,12 +226,14 @@ Before generating the tree diagram, produce the experiment analysis:
 
 Present all four sections and ask:
 
-```
-Approve or reject this analysis?
-```
+> 🟠 *"Approve or reject this analysis?"*
 
 - **approve** → write to the session log as-is (fill in the Verdict, Analysis, Learnings, Next Hypothesis sections).
-- **reject** → prompt: *"Type your own analysis:"* and record whatever the user writes instead.
+- **reject** → prompt:
+
+  > 🟠 *"Type your own analysis:"*
+
+  Record whatever the user writes instead.
 
 ---
 
