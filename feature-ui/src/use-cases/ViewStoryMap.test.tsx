@@ -64,7 +64,7 @@ describe('ViewStoryMap', () => {
     const es = makeFakeEventSource()
     render(<ViewStoryMap />)
     act(() => { es.emit({ ...baseState, activeStickyText: 'Enter card details' }) })
-    expect(screen.getByText('▶ NOW')).toBeInTheDocument()
+    expect(screen.getByText('Active')).toBeInTheDocument()
   })
 
   it('closes the board stream connection when unmounted', () => {
