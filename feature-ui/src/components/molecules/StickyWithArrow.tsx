@@ -9,7 +9,7 @@ interface Props {
 
 export default function StickyWithArrow({ text, state }: Props) {
   return (
-    <div className="sticky-with-arrow">
+    <div className="flex flex-col items-center">
       <ArrowUp />
       <Sticky text={text} state={state} />
     </div>

@@ -3,10 +3,10 @@ interface Props {
 }
 
 export default function SuggestionBarContent({ stickyText }: Props) {
-  if (!stickyText) return <span className="suggestion__empty">All stickies done.</span>
+  if (!stickyText) return <span className="text-gray-400 text-sm">All stickies done.</span>
   return (
-    <span className="suggestion__text">
-      Suggested next: <strong>{stickyText}</strong>
+    <span className="text-sm text-gray-500">
+      Suggested next: <strong className="font-semibold text-blue-600">{stickyText}</strong>
     </span>
   )
 }

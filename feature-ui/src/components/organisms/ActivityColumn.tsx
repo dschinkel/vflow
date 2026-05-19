@@ -11,9 +11,9 @@ interface Props {
 
 export default function ActivityColumn({ index, name, stickies }: Props) {
   return (
-    <div className="activity-column">
+    <div className="min-w-[220px] flex flex-col gap-2">
       <ColumnHeader index={index} name={name} />
-      <div className="activity-column__stickies">
+      <div className="flex flex-col">
         {stickies.map((s, i) =>
           i === 0
             ? <Sticky key={s.text} text={s.text} state={s.state} />
