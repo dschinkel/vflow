@@ -1,4 +1,4 @@
-export type StickyState = 'todo' | 'done' | 'deferred' | 'active'
+export type StickyState = 'todo' | 'done' | 'deferred' | 'active' | 'streaming'
 
 export interface StickyItem {
   text: string
