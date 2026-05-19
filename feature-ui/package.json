@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vite build",
+    "dev": "vite",
     "start": "tsx server/index.ts",
     "test": "vitest run",
     "test:watch": "vitest"
