@@ -303,3 +303,6 @@ I am logging the following
     - TDD plan and implementation
     - sessions where we found drift or instances where claude did not follow my skill properly in /gaps
     - refactoring log where it shows the refactors made and refactor suggestion rejections and why
+
+We need to address how we distribute this. We don't want users updating the core skills I think because our UI depends on their structure for the storymap automation
+    Research this

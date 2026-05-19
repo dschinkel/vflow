@@ -17,6 +17,7 @@ export function createApp(mapPath: string): Koa {
   }
 
   router.get('/events', async (ctx) => {
+    ctx.res.statusCode = 200
     ctx.respond = false
     openStream(ctx.res)
     ctx.res.write(`data: ${JSON.stringify(state())}\n\n`)

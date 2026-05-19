@@ -1,6 +1,8 @@
 # <span style="color:#76a039">feature-ui — Component & Styling Library Design Spec</span>
 
-> **Status:** In progress — brainstorming phase, not yet approved
+> **Status:** Decided — awaiting Claude Design prototype before implementation
+>
+> **Plan:** [feature-ui — Styling Migration Plan](../plans/2026-05-18-feature-ui-styling-migration.md)
 
 ---
 
@@ -26,8 +28,8 @@ The atomic component library is retained. The atoms don't go away — they get t
 // Before
 <div className="sticky sticky--active">...</div>
 
-// After (example with Chakra)
-<Box className={`sticky sticky--${state}`} bg="green.100" borderRadius="md" p={2}>...</Box>
+// After (with Tailwind + shadcn)
+<div className={cn("sticky rounded-md p-2 bg-yellow-100", isActive && "ring-2 ring-yellow-400")}>...</div>
 ```
 
 Library handles all tokens (color, spacing, typography, radius, shadow). Atoms own domain logic and structure. Raw CSS is eliminated.
@@ -78,15 +80,19 @@ Atoms wrap Mantine primitives (`Box`, `Badge`, `Text`, `Group`, `Stack`). Mantin
 
 ## <span style="color:#76a039">Open Questions</span>
 
-*(To be resolved before finalizing)*
-
-- Which option is selected?
-- Will Claude Design be used to prototype the board layout first? If so, what's the workflow for translating the HTML output into React atoms?
-- Are there specific aesthetic goals — e.g. should the board feel like a sticky note tool, a dark dev tool, a clean minimal board?
-- Any bundle size constraints given the dev tool context?
+All resolved. See Decision below.
 
 ---
 
 ## <span style="color:#76a039">Decision</span>
 
-*(To be filled in after brainstorming is complete)*
+**Library: Tailwind CSS + shadcn/ui**
+
+**Aesthetic goal:** Miro-like — clean, canvas-feel, neutral palette with color pops for sticky cards. shadcn's default baseline matches this without theme investment. Chakra was ruled out because its component defaults read as "web app" (soft rounded shapes, colored variants) and require meaningful theme overrides to achieve a clean canvas look. Mantine was ruled out for similar reasons. Tailwind makes per-card color variants (yellow, pink, green stickies) trivial via utility classes.
+
+**Bundle size:** Not a constraint. This is a local dev tool that never ships to users.
+
+**Claude Design workflow:** Claude Design will be used first to prototype the board layout visually. Its output (standalone HTML) is a visual reference only — not React code or Tailwind classes. The workflow is:
+1. Prototype the board in Claude Design to define the target look
+2. Use the HTML output as a visual spec when wiring atoms to Tailwind/shadcn primitives
+3. Implement atoms to match the prototype, not the other way around
